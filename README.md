@@ -38,9 +38,8 @@ To install and run the EcoPopDL-DP framework:
 2. Prepare input data:
    - Ensure genotypic, phenotypic, and environmental data are in the appropriate formats as outlined in the scripts.
 
-## Citation
-If you use EcoPopDL-DP in your research, please cite:
-> T. Hewavithana et al., "EcoPopDL-DP: Environmental-Aware and Population-Informed Genomic Prediction using Deep Learning and ChromoMap," Bioinformatics, 2022.
+## Contact us
+For any questions or inquiries, please feel free to open an issue on our repository or contact us at qnm481@usask.ca.
 
 ## Authors
 - Thulani Hewavithana
