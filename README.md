@@ -52,7 +52,7 @@ For any questions or inquiries, please feel free to open an issue on our reposit
 - Lingling Jin
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. 
 
 ## Contributions
 We welcome contributions! To contribute:
