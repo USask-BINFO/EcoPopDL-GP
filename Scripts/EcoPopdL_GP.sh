@@ -39,7 +39,7 @@ grep -h "CV error" log*.out
 
 # DAPC : R script
 
-# ADMIXTURE plot: R script
+# ADMIXTURE plot: R script admixture_plot.R
 
 # Generating genotype_matrix
 ./plink --bfile pruned_data_admixture --recode A --out genotype_matrix
