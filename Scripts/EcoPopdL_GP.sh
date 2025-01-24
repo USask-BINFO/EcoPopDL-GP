@@ -75,6 +75,6 @@ python3 Chromosome_masks_and_ChromoMap_plink.py
 ## Generating CNN-based model: seprate python script
 
 
-### Running LMM: R script
+### Running LMM: R script LMM.R
 
-### Baseline model: R script
+### Baseline model: R script Baseline_models.R
