@@ -47,7 +47,7 @@ Figure numbering and titles follow the manuscript order exactly for **Figures S2
 
 ## Supplementary Results Tables
 
-### Table S2. Full ChromoMap channel inventory.
+### Table S3. Full ChromoMap channel inventory.
 
 | Channel group | Description | Dataset-specific use |
 |---|---|---|
@@ -65,7 +65,7 @@ Figure numbering and titles follow the manuscript order exactly for **Figures S2
 | Homoeolog group identity | Raw or hash-encoded group identifier | Polyploid only |
 | Homoeolog anchor density | Local density of annotated homoeolog anchors | Polyploid only |
 
-### Table S3. Complete predictive performance across all datasets under within-genotype environment-holdout cross-validation.
+### Table S4. Complete predictive performance across all datasets under within-genotype environment-holdout cross-validation.
 
 Wall-clock time is reported in minutes. Higher R² and CCC indicate better performance; lower MAE and RMSE indicate better performance. Abbreviations: **EcoPop** = EcoPopDL-GP; **LMET** = LearnMET; **DGxE** = DeepG×E; **SW** = seed weight; **DTF** = days to flowering; **FT** = flowering time. Entries marked **—** indicate values not generated because of memory constraints.
 
@@ -177,7 +177,7 @@ Wall-clock time is reported in minutes. Higher R² and CCC indicate better perfo
 | LMET | 280 | 0.42 | 2.51 | 3.33 | 0.59 |
 | DGxE | 90 | 0.29 | 2.85 | 3.86 | 0.58 |
 
-### Table S4. Comparison of the two cross-validation settings.
+### Table S5. Comparison of the two cross-validation settings.
 
 Primary results in the main text are reported under within-genotype environment-holdout cross-validation. Genotype-grouped cross-validation is shown as a robustness check.
 
@@ -195,7 +195,7 @@ Primary results in the main text are reported under within-genotype environment-
 
 *Note.* **geno-CV** = genotype-grouped cross-validation; **env-CV** = within-genotype environment-holdout cross-validation.
 
-### Table S5. Qualitative summary of mixed post-hoc perturbation sensitivity analyses.
+### Table S6. Qualitative summary of mixed post-hoc perturbation sensitivity analyses.
 
 Entries summarize the dominant patterns observed after sample-wise permutation of environmental or metadata signals, channel occlusion of structured genomic inputs, and, for selected D4 components, temporary module disablement.
 
