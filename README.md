@@ -424,3 +424,13 @@ It also shows current options such as:
 - automatic phenotype grouping via blank `GROUP_COLS`
 - `TE_GFF` support
 - `ADMIXTURE_SELECTION_METHOD=elbow`
+
+## Contact 📬
+===============
+
+For any questions or inquiries, please feel free to open an issue on our repository or contact us at [qnm481@usask.ca](mailto:qnm481@usask.ca).
+
+## License 📜
+===============
+
+This project is licensed under the [MIT License](LICENSE)
