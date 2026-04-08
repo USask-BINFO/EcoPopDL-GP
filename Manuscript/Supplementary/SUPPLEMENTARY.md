@@ -13,7 +13,15 @@ Figure numbering and titles follow the manuscript order exactly for **Figures S2
 
 *Caption.* Each panel shows the mean ΔR² after sample-wise permutation of one temporal window in the environmental sequence for a given dataset-trait task. Positive values indicate reduced predictive performance after perturbation. These profiles therefore quantify reliance on temporally localized environmental signal rather than identifying exact causal developmental windows. Panels are shown in a consistent task order to facilitate comparison across datasets and traits.
 
-### Figure S3. Module and input perturbation sensitivity across tasks.
+### Figure S3. Stage×feature perturbation sensitivity across tasks.
+
+<p align="center">
+  <img src="Figures/fig_s2_stage_feature_perturbation.png" alt="Figure S3. Stage×feature perturbation sensitivity across tasks." width="1000">
+</p>
+
+*Caption.* Each cell summarizes the mean ΔR² after sample-wise permutation of one environmental feature within one temporal stage. These panels therefore quantify post-hoc reliance on stage-specific environmental signal rather than causal effects of individual variables. Panels are shown in a consistent task order to facilitate comparison across datasets and traits. Missing panels indicate analyses that were still running when the figure was generated and can be updated later without changing the layout.
+
+### Figure S4. Module and input perturbation sensitivity across tasks.
 
 <p align="center">
   <img src="Figures/supp_module_input_sensitivity.png" alt="Figure S3. Module and input perturbation sensitivity across tasks." width="1000">
@@ -21,7 +29,7 @@ Figure numbering and titles follow the manuscript order exactly for **Figures S2
 
 *Caption.* Each panel shows mean ΔR² after perturbing one input group or model component. Environmental and metadata inputs were perturbed by sample-wise permutation when appropriate, whereas BAE- and HABE-related genomic groups were evaluated by channel occlusion implemented by zeroing selected genomic channels. Panels are ordered consistently across tasks to support side-by-side comparison.
 
-### Figure S4. Per-population held-out predictive performance across tasks.
+### Figure S5. Per-population held-out predictive performance across tasks.
 
 <p align="center">
   <img src="Figures/supp_population_r2.png" alt="Figure S4. Per-population held-out predictive performance across tasks." width="1000">
@@ -29,7 +37,7 @@ Figure numbering and titles follow the manuscript order exactly for **Figures S2
 
 *Caption.* Each panel shows mean held-out R² within inferred population groups for one dataset-trait task under within-genotype environment-holdout cross-validation. Error bars indicate variability across folds. This figure reports subgroup performance summaries rather than perturbation-based importance. Panels are ordered consistently across tasks to facilitate comparison of subgroup performance across datasets and traits. Missing panels indicate analyses that were still running when the figure was generated and can be updated later without changing the layout.
 
-### Figure S5. Homoeolog-related perturbation sensitivity in the polyploid D4 dataset.
+### Figure S6. Homoeolog-related perturbation sensitivity in the polyploid D4 dataset.
 
 <p align="center">
   <img src="Figures/supp_d4_homoeolog.png" alt="Figure S5. Homoeolog-related perturbation sensitivity in the polyploid D4 dataset." width="1000">
