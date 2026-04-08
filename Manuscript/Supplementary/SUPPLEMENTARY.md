@@ -16,7 +16,7 @@ Figure numbering and titles follow the manuscript order exactly for **Figures S2
 ### Figure S3. Stage×feature perturbation sensitivity across tasks.
 
 <p align="center">
-  <img src="Figures/fig_s2_stage_feature_perturbation.png" alt="Figure S3. Stage×feature perturbation sensitivity across tasks." width="1000">
+  <img src="Figures/supp_stage_feature_heatmaps.png" alt="Figure S3. Stage×feature perturbation sensitivity across tasks." width="1000">
 </p>
 
 *Caption.* Each cell summarizes the mean ΔR² after sample-wise permutation of one environmental feature within one temporal stage. These panels therefore quantify post-hoc reliance on stage-specific environmental signal rather than causal effects of individual variables. Panels are shown in a consistent task order to facilitate comparison across datasets and traits. Missing panels indicate analyses that were still running when the figure was generated and can be updated later without changing the layout.
