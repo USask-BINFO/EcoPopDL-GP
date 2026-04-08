@@ -1,0 +1,2282 @@
+2026-04-07 16:34:27,168 - INFO - Using device: cuda:1
+2026-04-07 16:34:27,169 - INFO - Regularization for gxetensor: dropout=0.2 weight_decay=0.02
+2026-04-07 16:34:27,178 - INFO - Extracting population structure from 'Pop' column...
+2026-04-07 16:34:27,181 - INFO - Population distribution:
+PopID
+0    80
+Name: count, dtype: int64
+2026-04-07 16:34:27,237 - WARNING - 'SeedingDate' column missing - cannot model planting timing effects
+2026-04-07 16:34:27,238 - INFO - Preprocessing environmental data into temporal format...
+2026-04-07 16:34:27,242 - INFO - Auto thresholds (weekly): heat=30.159, cold=9.021, vpd=1.359
+2026-04-07 16:34:27,247 - INFO - Env feature dim (per step) -> 26
+2026-04-07 16:34:27,247 - INFO - Environmental data shape: (40, 20, 26)
+2026-04-07 16:34:27,247 - INFO - Number of locations: 2
+2026-04-07 16:34:27,247 - INFO - Number of years: 2
+2026-04-07 16:34:27,248 - INFO - Computed env anomaly mean with shape (20, 26) for GxE shocks.
+2026-04-07 16:34:27,249 - INFO - Inferred categorical sizes -> locations=2, years=2, env_pairs=4
+2026-04-07 16:34:27,254 - ERROR - No overlapping SampleID between metadata and tensor files.
+2026-04-07 16:34:27,254 - ERROR - First few metadata IDs: ['BNP_T01', 'BNP_T02', 'BNP_T03', 'BNP_T04', 'BNP_T05']
+2026-04-07 16:34:27,254 - ERROR - First few tensor IDs: ['BNP_T01_BNP_T01', 'BNP_T02_BNP_T02', 'BNP_T03_BNP_T03', 'BNP_T04_BNP_T04', 'BNP_T05_BNP_T05']
+2026-04-07 16:42:13,606 - INFO - Using device: cuda:1
+2026-04-07 16:42:13,607 - INFO - Regularization for gxetensor: dropout=0.2 weight_decay=0.02
+2026-04-07 16:42:13,617 - INFO - Extracting population structure from 'Pop' column...
+2026-04-07 16:42:13,621 - INFO - Population distribution:
+PopID
+1    32
+0    24
+2    24
+Name: count, dtype: int64
+2026-04-07 16:42:13,670 - WARNING - 'SeedingDate' column missing - cannot model planting timing effects
+2026-04-07 16:42:13,671 - INFO - Preprocessing environmental data into temporal format...
+2026-04-07 16:42:13,674 - INFO - Auto thresholds (weekly): heat=30.159, cold=9.021, vpd=1.359
+2026-04-07 16:42:13,679 - INFO - Env feature dim (per step) -> 26
+2026-04-07 16:42:13,680 - INFO - Environmental data shape: (40, 20, 26)
+2026-04-07 16:42:13,680 - INFO - Number of locations: 2
+2026-04-07 16:42:13,680 - INFO - Number of years: 2
+2026-04-07 16:42:13,680 - INFO - Computed env anomaly mean with shape (20, 26) for GxE shocks.
+2026-04-07 16:42:13,681 - INFO - Inferred categorical sizes -> locations=2, years=2, env_pairs=4
+2026-04-07 16:42:13,930 - INFO - Saved trait boxplot to trait_boxplot.png
+2026-04-07 16:42:13,932 - INFO - Found 10 samples with ChromoMap tiles (unique SampleIDs).
+2026-04-07 16:42:13,932 - INFO - CV mode: using all 10 unique genotypes (80 environment rows); no held-out test set.
+2026-04-07 16:42:13,933 - INFO - Using cross-validation on the full dataset (10 unique genotypes); skipping fixed train/val/test split analysis.
+2026-04-07 16:42:13,938 - INFO - Auto thresholds (weekly): heat=30.159, cold=9.021, vpd=1.359
+2026-04-07 16:42:13,940 - INFO - Env feature dim (per step) -> 26
+2026-04-07 16:42:13,959 - INFO - Loading PLINK dosage matrix for dosage branch override (complex/tensor path).
+2026-04-07 16:42:16,069 - INFO - Enabled PLINK dosage override for dosage branch (samples=10, snps=18).
+2026-04-07 16:42:16,084 - INFO - Model sizes â†’â€™ env=26, genomic_feat=88, chrom=3, locations=2, years=2, pops=3
+2026-04-07 16:42:16,084 - INFO - Tensor feature indices: block_id_raw_idx=84, te_hotspot_idx=77, is_te_idx=76, is_genic_idx=78, is_promoter_idx=79, block_gene_count_idx=80, block_snp_density_idx=82, block_mean_maf_idx=81, dosage_idx=0, token_rank_idx=2, dosage_local_mean_idx=3, dosage_local_std_idx=4, te_dist_idx=74, gene_dist_idx=75
+2026-04-07 16:42:16,085 - INFO - Using model type: gxetensor
+2026-04-07 16:42:16,085 - INFO - USE_DOSAGE_PCA=False: dosage branch will use flattened dosage (all SNP positions) without PCA projection.
+2026-04-07 16:42:16,095 - WARNING - [within-genotype] Fold 1: 1 genotypes missing train/test coverage (examples: ['BNP_T03'])
+2026-04-07 16:42:16,095 - WARNING - [within-genotype] Fold 2: 2 genotypes missing train/test coverage (examples: ['BNP_T08', 'BNP_T04'])
+2026-04-07 16:42:16,095 - WARNING - [within-genotype] Fold 3: 2 genotypes missing train/test coverage (examples: ['BNP_T01', 'BNP_T08'])
+2026-04-07 16:42:16,096 - INFO - [tier2_env] Starting CV: Within-genotype env holdout (seen genotypes, unseen environments) (4 folds)
+2026-04-07 16:42:16,603 - INFO - Auto thresholds (weekly): heat=30.159, cold=9.021, vpd=1.359
+2026-04-07 16:42:16,611 - INFO - [tier2_env Fold 1/4] Tensor dims →’ genomic_feat=88, chrom=3, locations=2, years=2, pops=3
+2026-04-07 16:42:16,611 - INFO - [tier2_env Fold 1/4] Tensor feature indices: block_id_raw_idx=84, te_hotspot_idx=77, is_te_idx=76, is_genic_idx=78, is_promoter_idx=79, block_gene_count_idx=80, block_snp_density_idx=82, block_mean_maf_idx=81, dosage_idx=0, token_rank_idx=2, dosage_local_mean_idx=3, dosage_local_std_idx=4, te_dist_idx=74, gene_dist_idx=75
+2026-04-07 16:42:16,611 - INFO - Creating GxE_Transformer_Tensor model (CV path)...
+2026-04-07 16:42:16,611 - INFO - Functional channel idx (CV): block_id_raw=84, te_hotspot=77, is_te=76, is_genic=78, is_promoter=79, block_gene=80, block_density=82, block_maf=81, dosage=0, te_dist=74, gene_dist=75
+2026-04-07 16:42:16,611 - WARNING - homeolog_group_token_split_subgenome requested but sg_channel_idx is missing; disabling split.
+2026-04-07 16:42:16,612 - WARNING - use_homeolog_auxiliary requested but hom_gid_channel_idx/sg_channel_idx is missing; disabling auxiliary loss.
+2026-04-07 16:42:16,955 - INFO - [tier2_env Fold 1/4] Model parameters: 605,075
+2026-04-07 16:42:18,294 - INFO - TE indicator is near-constant (mean=1.000); ignoring it for hotspots/func types.
+2026-04-07 16:42:18,603 - INFO - HABE tokens/sample: min=16 mean=16.0 max=16 | hotspot tokens/sample: min=15 mean=15.0 max=15 | func_type_counts=[18, 81, 54, 0]
+2026-04-07 16:42:18,937 - INFO -   [Regularized] Loss=0.3495 L1=0.0000 R2=-0.1555
+2026-04-07 16:42:19,408 - INFO - CCC: 0.0140
+2026-04-07 16:42:19,886 - INFO - CCC: 0.1269
+2026-04-07 16:42:19,887 - INFO - Epoch 001/200 | Train Loss 0.3495 R2 -0.1555 | Val Loss 2.8676 R2 0.0634 RMSE 1.9751 MAE 1.7842 CCC 0.1269
+2026-04-07 16:42:19,929 - INFO -  ✓ New best model saved (Val R² = 0.0634)
+2026-04-07 16:42:20,459 - INFO -   [Regularized] Loss=0.2938 L1=0.0000 R2=0.0276
+2026-04-07 16:42:20,866 - INFO - CCC: 0.0401
+2026-04-07 16:42:21,277 - INFO - CCC: 0.1401
+2026-04-07 16:42:21,277 - INFO - Epoch 002/200 | Train Loss 0.2938 R2 0.0276 | Val Loss 2.8549 R2 0.0828 RMSE 1.9546 MAE 1.7605 CCC 0.1401
+2026-04-07 16:42:21,321 - INFO -  ✓ New best model saved (Val R² = 0.0828)
+2026-04-07 16:42:21,781 - INFO -   [Regularized] Loss=0.2922 L1=0.0000 R2=0.0420
+2026-04-07 16:42:22,183 - INFO - CCC: 0.0705
+2026-04-07 16:42:22,601 - INFO - CCC: 0.1536
+2026-04-07 16:42:22,602 - INFO - Epoch 003/200 | Train Loss 0.2922 R2 0.0420 | Val Loss 2.8394 R2 0.0997 RMSE 1.9365 MAE 1.7394 CCC 0.1536
+2026-04-07 16:42:22,651 - INFO -  ✓ New best model saved (Val R² = 0.0997)
+2026-04-07 16:42:23,091 - INFO -   [Regularized] Loss=0.3156 L1=0.0000 R2=0.0174
+2026-04-07 16:42:23,508 - INFO - CCC: 0.1030
+2026-04-07 16:42:24,011 - INFO - CCC: 0.1659
+2026-04-07 16:42:24,012 - INFO - Epoch 004/200 | Train Loss 0.3156 R2 0.0174 | Val Loss 2.8226 R2 0.1137 RMSE 1.9214 MAE 1.7213 CCC 0.1659
+2026-04-07 16:42:24,059 - INFO -  ✓ New best model saved (Val R² = 0.1137)
+2026-04-07 16:42:24,585 - INFO -   [Regularized] Loss=0.3093 L1=0.0000 R2=-0.0272
+2026-04-07 16:42:25,054 - INFO - CCC: 0.1339
+2026-04-07 16:42:25,631 - INFO - CCC: 0.1747
+2026-04-07 16:42:25,632 - INFO - Epoch 005/200 | Train Loss 0.3093 R2 -0.0272 | Val Loss 2.8072 R2 0.1229 RMSE 1.9114 MAE 1.7080 CCC 0.1747
+2026-04-07 16:42:25,679 - INFO -  ✓ New best model saved (Val R² = 0.1229)
+2026-04-07 16:42:26,200 - INFO -   [Regularized] Loss=0.3249 L1=0.0000 R2=-0.1139
+2026-04-07 16:42:26,716 - INFO - CCC: 0.1475
+2026-04-07 16:42:27,235 - INFO - CCC: 0.1816
+2026-04-07 16:42:27,237 - INFO - Epoch 006/200 | Train Loss 0.3249 R2 -0.1139 | Val Loss 2.7980 R2 0.1309 RMSE 1.9026 MAE 1.6966 CCC 0.1816
+2026-04-07 16:42:27,284 - INFO -  ✓ New best model saved (Val R² = 0.1309)
+2026-04-07 16:42:27,866 - INFO -   [Regularized] Loss=0.2946 L1=0.0000 R2=0.1179
+2026-04-07 16:42:28,329 - INFO - CCC: 0.1745
+2026-04-07 16:42:28,887 - INFO - CCC: 0.1882
+2026-04-07 16:42:28,888 - INFO - Epoch 007/200 | Train Loss 0.2946 R2 0.1179 | Val Loss 2.7833 R2 0.1371 RMSE 1.8958 MAE 1.6873 CCC 0.1882
+2026-04-07 16:42:28,936 - INFO -  ✓ New best model saved (Val R² = 0.1371)
+2026-04-07 16:42:29,512 - INFO -   [Regularized] Loss=0.2595 L1=0.0000 R2=0.1821
+2026-04-07 16:42:29,987 - INFO - CCC: 0.2012
+2026-04-07 16:42:30,500 - INFO - CCC: 0.1947
+2026-04-07 16:42:30,503 - INFO - Epoch 008/200 | Train Loss 0.2595 R2 0.1821 | Val Loss 2.7707 R2 0.1437 RMSE 1.8886 MAE 1.6766 CCC 0.1947
+2026-04-07 16:42:30,550 - INFO -  ✓ New best model saved (Val R² = 0.1437)
+2026-04-07 16:42:31,078 - INFO -   [Regularized] Loss=0.3095 L1=0.0000 R2=0.0670
+2026-04-07 16:42:31,578 - INFO - CCC: 0.2261
+2026-04-07 16:42:32,069 - INFO - CCC: 0.2015
+2026-04-07 16:42:32,073 - INFO - Epoch 009/200 | Train Loss 0.3095 R2 0.0670 | Val Loss 2.7575 R2 0.1499 RMSE 1.8818 MAE 1.6680 CCC 0.2015
+2026-04-07 16:42:32,119 - INFO -  ✓ New best model saved (Val R² = 0.1499)
+2026-04-07 16:42:32,674 - INFO -   [Regularized] Loss=0.2678 L1=0.0000 R2=0.1588
+2026-04-07 16:42:33,106 - INFO - CCC: 0.2535
+2026-04-07 16:42:33,643 - INFO - CCC: 0.2074
+2026-04-07 16:42:33,644 - INFO - Epoch 010/200 | Train Loss 0.2678 R2 0.1588 | Val Loss 2.7457 R2 0.1554 RMSE 1.8756 MAE 1.6584 CCC 0.2074
+2026-04-07 16:42:33,689 - INFO -  ✓ New best model saved (Val R² = 0.1554)
+2026-04-07 16:42:34,279 - INFO -   [Regularized] Loss=0.2798 L1=0.0000 R2=0.1398
+2026-04-07 16:42:34,793 - INFO - CCC: 0.2862
+2026-04-07 16:42:35,309 - INFO - CCC: 0.2133
+2026-04-07 16:42:35,312 - INFO - Epoch 011/200 | Train Loss 0.2798 R2 0.1398 | Val Loss 2.7335 R2 0.1612 RMSE 1.8692 MAE 1.6466 CCC 0.2133
+2026-04-07 16:42:35,358 - INFO -  ✓ New best model saved (Val R² = 0.1612)
+2026-04-07 16:42:35,923 - INFO -   [Regularized] Loss=0.2767 L1=0.0000 R2=0.1792
+2026-04-07 16:42:36,433 - INFO - CCC: 0.3208
+2026-04-07 16:42:36,955 - INFO - CCC: 0.2184
+2026-04-07 16:42:36,957 - INFO - Epoch 012/200 | Train Loss 0.2767 R2 0.1792 | Val Loss 2.7225 R2 0.1662 RMSE 1.8636 MAE 1.6336 CCC 0.2184
+2026-04-07 16:42:37,004 - INFO -  ✓ New best model saved (Val R² = 0.1662)
+2026-04-07 16:42:37,554 - INFO -   [Regularized] Loss=0.2547 L1=0.0000 R2=0.2443
+2026-04-07 16:42:38,070 - INFO - CCC: 0.3543
+2026-04-07 16:42:38,578 - INFO - CCC: 0.2227
+2026-04-07 16:42:38,579 - INFO - Epoch 013/200 | Train Loss 0.2547 R2 0.2443 | Val Loss 2.7117 R2 0.1699 RMSE 1.8594 MAE 1.6229 CCC 0.2227
+2026-04-07 16:42:38,624 - INFO -  ✓ New best model saved (Val R² = 0.1699)
+2026-04-07 16:42:39,273 - INFO -   [Regularized] Loss=0.2373 L1=0.0000 R2=0.2649
+2026-04-07 16:42:39,764 - INFO - CCC: 0.3876
+2026-04-07 16:42:40,302 - INFO - CCC: 0.2261
+2026-04-07 16:42:40,304 - INFO - Epoch 014/200 | Train Loss 0.2373 R2 0.2649 | Val Loss 2.7009 R2 0.1721 RMSE 1.8570 MAE 1.6139 CCC 0.2261
+2026-04-07 16:42:40,351 - INFO -  ✓ New best model saved (Val R² = 0.1721)
+2026-04-07 16:42:40,908 - INFO -   [Regularized] Loss=0.2643 L1=0.0000 R2=0.2213
+2026-04-07 16:42:41,397 - INFO - CCC: 0.4190
+2026-04-07 16:42:41,907 - INFO - CCC: 0.2291
+2026-04-07 16:42:41,908 - INFO - Epoch 015/200 | Train Loss 0.2643 R2 0.2213 | Val Loss 2.6904 R2 0.1738 RMSE 1.8550 MAE 1.6050 CCC 0.2291
+2026-04-07 16:42:41,956 - INFO -  ✓ New best model saved (Val R² = 0.1738)
+2026-04-07 16:42:42,492 - INFO -   [Regularized] Loss=0.3058 L1=0.0000 R2=0.0018
+2026-04-07 16:42:42,977 - INFO - CCC: 0.4434
+2026-04-07 16:42:43,478 - INFO - CCC: 0.2321
+2026-04-07 16:42:43,479 - INFO - Epoch 016/200 | Train Loss 0.3058 R2 0.0018 | Val Loss 2.6824 R2 0.1760 RMSE 1.8526 MAE 1.5947 CCC 0.2321
+2026-04-07 16:42:43,526 - INFO -  ✓ New best model saved (Val R² = 0.1760)
+2026-04-07 16:42:44,081 - INFO -   [Regularized] Loss=0.2184 L1=0.0000 R2=0.3487
+2026-04-07 16:42:44,544 - INFO - CCC: 0.4677
+2026-04-07 16:42:45,124 - INFO - CCC: 0.2349
+2026-04-07 16:42:45,125 - INFO - Epoch 017/200 | Train Loss 0.2184 R2 0.3487 | Val Loss 2.6750 R2 0.1777 RMSE 1.8507 MAE 1.5908 CCC 0.2349
+2026-04-07 16:42:45,175 - INFO -  ✓ New best model saved (Val R² = 0.1777)
+2026-04-07 16:42:45,697 - INFO -   [Regularized] Loss=0.2338 L1=0.0000 R2=0.3154
+2026-04-07 16:42:46,184 - INFO - CCC: 0.4943
+2026-04-07 16:42:46,704 - INFO - CCC: 0.2364
+2026-04-07 16:42:46,707 - INFO - Epoch 018/200 | Train Loss 0.2338 R2 0.3154 | Val Loss 2.6686 R2 0.1778 RMSE 1.8506 MAE 1.5898 CCC 0.2364
+2026-04-07 16:42:47,237 - INFO -   [Regularized] Loss=0.2349 L1=0.0000 R2=0.3361
+2026-04-07 16:42:47,713 - INFO - CCC: 0.5232
+2026-04-07 16:42:48,243 - INFO - CCC: 0.2371
+2026-04-07 16:42:48,244 - INFO - Epoch 019/200 | Train Loss 0.2349 R2 0.3361 | Val Loss 2.6642 R2 0.1770 RMSE 1.8514 MAE 1.5898 CCC 0.2371
+2026-04-07 16:42:48,801 - INFO -   [Regularized] Loss=0.2232 L1=0.0000 R2=0.2592
+2026-04-07 16:42:49,327 - INFO - CCC: 0.5509
+2026-04-07 16:42:49,940 - INFO - CCC: 0.2369
+2026-04-07 16:42:49,940 - INFO - Epoch 020/200 | Train Loss 0.2232 R2 0.2592 | Val Loss 2.6620 R2 0.1760 RMSE 1.8526 MAE 1.5907 CCC 0.2369
+2026-04-07 16:42:50,514 - INFO -   [Regularized] Loss=0.2563 L1=0.0000 R2=0.2442
+2026-04-07 16:42:51,042 - INFO - CCC: 0.5769
+2026-04-07 16:42:51,539 - INFO - CCC: 0.2351
+2026-04-07 16:42:51,540 - INFO - Epoch 021/200 | Train Loss 0.2563 R2 0.2442 | Val Loss 2.6629 R2 0.1735 RMSE 1.8554 MAE 1.5940 CCC 0.2351
+2026-04-07 16:42:52,075 - INFO -   [Regularized] Loss=0.1960 L1=0.0000 R2=0.4078
+2026-04-07 16:42:52,606 - INFO - CCC: 0.5997
+2026-04-07 16:42:53,154 - INFO - CCC: 0.2339
+2026-04-07 16:42:53,155 - INFO - Epoch 022/200 | Train Loss 0.1960 R2 0.4078 | Val Loss 2.6623 R2 0.1716 RMSE 1.8575 MAE 1.5961 CCC 0.2339
+2026-04-07 16:42:53,712 - INFO -   [Regularized] Loss=0.2507 L1=0.0000 R2=0.2681
+2026-04-07 16:42:54,249 - INFO - CCC: 0.6304
+2026-04-07 16:42:54,815 - INFO - CCC: 0.2356
+2026-04-07 16:42:54,818 - INFO - Epoch 023/200 | Train Loss 0.2507 R2 0.2681 | Val Loss 2.6562 R2 0.1718 RMSE 1.8573 MAE 1.5929 CCC 0.2356
+2026-04-07 16:42:55,390 - INFO -   [Regularized] Loss=0.2313 L1=0.0000 R2=0.3376
+2026-04-07 16:42:55,892 - INFO - CCC: 0.6574
+2026-04-07 16:42:56,368 - INFO - CCC: 0.2376
+2026-04-07 16:42:56,370 - INFO - Epoch 024/200 | Train Loss 0.2313 R2 0.3376 | Val Loss 2.6493 R2 0.1720 RMSE 1.8572 MAE 1.5895 CCC 0.2376
+2026-04-07 16:42:56,937 - INFO -   [Regularized] Loss=0.1782 L1=0.0000 R2=0.4858
+2026-04-07 16:42:57,466 - INFO - CCC: 0.6814
+2026-04-07 16:42:58,018 - INFO - CCC: 0.2398
+2026-04-07 16:42:58,020 - INFO - Epoch 025/200 | Train Loss 0.1782 R2 0.4858 | Val Loss 2.6424 R2 0.1721 RMSE 1.8570 MAE 1.5861 CCC 0.2398
+2026-04-07 16:42:58,610 - INFO -   [Regularized] Loss=0.1348 L1=0.0000 R2=0.6000
+2026-04-07 16:42:59,106 - INFO - CCC: 0.7074
+2026-04-07 16:42:59,712 - INFO - CCC: 0.2401
+2026-04-07 16:42:59,714 - INFO - Epoch 026/200 | Train Loss 0.1348 R2 0.6000 | Val Loss 2.6386 R2 0.1710 RMSE 1.8583 MAE 1.5854 CCC 0.2401
+2026-04-07 16:43:00,308 - INFO -   [Regularized] Loss=0.1643 L1=0.0000 R2=0.5192
+2026-04-07 16:43:00,902 - INFO - CCC: 0.7313
+2026-04-07 16:43:01,457 - INFO - CCC: 0.2405
+2026-04-07 16:43:01,459 - INFO - Epoch 027/200 | Train Loss 0.1643 R2 0.5192 | Val Loss 2.6347 R2 0.1698 RMSE 1.8596 MAE 1.5846 CCC 0.2405
+2026-04-07 16:43:02,087 - INFO -   [Regularized] Loss=0.1984 L1=0.0000 R2=0.4274
+2026-04-07 16:43:02,625 - INFO - CCC: 0.7496
+2026-04-07 16:43:03,161 - INFO - CCC: 0.2392
+2026-04-07 16:43:03,163 - INFO - Epoch 028/200 | Train Loss 0.1984 R2 0.4274 | Val Loss 2.6341 R2 0.1675 RMSE 1.8621 MAE 1.5864 CCC 0.2392
+2026-04-07 16:43:03,691 - INFO -   [Regularized] Loss=0.3541 L1=0.0000 R2=-0.0747
+2026-04-07 16:43:04,235 - INFO - CCC: 0.7595
+2026-04-07 16:43:04,744 - INFO - CCC: 0.2408
+2026-04-07 16:43:04,745 - INFO - Epoch 029/200 | Train Loss 0.3541 R2 -0.0747 | Val Loss 2.6303 R2 0.1681 RMSE 1.8615 MAE 1.5845 CCC 0.2408
+2026-04-07 16:43:05,347 - INFO -   [Regularized] Loss=0.1672 L1=0.0000 R2=0.5264
+2026-04-07 16:43:05,831 - INFO - CCC: 0.7662
+2026-04-07 16:43:06,345 - INFO - CCC: 0.2393
+2026-04-07 16:43:06,347 - INFO - Epoch 030/200 | Train Loss 0.1672 R2 0.5264 | Val Loss 2.6309 R2 0.1661 RMSE 1.8638 MAE 1.5869 CCC 0.2393
+2026-04-07 16:43:06,924 - INFO -   [Regularized] Loss=0.1546 L1=0.0000 R2=0.5236
+2026-04-07 16:43:07,421 - INFO - CCC: 0.7755
+2026-04-07 16:43:07,954 - INFO - CCC: 0.2399
+2026-04-07 16:43:07,956 - INFO - Epoch 031/200 | Train Loss 0.1546 R2 0.5236 | Val Loss 2.6286 R2 0.1656 RMSE 1.8643 MAE 1.5864 CCC 0.2399
+2026-04-07 16:43:08,558 - INFO -   [Regularized] Loss=0.1491 L1=0.0000 R2=0.5593
+2026-04-07 16:43:09,065 - INFO - CCC: 0.7919
+2026-04-07 16:43:09,572 - INFO - CCC: 0.2425
+2026-04-07 16:43:09,574 - INFO - Epoch 032/200 | Train Loss 0.1491 R2 0.5593 | Val Loss 2.6223 R2 0.1663 RMSE 1.8635 MAE 1.5825 CCC 0.2425
+2026-04-07 16:43:10,121 - INFO -   [Regularized] Loss=0.1529 L1=0.0000 R2=0.5369
+2026-04-07 16:43:10,650 - INFO - CCC: 0.8046
+2026-04-07 16:43:11,165 - INFO - CCC: 0.2430
+2026-04-07 16:43:11,168 - INFO - Epoch 033/200 | Train Loss 0.1529 R2 0.5369 | Val Loss 2.6184 R2 0.1652 RMSE 1.8647 MAE 1.5806 CCC 0.2430
+2026-04-07 16:43:11,781 - INFO -   [Regularized] Loss=0.1718 L1=0.0000 R2=0.4873
+2026-04-07 16:43:12,300 - INFO - CCC: 0.8119
+2026-04-07 16:43:12,761 - INFO - CCC: 0.2428
+2026-04-07 16:43:12,763 - INFO - Epoch 034/200 | Train Loss 0.1718 R2 0.4873 | Val Loss 2.6168 R2 0.1641 RMSE 1.8660 MAE 1.5803 CCC 0.2428
+2026-04-07 16:43:13,303 - INFO -   [Regularized] Loss=0.1135 L1=0.0000 R2=0.6513
+2026-04-07 16:43:13,807 - INFO - CCC: 0.8178
+2026-04-07 16:43:14,322 - INFO - CCC: 0.2425
+2026-04-07 16:43:14,324 - INFO - Epoch 035/200 | Train Loss 0.1135 R2 0.6513 | Val Loss 2.6158 R2 0.1630 RMSE 1.8672 MAE 1.5807 CCC 0.2425
+2026-04-07 16:43:14,892 - INFO -   [Regularized] Loss=0.1230 L1=0.0000 R2=0.6624
+2026-04-07 16:43:15,382 - INFO - CCC: 0.8231
+2026-04-07 16:43:15,918 - INFO - CCC: 0.2421
+2026-04-07 16:43:15,920 - INFO - Epoch 036/200 | Train Loss 0.1230 R2 0.6624 | Val Loss 2.6153 R2 0.1618 RMSE 1.8685 MAE 1.5824 CCC 0.2421
+2026-04-07 16:43:16,476 - INFO -   [Regularized] Loss=0.1383 L1=0.0000 R2=0.5858
+2026-04-07 16:43:16,985 - INFO - CCC: 0.8283
+2026-04-07 16:43:17,474 - INFO - CCC: 0.2419
+2026-04-07 16:43:17,475 - INFO - Epoch 037/200 | Train Loss 0.1383 R2 0.5858 | Val Loss 2.6149 R2 0.1609 RMSE 1.8695 MAE 1.5839 CCC 0.2419
+2026-04-07 16:43:17,475 - INFO - Early stopping triggered (no val R2 improvement in 20 epochs).
+2026-04-07 16:43:17,536 - INFO - Loaded checkpoint from best_model_tmp.pt (strict).
+2026-04-07 16:43:18,056 - INFO - CCC: 0.2349
+2026-04-07 16:43:18,612 - INFO - CCC: 0.3110
+2026-04-07 16:44:12,194 - INFO - Signal analysis complete -> results_signal_d4_polyploid/tier2_env_fold1
+2026-04-07 16:44:12,620 - INFO - Auto thresholds (weekly): heat=30.159, cold=9.021, vpd=1.359
+2026-04-07 16:44:12,628 - INFO - [tier2_env Fold 2/4] Tensor dims →’ genomic_feat=88, chrom=3, locations=2, years=2, pops=3
+2026-04-07 16:44:12,628 - INFO - [tier2_env Fold 2/4] Tensor feature indices: block_id_raw_idx=84, te_hotspot_idx=77, is_te_idx=76, is_genic_idx=78, is_promoter_idx=79, block_gene_count_idx=80, block_snp_density_idx=82, block_mean_maf_idx=81, dosage_idx=0, token_rank_idx=2, dosage_local_mean_idx=3, dosage_local_std_idx=4, te_dist_idx=74, gene_dist_idx=75
+2026-04-07 16:44:12,629 - INFO - Creating GxE_Transformer_Tensor model (CV path)...
+2026-04-07 16:44:12,629 - INFO - Functional channel idx (CV): block_id_raw=84, te_hotspot=77, is_te=76, is_genic=78, is_promoter=79, block_gene=80, block_density=82, block_maf=81, dosage=0, te_dist=74, gene_dist=75
+2026-04-07 16:44:12,629 - WARNING - homeolog_group_token_split_subgenome requested but sg_channel_idx is missing; disabling split.
+2026-04-07 16:44:12,629 - WARNING - use_homeolog_auxiliary requested but hom_gid_channel_idx/sg_channel_idx is missing; disabling auxiliary loss.
+2026-04-07 16:44:12,645 - INFO - [tier2_env Fold 2/4] Model parameters: 605,075
+2026-04-07 16:44:12,922 - INFO - TE indicator is near-constant (mean=1.000); ignoring it for hotspots/func types.
+2026-04-07 16:44:12,943 - INFO - HABE tokens/sample: min=16 mean=16.0 max=16 | hotspot tokens/sample: min=15 mean=15.0 max=15 | func_type_counts=[16, 72, 48, 0]
+2026-04-07 16:44:13,079 - INFO -   [Regularized] Loss=0.3491 L1=0.0000 R2=-0.2806
+2026-04-07 16:44:13,472 - INFO - CCC: -0.0130
+2026-04-07 16:44:13,884 - INFO - CCC: 0.6463
+2026-04-07 16:44:13,885 - INFO - Epoch 001/200 | Train Loss 0.3491 R2 -0.2806 | Val Loss 1.0580 R2 0.0072 RMSE 1.7729 MAE 1.3694 CCC 0.6463
+2026-04-07 16:44:13,929 - INFO -  ✓ New best model saved (Val R² = 0.0072)
+2026-04-07 16:44:14,344 - INFO -   [Regularized] Loss=0.2723 L1=0.0000 R2=-0.0573
+2026-04-07 16:44:14,739 - INFO - CCC: -0.0017
+2026-04-07 16:44:15,146 - INFO - CCC: 0.6478
+2026-04-07 16:44:15,147 - INFO - Epoch 002/200 | Train Loss 0.2723 R2 -0.0573 | Val Loss 1.0729 R2 0.0228 RMSE 1.7589 MAE 1.4122 CCC 0.6478
+2026-04-07 16:44:15,191 - INFO -  ✓ New best model saved (Val R² = 0.0228)
+2026-04-07 16:44:15,655 - INFO -   [Regularized] Loss=0.2551 L1=0.0000 R2=-0.0504
+2026-04-07 16:44:16,070 - INFO - CCC: 0.0065
+2026-04-07 16:44:16,473 - INFO - CCC: 0.6480
+2026-04-07 16:44:16,475 - INFO - Epoch 003/200 | Train Loss 0.2551 R2 -0.0504 | Val Loss 1.0771 R2 0.0279 RMSE 1.7543 MAE 1.4232 CCC 0.6480
+2026-04-07 16:44:16,519 - INFO -  ✓ New best model saved (Val R² = 0.0279)
+2026-04-07 16:44:16,964 - INFO -   [Regularized] Loss=0.2830 L1=0.0000 R2=-0.2006
+2026-04-07 16:44:17,377 - INFO - CCC: 0.0141
+2026-04-07 16:44:17,821 - INFO - CCC: 0.6496
+2026-04-07 16:44:17,823 - INFO - Epoch 004/200 | Train Loss 0.2830 R2 -0.2006 | Val Loss 1.0757 R2 0.0338 RMSE 1.7490 MAE 1.4240 CCC 0.6496
+2026-04-07 16:44:17,866 - INFO -  ✓ New best model saved (Val R² = 0.0338)
+2026-04-07 16:44:18,317 - INFO -   [Regularized] Loss=0.2711 L1=0.0000 R2=-0.1525
+2026-04-07 16:44:18,718 - INFO - CCC: 0.0207
+2026-04-07 16:44:19,154 - INFO - CCC: 0.6533
+2026-04-07 16:44:19,155 - INFO - Epoch 005/200 | Train Loss 0.2711 R2 -0.1525 | Val Loss 1.0645 R2 0.0442 RMSE 1.7396 MAE 1.4085 CCC 0.6533
+2026-04-07 16:44:19,199 - INFO -  ✓ New best model saved (Val R² = 0.0442)
+2026-04-07 16:44:19,646 - INFO -   [Regularized] Loss=0.2281 L1=0.0000 R2=0.1242
+2026-04-07 16:44:20,114 - INFO - CCC: 0.0229
+2026-04-07 16:44:20,621 - INFO - CCC: 0.6542
+2026-04-07 16:44:20,624 - INFO - Epoch 006/200 | Train Loss 0.2281 R2 0.1242 | Val Loss 1.0619 R2 0.0470 RMSE 1.7370 MAE 1.4050 CCC 0.6542
+2026-04-07 16:44:20,671 - INFO -  ✓ New best model saved (Val R² = 0.0470)
+2026-04-07 16:44:21,273 - INFO -   [Regularized] Loss=0.2504 L1=0.0000 R2=-0.0437
+2026-04-07 16:44:21,792 - INFO - CCC: 0.0280
+2026-04-07 16:44:22,320 - INFO - CCC: 0.6564
+2026-04-07 16:44:22,322 - INFO - Epoch 007/200 | Train Loss 0.2504 R2 -0.0437 | Val Loss 1.0532 R2 0.0543 RMSE 1.7304 MAE 1.3916 CCC 0.6564
+2026-04-07 16:44:22,373 - INFO -  ✓ New best model saved (Val R² = 0.0543)
+2026-04-07 16:44:22,928 - INFO -   [Regularized] Loss=0.2179 L1=0.0000 R2=0.1180
+2026-04-07 16:44:23,432 - INFO - CCC: 0.0337
+2026-04-07 16:44:23,984 - INFO - CCC: 0.6588
+2026-04-07 16:44:23,986 - INFO - Epoch 008/200 | Train Loss 0.2179 R2 0.1180 | Val Loss 1.0437 R2 0.0610 RMSE 1.7242 MAE 1.3759 CCC 0.6588
+2026-04-07 16:44:24,033 - INFO -  ✓ New best model saved (Val R² = 0.0610)
+2026-04-07 16:44:24,668 - INFO -   [Regularized] Loss=0.2485 L1=0.0000 R2=-0.0047
+2026-04-07 16:44:25,250 - INFO - CCC: 0.0388
+2026-04-07 16:44:25,916 - INFO - CCC: 0.6605
+2026-04-07 16:44:25,917 - INFO - Epoch 009/200 | Train Loss 0.2485 R2 -0.0047 | Val Loss 1.0343 R2 0.0652 RMSE 1.7203 MAE 1.3575 CCC 0.6605
+2026-04-07 16:44:25,965 - INFO -  ✓ New best model saved (Val R² = 0.0652)
+2026-04-07 16:44:26,543 - INFO -   [Regularized] Loss=0.2786 L1=0.0000 R2=-0.1035
+2026-04-07 16:44:27,069 - INFO - CCC: 0.0436
+2026-04-07 16:44:27,632 - INFO - CCC: 0.6612
+2026-04-07 16:44:27,634 - INFO - Epoch 010/200 | Train Loss 0.2786 R2 -0.1035 | Val Loss 1.0266 R2 0.0664 RMSE 1.7192 MAE 1.3438 CCC 0.6612
+2026-04-07 16:44:27,684 - INFO -  ✓ New best model saved (Val R² = 0.0664)
+2026-04-07 16:44:28,370 - INFO -   [Regularized] Loss=0.2553 L1=0.0000 R2=-0.0094
+2026-04-07 16:44:28,921 - INFO - CCC: 0.0480
+2026-04-07 16:44:29,480 - INFO - CCC: 0.6616
+2026-04-07 16:44:29,481 - INFO - Epoch 011/200 | Train Loss 0.2553 R2 -0.0094 | Val Loss 1.0228 R2 0.0670 RMSE 1.7187 MAE 1.3377 CCC 0.6616
+2026-04-07 16:44:30,053 - INFO -   [Regularized] Loss=0.2690 L1=0.0000 R2=-0.0562
+2026-04-07 16:44:30,580 - INFO - CCC: 0.0501
+2026-04-07 16:44:31,115 - INFO - CCC: 0.6618
+2026-04-07 16:44:31,117 - INFO - Epoch 012/200 | Train Loss 0.2690 R2 -0.0562 | Val Loss 1.0214 R2 0.0676 RMSE 1.7182 MAE 1.3356 CCC 0.6618
+2026-04-07 16:44:31,164 - INFO -  ✓ New best model saved (Val R² = 0.0676)
+2026-04-07 16:44:31,721 - INFO -   [Regularized] Loss=0.1984 L1=0.0000 R2=0.2322
+2026-04-07 16:44:32,247 - INFO - CCC: 0.0539
+2026-04-07 16:44:32,777 - INFO - CCC: 0.6620
+2026-04-07 16:44:32,779 - INFO - Epoch 013/200 | Train Loss 0.1984 R2 0.2322 | Val Loss 1.0178 R2 0.0672 RMSE 1.7185 MAE 1.3288 CCC 0.6620
+2026-04-07 16:44:33,345 - INFO -   [Regularized] Loss=0.2505 L1=0.0000 R2=-0.0099
+2026-04-07 16:44:33,875 - INFO - CCC: 0.0581
+2026-04-07 16:44:34,381 - INFO - CCC: 0.6626
+2026-04-07 16:44:34,382 - INFO - Epoch 014/200 | Train Loss 0.2505 R2 -0.0099 | Val Loss 1.0154 R2 0.0686 RMSE 1.7172 MAE 1.3249 CCC 0.6626
+2026-04-07 16:44:34,430 - INFO -  ✓ New best model saved (Val R² = 0.0686)
+2026-04-07 16:44:35,022 - INFO -   [Regularized] Loss=0.2659 L1=0.0000 R2=-0.1108
+2026-04-07 16:44:35,532 - INFO - CCC: 0.0624
+2026-04-07 16:44:36,058 - INFO - CCC: 0.6634
+2026-04-07 16:44:36,061 - INFO - Epoch 015/200 | Train Loss 0.2659 R2 -0.1108 | Val Loss 1.0141 R2 0.0711 RMSE 1.7149 MAE 1.3241 CCC 0.6634
+2026-04-07 16:44:36,109 - INFO -  ✓ New best model saved (Val R² = 0.0711)
+2026-04-07 16:44:36,712 - INFO -   [Regularized] Loss=0.2148 L1=0.0000 R2=0.1544
+2026-04-07 16:44:37,220 - INFO - CCC: 0.0668
+2026-04-07 16:44:37,740 - INFO - CCC: 0.6639
+2026-04-07 16:44:37,741 - INFO - Epoch 016/200 | Train Loss 0.2148 R2 0.1544 | Val Loss 1.0141 R2 0.0736 RMSE 1.7126 MAE 1.3258 CCC 0.6639
+2026-04-07 16:44:37,788 - INFO -  ✓ New best model saved (Val R² = 0.0736)
+2026-04-07 16:44:38,401 - INFO -   [Regularized] Loss=0.2294 L1=0.0000 R2=0.0663
+2026-04-07 16:44:38,933 - INFO - CCC: 0.0716
+2026-04-07 16:44:39,473 - INFO - CCC: 0.6641
+2026-04-07 16:44:39,475 - INFO - Epoch 017/200 | Train Loss 0.2294 R2 0.0663 | Val Loss 1.0143 R2 0.0753 RMSE 1.7110 MAE 1.3276 CCC 0.6641
+2026-04-07 16:44:39,523 - INFO -  ✓ New best model saved (Val R² = 0.0753)
+2026-04-07 16:44:40,121 - INFO -   [Regularized] Loss=0.2360 L1=0.0000 R2=0.0484
+2026-04-07 16:44:40,693 - INFO - CCC: 0.0768
+2026-04-07 16:44:41,239 - INFO - CCC: 0.6644
+2026-04-07 16:44:41,240 - INFO - Epoch 018/200 | Train Loss 0.2360 R2 0.0484 | Val Loss 1.0143 R2 0.0770 RMSE 1.7094 MAE 1.3287 CCC 0.6644
+2026-04-07 16:44:41,290 - INFO -  ✓ New best model saved (Val R² = 0.0770)
+2026-04-07 16:44:41,871 - INFO -   [Regularized] Loss=0.2302 L1=0.0000 R2=0.0373
+2026-04-07 16:44:42,394 - INFO - CCC: 0.0823
+2026-04-07 16:44:42,890 - INFO - CCC: 0.6648
+2026-04-07 16:44:42,892 - INFO - Epoch 019/200 | Train Loss 0.2302 R2 0.0373 | Val Loss 1.0144 R2 0.0791 RMSE 1.7075 MAE 1.3301 CCC 0.6648
+2026-04-07 16:44:42,939 - INFO -  ✓ New best model saved (Val R² = 0.0791)
+2026-04-07 16:44:43,513 - INFO -   [Regularized] Loss=0.2837 L1=0.0000 R2=-0.0809
+2026-04-07 16:44:44,116 - INFO - CCC: 0.0871
+2026-04-07 16:44:44,685 - INFO - CCC: 0.6651
+2026-04-07 16:44:44,686 - INFO - Epoch 020/200 | Train Loss 0.2837 R2 -0.0809 | Val Loss 1.0162 R2 0.0817 RMSE 1.7051 MAE 1.3345 CCC 0.6651
+2026-04-07 16:44:44,736 - INFO -  ✓ New best model saved (Val R² = 0.0817)
+2026-04-07 16:44:45,264 - INFO -   [Regularized] Loss=0.2733 L1=0.0000 R2=-0.1073
+2026-04-07 16:44:45,753 - INFO - CCC: 0.0919
+2026-04-07 16:44:46,311 - INFO - CCC: 0.6656
+2026-04-07 16:44:46,313 - INFO - Epoch 021/200 | Train Loss 0.2733 R2 -0.1073 | Val Loss 1.0188 R2 0.0843 RMSE 1.7027 MAE 1.3399 CCC 0.6656
+2026-04-07 16:44:46,361 - INFO -  ✓ New best model saved (Val R² = 0.0843)
+2026-04-07 16:44:46,997 - INFO -   [Regularized] Loss=0.2168 L1=0.0000 R2=0.1243
+2026-04-07 16:44:47,528 - INFO - CCC: 0.0965
+2026-04-07 16:44:48,059 - INFO - CCC: 0.6656
+2026-04-07 16:44:48,062 - INFO - Epoch 022/200 | Train Loss 0.2168 R2 0.1243 | Val Loss 1.0218 R2 0.0856 RMSE 1.7014 MAE 1.3449 CCC 0.6656
+2026-04-07 16:44:48,109 - INFO -  ✓ New best model saved (Val R² = 0.0856)
+2026-04-07 16:44:48,725 - INFO -   [Regularized] Loss=0.1913 L1=0.0000 R2=0.2668
+2026-04-07 16:44:49,307 - INFO - CCC: 0.1024
+2026-04-07 16:44:49,895 - INFO - CCC: 0.6654
+2026-04-07 16:44:49,896 - INFO - Epoch 023/200 | Train Loss 0.1913 R2 0.2668 | Val Loss 1.0231 R2 0.0855 RMSE 1.7015 MAE 1.3470 CCC 0.6654
+2026-04-07 16:44:50,468 - INFO -   [Regularized] Loss=0.2318 L1=0.0000 R2=0.0544
+2026-04-07 16:44:50,960 - INFO - CCC: 0.1042
+2026-04-07 16:44:51,501 - INFO - CCC: 0.6654
+2026-04-07 16:44:51,502 - INFO - Epoch 024/200 | Train Loss 0.2318 R2 0.0544 | Val Loss 1.0235 R2 0.0859 RMSE 1.7012 MAE 1.3476 CCC 0.6654
+2026-04-07 16:44:52,108 - INFO -   [Regularized] Loss=0.2077 L1=0.0000 R2=0.1464
+2026-04-07 16:44:52,718 - INFO - CCC: 0.1111
+2026-04-07 19:38:47,567 - INFO - Using device: cuda:1
+2026-04-07 19:38:47,567 - INFO - Regularization for gxetensor: dropout=0.2 weight_decay=0.02
+2026-04-07 19:38:47,577 - INFO - Extracting population structure from 'Pop' column...
+2026-04-07 19:38:47,580 - INFO - Population distribution:
+PopID
+1    32
+0    24
+2    24
+Name: count, dtype: int64
+2026-04-07 19:38:47,623 - WARNING - 'SeedingDate' column missing - cannot model planting timing effects
+2026-04-07 19:38:47,624 - INFO - Preprocessing environmental data into temporal format...
+2026-04-07 19:38:47,627 - INFO - Auto thresholds (weekly): heat=30.159, cold=9.021, vpd=1.359
+2026-04-07 19:38:47,631 - INFO - Env feature dim (per step) -> 26
+2026-04-07 19:38:47,632 - INFO - Environmental data shape: (40, 20, 26)
+2026-04-07 19:38:47,632 - INFO - Number of locations: 2
+2026-04-07 19:38:47,632 - INFO - Number of years: 2
+2026-04-07 19:38:47,632 - INFO - Computed env anomaly mean with shape (20, 26) for GxE shocks.
+2026-04-07 19:38:47,633 - INFO - Inferred categorical sizes -> locations=2, years=2, env_pairs=4
+2026-04-07 19:38:56,015 - INFO - Saved trait boxplot to trait_boxplot.png
+2026-04-07 19:38:56,018 - INFO - Found 10 samples with ChromoMap tiles (unique SampleIDs).
+2026-04-07 19:38:56,018 - INFO - CV mode: using all 10 unique genotypes (80 environment rows); no held-out test set.
+2026-04-07 19:38:56,019 - INFO - Using cross-validation on the full dataset (10 unique genotypes); skipping fixed train/val/test split analysis.
+2026-04-07 19:38:56,025 - INFO - Auto thresholds (weekly): heat=30.159, cold=9.021, vpd=1.359
+2026-04-07 19:38:56,027 - INFO - Env feature dim (per step) -> 26
+2026-04-07 19:38:56,047 - INFO - Loading PLINK dosage matrix for dosage branch override (complex/tensor path).
+2026-04-07 19:38:57,088 - INFO - Enabled PLINK dosage override for dosage branch (samples=10, snps=18).
+2026-04-07 19:38:57,095 - INFO - Model sizes â†’â€™ env=26, genomic_feat=88, chrom=3, locations=2, years=2, pops=3
+2026-04-07 19:38:57,095 - INFO - Tensor feature indices: block_id_raw_idx=84, te_hotspot_idx=77, is_te_idx=76, is_genic_idx=78, is_promoter_idx=79, block_gene_count_idx=80, block_snp_density_idx=82, block_mean_maf_idx=81, dosage_idx=0, token_rank_idx=2, dosage_local_mean_idx=3, dosage_local_std_idx=4, te_dist_idx=74, gene_dist_idx=75
+2026-04-07 19:38:57,095 - INFO - Using model type: gxetensor
+2026-04-07 19:38:57,095 - INFO - USE_DOSAGE_PCA=False: dosage branch will use flattened dosage (all SNP positions) without PCA projection.
+2026-04-07 19:38:57,099 - WARNING - [within-genotype] Fold 1: 1 genotypes missing train/test coverage (examples: ['BNP_T03'])
+2026-04-07 19:38:57,099 - WARNING - [within-genotype] Fold 2: 2 genotypes missing train/test coverage (examples: ['BNP_T04', 'BNP_T08'])
+2026-04-07 19:38:57,100 - WARNING - [within-genotype] Fold 3: 2 genotypes missing train/test coverage (examples: ['BNP_T08', 'BNP_T01'])
+2026-04-07 19:38:57,100 - INFO - [tier2_env] Starting CV: Within-genotype env holdout (seen genotypes, unseen environments) (4 folds)
+2026-04-07 19:38:57,475 - INFO - Auto thresholds (weekly): heat=30.159, cold=9.021, vpd=1.359
+2026-04-07 19:38:57,485 - INFO - [tier2_env Fold 1/4] Tensor dims →’ genomic_feat=88, chrom=3, locations=2, years=2, pops=3
+2026-04-07 19:38:57,485 - INFO - [tier2_env Fold 1/4] Tensor feature indices: block_id_raw_idx=84, te_hotspot_idx=77, is_te_idx=76, is_genic_idx=78, is_promoter_idx=79, block_gene_count_idx=80, block_snp_density_idx=82, block_mean_maf_idx=81, dosage_idx=0, token_rank_idx=2, dosage_local_mean_idx=3, dosage_local_std_idx=4, te_dist_idx=74, gene_dist_idx=75
+2026-04-07 19:38:57,485 - INFO - Creating GxE_Transformer_Tensor model (CV path)...
+2026-04-07 19:38:57,485 - INFO - Functional channel idx (CV): block_id_raw=84, te_hotspot=77, is_te=76, is_genic=78, is_promoter=79, block_gene=80, block_density=82, block_maf=81, dosage=0, te_dist=74, gene_dist=75
+2026-04-07 19:38:57,486 - WARNING - homeolog_group_token_split_subgenome requested but sg_channel_idx is missing; disabling split.
+2026-04-07 19:38:57,486 - WARNING - use_homeolog_auxiliary requested but hom_gid_channel_idx/sg_channel_idx is missing; disabling auxiliary loss.
+2026-04-07 19:38:57,718 - INFO - [tier2_env Fold 1/4] Model parameters: 605,075
+2026-04-07 19:38:58,763 - INFO - TE indicator is near-constant (mean=1.000); ignoring it for hotspots/func types.
+2026-04-07 19:38:58,901 - INFO - HABE tokens/sample: min=16 mean=16.0 max=16 | hotspot tokens/sample: min=15 mean=15.0 max=15 | func_type_counts=[18, 81, 54, 0]
+2026-04-07 19:38:59,226 - INFO -   [Regularized] Loss=0.3698 L1=0.0000 R2=-0.2810
+2026-04-07 19:38:59,613 - INFO - CCC: 0.0117
+2026-04-07 19:39:00,016 - INFO - CCC: 0.1217
+2026-04-07 19:39:00,017 - INFO - Epoch 001/200 | Train Loss 0.3698 R2 -0.2810 | Val Loss 2.8681 R2 0.0531 RMSE 1.9859 MAE 1.7957 CCC 0.1217
+2026-04-07 19:39:00,057 - INFO -  ✓ New best model saved (Val R² = 0.0531)
+2026-04-07 19:39:00,503 - INFO -   [Regularized] Loss=0.3412 L1=0.0000 R2=-0.1062
+2026-04-07 19:39:00,932 - INFO - CCC: 0.0273
+2026-04-07 19:39:01,409 - INFO - CCC: 0.1383
+2026-04-07 19:39:01,410 - INFO - Epoch 002/200 | Train Loss 0.3412 R2 -0.1062 | Val Loss 2.8561 R2 0.0792 RMSE 1.9584 MAE 1.7670 CCC 0.1383
+2026-04-07 19:39:01,458 - INFO -  ✓ New best model saved (Val R² = 0.0792)
+2026-04-07 19:39:01,931 - INFO -   [Regularized] Loss=0.3117 L1=0.0000 R2=-0.0014
+2026-04-07 19:39:02,347 - INFO - CCC: 0.0427
+2026-04-07 19:39:02,787 - INFO - CCC: 0.1536
+2026-04-07 19:39:02,788 - INFO - Epoch 003/200 | Train Loss 0.3117 R2 -0.0014 | Val Loss 2.8442 R2 0.1010 RMSE 1.9351 MAE 1.7410 CCC 0.1536
+2026-04-07 19:39:02,833 - INFO -  ✓ New best model saved (Val R² = 0.1010)
+2026-04-07 19:39:03,353 - INFO -   [Regularized] Loss=0.3336 L1=0.0000 R2=-0.0671
+2026-04-07 19:39:03,775 - INFO - CCC: 0.0620
+2026-04-07 19:39:04,291 - INFO - CCC: 0.1662
+2026-04-07 19:39:04,292 - INFO - Epoch 004/200 | Train Loss 0.3336 R2 -0.0671 | Val Loss 2.8339 R2 0.1174 RMSE 1.9174 MAE 1.7202 CCC 0.1662
+2026-04-07 19:39:04,343 - INFO -  ✓ New best model saved (Val R² = 0.1174)
+2026-04-07 19:39:04,783 - INFO -   [Regularized] Loss=0.2808 L1=0.0000 R2=0.0933
+2026-04-07 19:39:05,224 - INFO - CCC: 0.0816
+2026-04-07 19:39:05,638 - INFO - CCC: 0.1760
+2026-04-07 19:39:05,639 - INFO - Epoch 005/200 | Train Loss 0.2808 R2 0.0933 | Val Loss 2.8250 R2 0.1294 RMSE 1.9043 MAE 1.7033 CCC 0.1760
+2026-04-07 19:39:05,683 - INFO -  ✓ New best model saved (Val R² = 0.1294)
+2026-04-07 19:39:06,064 - INFO -   [Regularized] Loss=0.3431 L1=0.0000 R2=-0.1814
+2026-04-07 19:39:06,492 - INFO - CCC: 0.0924
+2026-04-07 19:39:06,917 - INFO - CCC: 0.1849
+2026-04-07 19:39:06,918 - INFO - Epoch 006/200 | Train Loss 0.3431 R2 -0.1814 | Val Loss 2.8170 R2 0.1399 RMSE 1.8927 MAE 1.6884 CCC 0.1849
+2026-04-07 19:39:06,963 - INFO -  ✓ New best model saved (Val R² = 0.1399)
+2026-04-07 19:39:07,444 - INFO -   [Regularized] Loss=0.2923 L1=0.0000 R2=0.1211
+2026-04-07 19:39:07,868 - INFO - CCC: 0.1149
+2026-04-07 19:39:08,313 - INFO - CCC: 0.1921
+2026-04-07 19:39:08,314 - INFO - Epoch 007/200 | Train Loss 0.2923 R2 0.1211 | Val Loss 2.8072 R2 0.1474 RMSE 1.8845 MAE 1.6774 CCC 0.1921
+2026-04-07 19:39:08,361 - INFO -  ✓ New best model saved (Val R² = 0.1474)
+2026-04-07 19:39:08,836 - INFO -   [Regularized] Loss=0.3178 L1=0.0000 R2=0.0487
+2026-04-07 19:39:09,244 - INFO - CCC: 0.1432
+2026-04-07 19:39:09,659 - INFO - CCC: 0.1982
+2026-04-07 19:39:09,660 - INFO - Epoch 008/200 | Train Loss 0.3178 R2 0.0487 | Val Loss 2.7954 R2 0.1533 RMSE 1.8780 MAE 1.6683 CCC 0.1982
+2026-04-07 19:39:09,704 - INFO -  ✓ New best model saved (Val R² = 0.1533)
+2026-04-07 19:39:10,100 - INFO -   [Regularized] Loss=0.2973 L1=0.0000 R2=0.0811
+2026-04-07 19:39:10,510 - INFO - CCC: 0.1739
+2026-04-07 19:39:10,986 - INFO - CCC: 0.2034
+2026-04-07 19:39:10,987 - INFO - Epoch 009/200 | Train Loss 0.2973 R2 0.0811 | Val Loss 2.7817 R2 0.1574 RMSE 1.8734 MAE 1.6623 CCC 0.2034
+2026-04-07 19:39:11,027 - INFO -  ✓ New best model saved (Val R² = 0.1574)
+2026-04-07 19:39:11,503 - INFO -   [Regularized] Loss=0.2943 L1=0.0000 R2=0.0898
+2026-04-07 19:39:11,905 - INFO - CCC: 0.2022
+2026-04-07 19:39:12,378 - INFO - CCC: 0.2077
+2026-04-07 19:39:12,379 - INFO - Epoch 010/200 | Train Loss 0.2943 R2 0.0898 | Val Loss 2.7674 R2 0.1600 RMSE 1.8705 MAE 1.6593 CCC 0.2077
+2026-04-07 19:39:12,422 - INFO -  ✓ New best model saved (Val R² = 0.1600)
+2026-04-07 19:39:12,945 - INFO -   [Regularized] Loss=0.2965 L1=0.0000 R2=0.0843
+2026-04-07 19:39:13,419 - INFO - CCC: 0.2231
+2026-04-07 19:39:13,830 - INFO - CCC: 0.2107
+2026-04-07 19:39:13,831 - INFO - Epoch 011/200 | Train Loss 0.2965 R2 0.0843 | Val Loss 2.7544 R2 0.1606 RMSE 1.8698 MAE 1.6600 CCC 0.2107
+2026-04-07 19:39:14,348 - INFO -   [Regularized] Loss=0.2874 L1=0.0000 R2=0.0991
+2026-04-07 19:39:14,793 - INFO - CCC: 0.2421
+2026-04-07 19:39:15,286 - INFO - CCC: 0.2133
+2026-04-07 19:39:15,288 - INFO - Epoch 012/200 | Train Loss 0.2874 R2 0.0991 | Val Loss 2.7428 R2 0.1609 RMSE 1.8695 MAE 1.6601 CCC 0.2133
+2026-04-07 19:39:15,721 - INFO -   [Regularized] Loss=0.2478 L1=0.0000 R2=0.2400
+2026-04-07 19:39:16,206 - INFO - CCC: 0.2547
+2026-04-07 19:39:16,645 - INFO - CCC: 0.2158
+2026-04-07 19:39:16,646 - INFO - Epoch 013/200 | Train Loss 0.2478 R2 0.2400 | Val Loss 2.7332 R2 0.1607 RMSE 1.8697 MAE 1.6622 CCC 0.2158
+2026-04-07 19:39:17,247 - INFO -   [Regularized] Loss=0.2522 L1=0.0000 R2=0.2204
+2026-04-07 19:39:17,722 - INFO - CCC: 0.2684
+2026-04-07 19:39:18,169 - INFO - CCC: 0.2181
+2026-04-07 19:39:18,170 - INFO - Epoch 014/200 | Train Loss 0.2522 R2 0.2204 | Val Loss 2.7251 R2 0.1605 RMSE 1.8700 MAE 1.6633 CCC 0.2181
+2026-04-07 19:39:18,673 - INFO -   [Regularized] Loss=0.2679 L1=0.0000 R2=0.1812
+2026-04-07 19:39:19,213 - INFO - CCC: 0.2928
+2026-04-07 19:39:19,807 - INFO - CCC: 0.2210
+2026-04-07 19:39:19,810 - INFO - Epoch 015/200 | Train Loss 0.2679 R2 0.1812 | Val Loss 2.7155 R2 0.1624 RMSE 1.8679 MAE 1.6576 CCC 0.2210
+2026-04-07 19:39:19,857 - INFO -  ✓ New best model saved (Val R² = 0.1624)
+2026-04-07 19:39:20,536 - INFO -   [Regularized] Loss=0.3091 L1=0.0000 R2=0.0599
+2026-04-07 19:39:21,177 - INFO - CCC: 0.3259
+2026-04-07 19:39:21,737 - INFO - CCC: 0.2242
+2026-04-07 19:39:21,738 - INFO - Epoch 016/200 | Train Loss 0.3091 R2 0.0599 | Val Loss 2.7063 R2 0.1661 RMSE 1.8637 MAE 1.6460 CCC 0.2242
+2026-04-07 19:39:21,785 - INFO -  ✓ New best model saved (Val R² = 0.1661)
+2026-04-07 19:39:22,391 - INFO -   [Regularized] Loss=0.2718 L1=0.0000 R2=0.1279
+2026-04-07 19:39:22,918 - INFO - CCC: 0.3506
+2026-04-07 19:39:23,479 - INFO - CCC: 0.2269
+2026-04-07 19:39:23,480 - INFO - Epoch 017/200 | Train Loss 0.2718 R2 0.1279 | Val Loss 2.6999 R2 0.1687 RMSE 1.8608 MAE 1.6383 CCC 0.2269
+2026-04-07 19:39:23,528 - INFO -  ✓ New best model saved (Val R² = 0.1687)
+2026-04-07 19:39:24,168 - INFO -   [Regularized] Loss=0.2578 L1=0.0000 R2=0.2200
+2026-04-07 19:39:24,727 - INFO - CCC: 0.3736
+2026-04-07 19:39:25,296 - INFO - CCC: 0.2290
+2026-04-07 19:39:25,297 - INFO - Epoch 018/200 | Train Loss 0.2578 R2 0.2200 | Val Loss 2.6941 R2 0.1702 RMSE 1.8591 MAE 1.6325 CCC 0.2290
+2026-04-07 19:39:25,343 - INFO -  ✓ New best model saved (Val R² = 0.1702)
+2026-04-07 19:39:25,918 - INFO -   [Regularized] Loss=0.2559 L1=0.0000 R2=0.1878
+2026-04-07 19:39:26,478 - INFO - CCC: 0.4032
+2026-04-07 19:39:27,112 - INFO - CCC: 0.2313
+2026-04-07 19:39:27,113 - INFO - Epoch 019/200 | Train Loss 0.2559 R2 0.1878 | Val Loss 2.6875 R2 0.1725 RMSE 1.8566 MAE 1.6230 CCC 0.2313
+2026-04-07 19:39:27,162 - INFO -  ✓ New best model saved (Val R² = 0.1725)
+2026-04-07 19:39:27,796 - INFO -   [Regularized] Loss=0.2723 L1=0.0000 R2=0.1552
+2026-04-07 19:39:28,355 - INFO - CCC: 0.4321
+2026-04-07 19:39:28,931 - INFO - CCC: 0.2335
+2026-04-07 19:39:28,932 - INFO - Epoch 020/200 | Train Loss 0.2723 R2 0.1552 | Val Loss 2.6814 R2 0.1749 RMSE 1.8539 MAE 1.6117 CCC 0.2335
+2026-04-07 19:39:28,979 - INFO -  ✓ New best model saved (Val R² = 0.1749)
+2026-04-07 19:39:29,516 - INFO -   [Regularized] Loss=0.3046 L1=0.0000 R2=0.0934
+2026-04-07 19:39:30,109 - INFO - CCC: 0.4546
+2026-04-07 19:39:30,747 - INFO - CCC: 0.2356
+2026-04-07 19:39:30,748 - INFO - Epoch 021/200 | Train Loss 0.3046 R2 0.0934 | Val Loss 2.6760 R2 0.1767 RMSE 1.8518 MAE 1.6022 CCC 0.2356
+2026-04-07 19:39:30,796 - INFO -  ✓ New best model saved (Val R² = 0.1767)
+2026-04-07 19:39:31,463 - INFO -   [Regularized] Loss=0.2200 L1=0.0000 R2=0.3162
+2026-04-07 19:39:32,073 - INFO - CCC: 0.4708
+2026-04-07 19:39:32,759 - INFO - CCC: 0.2380
+2026-04-07 19:39:32,760 - INFO - Epoch 022/200 | Train Loss 0.2200 R2 0.3162 | Val Loss 2.6717 R2 0.1790 RMSE 1.8492 MAE 1.5932 CCC 0.2380
+2026-04-07 19:39:32,811 - INFO -  ✓ New best model saved (Val R² = 0.1790)
+2026-04-07 19:39:33,461 - INFO -   [Regularized] Loss=0.2477 L1=0.0000 R2=0.2516
+2026-04-07 19:39:34,116 - INFO - CCC: 0.4817
+2026-04-07 19:39:34,693 - INFO - CCC: 0.2401
+2026-04-07 19:39:34,693 - INFO - Epoch 023/200 | Train Loss 0.2477 R2 0.2516 | Val Loss 2.6691 R2 0.1811 RMSE 1.8469 MAE 1.5872 CCC 0.2401
+2026-04-07 19:39:34,749 - INFO -  ✓ New best model saved (Val R² = 0.1811)
+2026-04-07 19:39:35,416 - INFO -   [Regularized] Loss=0.2392 L1=0.0000 R2=0.3093
+2026-04-07 19:39:36,015 - INFO - CCC: 0.4943
+2026-04-07 19:39:36,568 - INFO - CCC: 0.2421
+2026-04-07 19:39:36,570 - INFO - Epoch 024/200 | Train Loss 0.2392 R2 0.3093 | Val Loss 2.6653 R2 0.1825 RMSE 1.8453 MAE 1.5856 CCC 0.2421
+2026-04-07 19:39:36,619 - INFO -  ✓ New best model saved (Val R² = 0.1825)
+2026-04-07 19:39:37,275 - INFO -   [Regularized] Loss=0.2254 L1=0.0000 R2=0.3748
+2026-04-07 19:39:37,773 - INFO - CCC: 0.5100
+2026-04-07 19:39:38,342 - INFO - CCC: 0.2435
+2026-04-07 19:39:38,343 - INFO - Epoch 025/200 | Train Loss 0.2254 R2 0.3748 | Val Loss 2.6604 R2 0.1829 RMSE 1.8448 MAE 1.5843 CCC 0.2435
+2026-04-07 19:39:38,970 - INFO -   [Regularized] Loss=0.2098 L1=0.0000 R2=0.3911
+2026-04-07 19:39:39,518 - INFO - CCC: 0.5283
+2026-04-07 19:39:40,016 - INFO - CCC: 0.2448
+2026-04-07 19:39:40,017 - INFO - Epoch 026/200 | Train Loss 0.2098 R2 0.3911 | Val Loss 2.6553 R2 0.1829 RMSE 1.8448 MAE 1.5830 CCC 0.2448
+2026-04-07 19:39:40,501 - INFO -   [Regularized] Loss=0.2290 L1=0.0000 R2=0.3170
+2026-04-07 19:39:40,961 - INFO - CCC: 0.5505
+2026-04-07 19:39:41,450 - INFO - CCC: 0.2460
+2026-04-07 19:39:41,451 - INFO - Epoch 027/200 | Train Loss 0.2290 R2 0.3170 | Val Loss 2.6501 R2 0.1825 RMSE 1.8453 MAE 1.5820 CCC 0.2460
+2026-04-07 19:39:41,911 - INFO -   [Regularized] Loss=0.2370 L1=0.0000 R2=0.2997
+2026-04-07 19:39:42,427 - INFO - CCC: 0.5760
+2026-04-07 19:39:42,842 - INFO - CCC: 0.2470
+2026-04-07 19:39:42,843 - INFO - Epoch 028/200 | Train Loss 0.2370 R2 0.2997 | Val Loss 2.6457 R2 0.1820 RMSE 1.8458 MAE 1.5812 CCC 0.2470
+2026-04-07 19:39:43,349 - INFO -   [Regularized] Loss=0.2905 L1=0.0000 R2=0.1018
+2026-04-07 19:39:43,743 - INFO - CCC: 0.5851
+2026-04-07 19:39:44,146 - INFO - CCC: 0.2479
+2026-04-07 19:39:44,147 - INFO - Epoch 029/200 | Train Loss 0.2905 R2 0.1018 | Val Loss 2.6443 R2 0.1823 RMSE 1.8455 MAE 1.5805 CCC 0.2479
+2026-04-07 19:39:44,607 - INFO -   [Regularized] Loss=0.1902 L1=0.0000 R2=0.4498
+2026-04-07 19:39:45,047 - INFO - CCC: 0.6199
+2026-04-07 19:39:45,458 - INFO - CCC: 0.2478
+2026-04-07 19:39:45,461 - INFO - Epoch 030/200 | Train Loss 0.1902 R2 0.4498 | Val Loss 2.6417 R2 0.1810 RMSE 1.8470 MAE 1.5811 CCC 0.2478
+2026-04-07 19:39:45,924 - INFO -   [Regularized] Loss=0.2190 L1=0.0000 R2=0.3491
+2026-04-07 19:39:46,335 - INFO - CCC: 0.6526
+2026-04-07 19:39:46,790 - INFO - CCC: 0.2463
+2026-04-07 19:39:46,791 - INFO - Epoch 031/200 | Train Loss 0.2190 R2 0.3491 | Val Loss 2.6436 R2 0.1790 RMSE 1.8492 MAE 1.5847 CCC 0.2463
+2026-04-07 19:39:47,198 - INFO -   [Regularized] Loss=0.2234 L1=0.0000 R2=0.3629
+2026-04-07 19:39:47,561 - INFO - CCC: 0.6411
+2026-04-07 19:39:47,996 - INFO - CCC: 0.2436
+2026-04-07 19:39:47,997 - INFO - Epoch 032/200 | Train Loss 0.2234 R2 0.3629 | Val Loss 2.6517 R2 0.1764 RMSE 1.8522 MAE 1.5920 CCC 0.2436
+2026-04-07 19:39:48,447 - INFO -   [Regularized] Loss=0.1857 L1=0.0000 R2=0.4386
+2026-04-07 19:39:48,869 - INFO - CCC: 0.6073
+2026-04-07 19:39:49,244 - INFO - CCC: 0.2433
+2026-04-07 19:39:49,245 - INFO - Epoch 033/200 | Train Loss 0.1857 R2 0.4386 | Val Loss 2.6568 R2 0.1752 RMSE 1.8535 MAE 1.5959 CCC 0.2433
+2026-04-07 19:39:49,670 - INFO -   [Regularized] Loss=0.1897 L1=0.0000 R2=0.3969
+2026-04-07 19:39:50,052 - INFO - CCC: 0.6029
+2026-04-07 19:39:50,466 - INFO - CCC: 0.2431
+2026-04-07 19:39:50,468 - INFO - Epoch 034/200 | Train Loss 0.1897 R2 0.3969 | Val Loss 2.6574 R2 0.1744 RMSE 1.8545 MAE 1.5972 CCC 0.2431
+2026-04-07 19:39:50,869 - INFO -   [Regularized] Loss=0.1842 L1=0.0000 R2=0.4113
+2026-04-07 19:39:51,283 - INFO - CCC: 0.6167
+2026-04-07 19:39:51,726 - INFO - CCC: 0.2438
+2026-04-07 19:39:51,727 - INFO - Epoch 035/200 | Train Loss 0.1842 R2 0.4113 | Val Loss 2.6554 R2 0.1746 RMSE 1.8542 MAE 1.5968 CCC 0.2438
+2026-04-07 19:39:52,191 - INFO -   [Regularized] Loss=0.1810 L1=0.0000 R2=0.4279
+2026-04-07 19:39:52,584 - INFO - CCC: 0.6591
+2026-04-07 19:39:52,952 - INFO - CCC: 0.2440
+2026-04-07 19:39:52,953 - INFO - Epoch 036/200 | Train Loss 0.1810 R2 0.4279 | Val Loss 2.6506 R2 0.1745 RMSE 1.8543 MAE 1.5951 CCC 0.2440
+2026-04-07 19:39:53,396 - INFO -   [Regularized] Loss=0.2001 L1=0.0000 R2=0.3465
+2026-04-07 19:39:53,805 - INFO - CCC: 0.7138
+2026-04-07 19:39:54,184 - INFO - CCC: 0.2457
+2026-04-07 19:39:54,185 - INFO - Epoch 037/200 | Train Loss 0.2001 R2 0.3465 | Val Loss 2.6417 R2 0.1751 RMSE 1.8537 MAE 1.5898 CCC 0.2457
+2026-04-07 19:39:54,617 - INFO -   [Regularized] Loss=0.1172 L1=0.0000 R2=0.6406
+2026-04-07 19:39:54,980 - INFO - CCC: 0.7532
+2026-04-07 19:39:55,442 - INFO - CCC: 0.2495
+2026-04-07 19:39:55,442 - INFO - Epoch 038/200 | Train Loss 0.1172 R2 0.6406 | Val Loss 2.6310 R2 0.1767 RMSE 1.8519 MAE 1.5823 CCC 0.2495
+2026-04-07 19:39:55,845 - INFO -   [Regularized] Loss=0.1438 L1=0.0000 R2=0.5777
+2026-04-07 19:39:56,248 - INFO - CCC: 0.7709
+2026-04-07 19:39:56,649 - INFO - CCC: 0.2519
+2026-04-07 19:39:56,650 - INFO - Epoch 039/200 | Train Loss 0.1438 R2 0.5777 | Val Loss 2.6243 R2 0.1773 RMSE 1.8512 MAE 1.5776 CCC 0.2519
+2026-04-07 19:39:57,068 - INFO -   [Regularized] Loss=0.1953 L1=0.0000 R2=0.4343
+2026-04-07 19:39:57,485 - INFO - CCC: 0.7758
+2026-04-07 19:39:57,880 - INFO - CCC: 0.2525
+2026-04-07 19:39:57,881 - INFO - Epoch 040/200 | Train Loss 0.1953 R2 0.4343 | Val Loss 2.6215 R2 0.1769 RMSE 1.8516 MAE 1.5759 CCC 0.2525
+2026-04-07 19:39:58,287 - INFO -   [Regularized] Loss=0.1355 L1=0.0000 R2=0.5955
+2026-04-07 19:39:58,683 - INFO - CCC: 0.7787
+2026-04-07 19:39:59,140 - INFO - CCC: 0.2525
+2026-04-07 19:39:59,141 - INFO - Epoch 041/200 | Train Loss 0.1355 R2 0.5955 | Val Loss 2.6206 R2 0.1764 RMSE 1.8521 MAE 1.5755 CCC 0.2525
+2026-04-07 19:39:59,620 - INFO -   [Regularized] Loss=0.2325 L1=0.0000 R2=0.3345
+2026-04-07 19:39:59,996 - INFO - CCC: 0.7846
+2026-04-07 19:40:00,340 - INFO - CCC: 0.2523
+2026-04-07 19:40:00,341 - INFO - Epoch 042/200 | Train Loss 0.2325 R2 0.3345 | Val Loss 2.6202 R2 0.1758 RMSE 1.8529 MAE 1.5755 CCC 0.2523
+2026-04-07 19:40:00,789 - INFO -   [Regularized] Loss=0.1541 L1=0.0000 R2=0.5414
+2026-04-07 19:40:01,204 - INFO - CCC: 0.7929
+2026-04-07 19:40:01,622 - INFO - CCC: 0.2522
+2026-04-07 19:40:01,622 - INFO - Epoch 043/200 | Train Loss 0.1541 R2 0.5414 | Val Loss 2.6196 R2 0.1752 RMSE 1.8535 MAE 1.5755 CCC 0.2522
+2026-04-07 19:40:02,082 - INFO -   [Regularized] Loss=0.1489 L1=0.0000 R2=0.5490
+2026-04-07 19:40:02,496 - INFO - CCC: 0.8010
+2026-04-07 19:40:02,924 - INFO - CCC: 0.2521
+2026-04-07 19:40:02,925 - INFO - Epoch 044/200 | Train Loss 0.1489 R2 0.5490 | Val Loss 2.6194 R2 0.1747 RMSE 1.8540 MAE 1.5755 CCC 0.2521
+2026-04-07 19:40:02,925 - INFO - Early stopping triggered (no val R2 improvement in 20 epochs).
+2026-04-07 19:40:02,981 - INFO - Loaded checkpoint from best_model_tmp.pt (strict).
+2026-04-07 19:40:03,395 - INFO - CCC: 0.2421
+2026-04-07 19:40:03,852 - INFO - CCC: 0.3212
+2026-04-07 19:40:54,283 - INFO - Signal analysis complete -> results_signal_d4_polyploid/tier2_env_fold1
+2026-04-07 19:40:54,666 - INFO - Auto thresholds (weekly): heat=30.159, cold=9.021, vpd=1.359
+2026-04-07 19:40:54,676 - INFO - [tier2_env Fold 2/4] Tensor dims →’ genomic_feat=88, chrom=3, locations=2, years=2, pops=3
+2026-04-07 19:40:54,676 - INFO - [tier2_env Fold 2/4] Tensor feature indices: block_id_raw_idx=84, te_hotspot_idx=77, is_te_idx=76, is_genic_idx=78, is_promoter_idx=79, block_gene_count_idx=80, block_snp_density_idx=82, block_mean_maf_idx=81, dosage_idx=0, token_rank_idx=2, dosage_local_mean_idx=3, dosage_local_std_idx=4, te_dist_idx=74, gene_dist_idx=75
+2026-04-07 19:40:54,677 - INFO - Creating GxE_Transformer_Tensor model (CV path)...
+2026-04-07 19:40:54,677 - INFO - Functional channel idx (CV): block_id_raw=84, te_hotspot=77, is_te=76, is_genic=78, is_promoter=79, block_gene=80, block_density=82, block_maf=81, dosage=0, te_dist=74, gene_dist=75
+2026-04-07 19:40:54,677 - WARNING - homeolog_group_token_split_subgenome requested but sg_channel_idx is missing; disabling split.
+2026-04-07 19:40:54,677 - WARNING - use_homeolog_auxiliary requested but hom_gid_channel_idx/sg_channel_idx is missing; disabling auxiliary loss.
+2026-04-07 19:40:54,696 - INFO - [tier2_env Fold 2/4] Model parameters: 605,075
+2026-04-07 19:40:55,237 - INFO - TE indicator is near-constant (mean=1.000); ignoring it for hotspots/func types.
+2026-04-07 19:40:55,264 - INFO - HABE tokens/sample: min=16 mean=16.0 max=16 | hotspot tokens/sample: min=15 mean=15.0 max=15 | func_type_counts=[16, 72, 48, 0]
+2026-04-07 19:40:55,437 - INFO -   [Regularized] Loss=0.2549 L1=0.0000 R2=-0.0278
+2026-04-07 19:40:56,005 - INFO - CCC: -0.0068
+2026-04-07 19:40:56,558 - INFO - CCC: 0.6652
+2026-04-07 19:40:56,559 - INFO - Epoch 001/200 | Train Loss 0.2549 R2 -0.0278 | Val Loss 1.0153 R2 0.0864 RMSE 1.7008 MAE 1.3381 CCC 0.6652
+2026-04-07 19:40:56,596 - INFO -  ✓ New best model saved (Val R² = 0.0864)
+2026-04-07 19:40:57,235 - INFO -   [Regularized] Loss=0.2608 L1=0.0000 R2=-0.0528
+2026-04-07 19:40:57,851 - INFO - CCC: 0.0010
+2026-04-07 19:40:58,403 - INFO - CCC: 0.6659
+2026-04-07 19:40:58,404 - INFO - Epoch 002/200 | Train Loss 0.2608 R2 -0.0528 | Val Loss 1.0104 R2 0.0861 RMSE 1.7010 MAE 1.3286 CCC 0.6659
+2026-04-07 19:40:58,968 - INFO -   [Regularized] Loss=0.2461 L1=0.0000 R2=-0.0028
+2026-04-07 19:40:59,518 - INFO - CCC: 0.0066
+2026-04-07 19:41:00,077 - INFO - CCC: 0.6663
+2026-04-07 19:41:00,079 - INFO - Epoch 003/200 | Train Loss 0.2461 R2 -0.0028 | Val Loss 1.0089 R2 0.0855 RMSE 1.7015 MAE 1.3254 CCC 0.6663
+2026-04-07 19:41:00,700 - INFO -   [Regularized] Loss=0.2589 L1=0.0000 R2=-0.0581
+2026-04-07 19:41:01,297 - INFO - CCC: 0.0131
+2026-04-07 19:41:01,822 - INFO - CCC: 0.6666
+2026-04-07 19:41:01,824 - INFO - Epoch 004/200 | Train Loss 0.2589 R2 -0.0581 | Val Loss 1.0066 R2 0.0846 RMSE 1.7024 MAE 1.3200 CCC 0.6666
+2026-04-07 19:41:02,378 - INFO -   [Regularized] Loss=0.2552 L1=0.0000 R2=-0.0517
+2026-04-07 19:41:02,919 - INFO - CCC: 0.0171
+2026-04-07 19:41:03,486 - INFO - CCC: 0.6665
+2026-04-07 19:41:03,486 - INFO - Epoch 005/200 | Train Loss 0.2552 R2 -0.0517 | Val Loss 1.0062 R2 0.0831 RMSE 1.7038 MAE 1.3182 CCC 0.6665
+2026-04-07 19:41:04,074 - INFO -   [Regularized] Loss=0.2262 L1=0.0000 R2=0.0927
+2026-04-07 19:41:04,667 - INFO - CCC: 0.0230
+2026-04-07 19:41:05,225 - INFO - CCC: 0.6668
+2026-04-07 19:41:05,227 - INFO - Epoch 006/200 | Train Loss 0.2262 R2 0.0927 | Val Loss 1.0042 R2 0.0822 RMSE 1.7046 MAE 1.3136 CCC 0.6668
+2026-04-07 19:41:05,877 - INFO -   [Regularized] Loss=0.2332 L1=0.0000 R2=0.0683
+2026-04-07 19:41:06,438 - INFO - CCC: 0.0288
+2026-04-07 19:41:06,978 - INFO - CCC: 0.6670
+2026-04-07 19:41:06,979 - INFO - Epoch 007/200 | Train Loss 0.2332 R2 0.0683 | Val Loss 1.0034 R2 0.0819 RMSE 1.7049 MAE 1.3116 CCC 0.6670
+2026-04-07 19:41:07,584 - INFO -   [Regularized] Loss=0.2322 L1=0.0000 R2=0.0719
+2026-04-07 19:41:08,122 - INFO - CCC: 0.0348
+2026-04-07 19:41:08,684 - INFO - CCC: 0.6674
+2026-04-07 19:41:08,685 - INFO - Epoch 008/200 | Train Loss 0.2322 R2 0.0719 | Val Loss 1.0024 R2 0.0826 RMSE 1.7042 MAE 1.3104 CCC 0.6674
+2026-04-07 19:41:09,285 - INFO -   [Regularized] Loss=0.2515 L1=0.0000 R2=-0.0101
+2026-04-07 19:41:09,810 - INFO - CCC: 0.0407
+2026-04-07 19:41:10,404 - INFO - CCC: 0.6679
+2026-04-07 19:41:10,405 - INFO - Epoch 009/200 | Train Loss 0.2515 R2 -0.0101 | Val Loss 1.0022 R2 0.0842 RMSE 1.7028 MAE 1.3114 CCC 0.6679
+2026-04-07 19:41:11,060 - INFO -   [Regularized] Loss=0.2487 L1=0.0000 R2=-0.0024
+2026-04-07 19:41:11,642 - INFO - CCC: 0.0472
+2026-04-07 19:41:12,230 - INFO - CCC: 0.6685
+2026-04-07 19:41:12,231 - INFO - Epoch 010/200 | Train Loss 0.2487 R2 -0.0024 | Val Loss 1.0019 R2 0.0864 RMSE 1.7007 MAE 1.3126 CCC 0.6685
+2026-04-07 19:41:12,855 - INFO -   [Regularized] Loss=0.2383 L1=0.0000 R2=0.0410
+2026-04-07 19:41:13,456 - INFO - CCC: 0.0539
+2026-04-07 19:41:14,023 - INFO - CCC: 0.6691
+2026-04-07 19:41:14,024 - INFO - Epoch 011/200 | Train Loss 0.2383 R2 0.0410 | Val Loss 1.0022 R2 0.0886 RMSE 1.6986 MAE 1.3148 CCC 0.6691
+2026-04-07 19:41:14,079 - INFO -  ✓ New best model saved (Val R² = 0.0886)
+2026-04-07 19:41:14,698 - INFO -   [Regularized] Loss=0.2346 L1=0.0000 R2=0.0566
+2026-04-07 19:41:15,270 - INFO - CCC: 0.0606
+2026-04-07 19:41:15,797 - INFO - CCC: 0.6696
+2026-04-07 19:41:15,798 - INFO - Epoch 012/200 | Train Loss 0.2346 R2 0.0566 | Val Loss 1.0026 R2 0.0906 RMSE 1.6968 MAE 1.3172 CCC 0.6696
+2026-04-07 19:41:15,848 - INFO -  ✓ New best model saved (Val R² = 0.0906)
+2026-04-07 19:41:16,478 - INFO -   [Regularized] Loss=0.2417 L1=0.0000 R2=0.0129
+2026-04-07 19:41:17,010 - INFO - CCC: 0.0672
+2026-04-07 19:41:17,544 - INFO - CCC: 0.6702
+2026-04-07 19:41:17,545 - INFO - Epoch 013/200 | Train Loss 0.2417 R2 0.0129 | Val Loss 1.0031 R2 0.0923 RMSE 1.6952 MAE 1.3196 CCC 0.6702
+2026-04-07 19:41:17,588 - INFO -  ✓ New best model saved (Val R² = 0.0923)
+2026-04-07 19:41:18,203 - INFO -   [Regularized] Loss=0.2222 L1=0.0000 R2=0.1081
+2026-04-07 19:41:18,745 - INFO - CCC: 0.0738
+2026-04-07 19:41:19,395 - INFO - CCC: 0.6707
+2026-04-07 19:41:19,396 - INFO - Epoch 014/200 | Train Loss 0.2222 R2 0.1081 | Val Loss 1.0037 R2 0.0940 RMSE 1.6936 MAE 1.3218 CCC 0.6707
+2026-04-07 19:41:19,442 - INFO -  ✓ New best model saved (Val R² = 0.0940)
+2026-04-07 19:41:20,015 - INFO -   [Regularized] Loss=0.2525 L1=0.0000 R2=-0.0432
+2026-04-07 19:41:20,611 - INFO - CCC: 0.0780
+2026-04-07 19:41:21,292 - INFO - CCC: 0.6713
+2026-04-07 19:41:21,293 - INFO - Epoch 015/200 | Train Loss 0.2525 R2 -0.0432 | Val Loss 1.0035 R2 0.0953 RMSE 1.6924 MAE 1.3222 CCC 0.6713
+2026-04-07 19:41:21,344 - INFO -  ✓ New best model saved (Val R² = 0.0953)
+2026-04-07 19:41:21,989 - INFO -   [Regularized] Loss=0.2465 L1=0.0000 R2=0.0003
+2026-04-07 19:41:22,554 - INFO - CCC: 0.0843
+2026-04-07 19:41:23,150 - INFO - CCC: 0.6716
+2026-04-07 19:41:23,153 - INFO - Epoch 016/200 | Train Loss 0.2465 R2 0.0003 | Val Loss 1.0037 R2 0.0960 RMSE 1.6918 MAE 1.3233 CCC 0.6716
+2026-04-07 19:41:23,808 - INFO -   [Regularized] Loss=0.2255 L1=0.0000 R2=0.0775
+2026-04-07 19:41:24,334 - INFO - CCC: 0.0909
+2026-04-07 19:41:24,907 - INFO - CCC: 0.6721
+2026-04-07 19:41:24,908 - INFO - Epoch 017/200 | Train Loss 0.2255 R2 0.0775 | Val Loss 1.0034 R2 0.0968 RMSE 1.6911 MAE 1.3237 CCC 0.6721
+2026-04-07 19:41:24,955 - INFO -  ✓ New best model saved (Val R² = 0.0968)
+2026-04-07 19:41:25,548 - INFO -   [Regularized] Loss=0.2261 L1=0.0000 R2=0.0790
+2026-04-07 19:41:25,916 - INFO - CCC: 0.0979
+2026-04-07 19:41:26,348 - INFO - CCC: 0.6724
+2026-04-07 19:41:26,349 - INFO - Epoch 018/200 | Train Loss 0.2261 R2 0.0790 | Val Loss 1.0030 R2 0.0970 RMSE 1.6908 MAE 1.3237 CCC 0.6724
+2026-04-07 19:41:26,840 - INFO -   [Regularized] Loss=0.2458 L1=0.0000 R2=-0.0013
+2026-04-07 19:41:27,288 - INFO - CCC: 0.1051
+2026-04-07 19:41:27,707 - INFO - CCC: 0.6726
+2026-04-07 19:41:27,708 - INFO - Epoch 019/200 | Train Loss 0.2458 R2 -0.0013 | Val Loss 1.0022 R2 0.0971 RMSE 1.6908 MAE 1.3231 CCC 0.6726
+2026-04-07 19:41:28,194 - INFO -   [Regularized] Loss=0.2322 L1=0.0000 R2=0.0583
+2026-04-07 19:41:28,545 - INFO - CCC: 0.1129
+2026-04-07 19:41:28,991 - INFO - CCC: 0.6729
+2026-04-07 19:41:28,992 - INFO - Epoch 020/200 | Train Loss 0.2322 R2 0.0583 | Val Loss 1.0008 R2 0.0974 RMSE 1.6904 MAE 1.3215 CCC 0.6729
+2026-04-07 19:41:29,413 - INFO -   [Regularized] Loss=0.2252 L1=0.0000 R2=0.0817
+2026-04-07 19:41:29,851 - INFO - CCC: 0.1218
+2026-04-07 19:41:30,314 - INFO - CCC: 0.6732
+2026-04-07 19:41:30,315 - INFO - Epoch 021/200 | Train Loss 0.2252 R2 0.0817 | Val Loss 0.9992 R2 0.0976 RMSE 1.6903 MAE 1.3196 CCC 0.6732
+2026-04-07 19:41:30,808 - INFO -   [Regularized] Loss=0.2184 L1=0.0000 R2=0.1132
+2026-04-07 19:41:31,283 - INFO - CCC: 0.1318
+2026-04-07 19:41:31,742 - INFO - CCC: 0.6736
+2026-04-07 19:41:31,743 - INFO - Epoch 022/200 | Train Loss 0.2184 R2 0.1132 | Val Loss 0.9977 R2 0.0980 RMSE 1.6899 MAE 1.3179 CCC 0.6736
+2026-04-07 19:41:31,789 - INFO -  ✓ New best model saved (Val R² = 0.0980)
+2026-04-07 19:41:32,261 - INFO -   [Regularized] Loss=0.2347 L1=0.0000 R2=0.0358
+2026-04-07 19:41:32,729 - INFO - CCC: 0.1427
+2026-04-07 19:41:33,137 - INFO - CCC: 0.6738
+2026-04-07 19:41:33,138 - INFO - Epoch 023/200 | Train Loss 0.2347 R2 0.0358 | Val Loss 0.9968 R2 0.0982 RMSE 1.6897 MAE 1.3171 CCC 0.6738
+2026-04-07 19:41:33,711 - INFO -   [Regularized] Loss=0.2346 L1=0.0000 R2=0.0423
+2026-04-07 19:41:34,259 - INFO - CCC: 0.1546
+2026-04-07 19:41:34,820 - INFO - CCC: 0.6739
+2026-04-07 19:41:34,822 - INFO - Epoch 024/200 | Train Loss 0.2346 R2 0.0423 | Val Loss 0.9965 R2 0.0981 RMSE 1.6898 MAE 1.3173 CCC 0.6739
+2026-04-07 19:41:35,455 - INFO -   [Regularized] Loss=0.2022 L1=0.0000 R2=0.1997
+2026-04-07 19:41:36,011 - INFO - CCC: 0.1679
+2026-04-07 19:41:36,575 - INFO - CCC: 0.6740
+2026-04-07 19:41:36,576 - INFO - Epoch 025/200 | Train Loss 0.2022 R2 0.1997 | Val Loss 0.9961 R2 0.0981 RMSE 1.6898 MAE 1.3175 CCC 0.6740
+2026-04-07 19:41:37,171 - INFO -   [Regularized] Loss=0.2176 L1=0.0000 R2=0.1244
+2026-04-07 19:41:37,738 - INFO - CCC: 0.1823
+2026-04-07 19:41:38,348 - INFO - CCC: 0.6741
+2026-04-07 19:41:38,349 - INFO - Epoch 026/200 | Train Loss 0.2176 R2 0.1244 | Val Loss 0.9961 R2 0.0980 RMSE 1.6899 MAE 1.3184 CCC 0.6741
+2026-04-07 19:41:38,962 - INFO -   [Regularized] Loss=0.2110 L1=0.0000 R2=0.1479
+2026-04-07 19:41:39,522 - INFO - CCC: 0.1980
+2026-04-07 19:41:40,060 - INFO - CCC: 0.6742
+2026-04-07 19:41:40,061 - INFO - Epoch 027/200 | Train Loss 0.2110 R2 0.1479 | Val Loss 0.9961 R2 0.0980 RMSE 1.6899 MAE 1.3197 CCC 0.6742
+2026-04-07 19:41:40,720 - INFO -   [Regularized] Loss=0.2081 L1=0.0000 R2=0.1576
+2026-04-07 19:41:41,278 - INFO - CCC: 0.2154
+2026-04-07 19:41:41,857 - INFO - CCC: 0.6743
+2026-04-07 19:41:41,857 - INFO - Epoch 028/200 | Train Loss 0.2081 R2 0.1576 | Val Loss 0.9964 R2 0.0978 RMSE 1.6901 MAE 1.3216 CCC 0.6743
+2026-04-07 19:41:42,488 - INFO -   [Regularized] Loss=0.2171 L1=0.0000 R2=0.1310
+2026-04-07 19:41:43,047 - INFO - CCC: 0.2339
+2026-04-07 19:41:43,626 - INFO - CCC: 0.6743
+2026-04-07 19:41:43,627 - INFO - Epoch 029/200 | Train Loss 0.2171 R2 0.1310 | Val Loss 0.9971 R2 0.0974 RMSE 1.6904 MAE 1.3244 CCC 0.6743
+2026-04-07 19:41:44,254 - INFO -   [Regularized] Loss=0.2072 L1=0.0000 R2=0.1650
+2026-04-07 19:41:44,780 - INFO - CCC: 0.2541
+2026-04-07 19:41:45,277 - INFO - CCC: 0.6742
+2026-04-07 19:41:45,278 - INFO - Epoch 030/200 | Train Loss 0.2072 R2 0.1650 | Val Loss 0.9970 R2 0.0967 RMSE 1.6911 MAE 1.3257 CCC 0.6742
+2026-04-07 19:41:45,910 - INFO -   [Regularized] Loss=0.1888 L1=0.0000 R2=0.2544
+2026-04-07 19:41:46,463 - INFO - CCC: 0.2766
+2026-04-07 19:41:47,014 - INFO - CCC: 0.6743
+2026-04-07 19:41:47,016 - INFO - Epoch 031/200 | Train Loss 0.1888 R2 0.2544 | Val Loss 0.9970 R2 0.0963 RMSE 1.6914 MAE 1.3274 CCC 0.6743
+2026-04-07 19:41:47,722 - INFO -   [Regularized] Loss=0.2220 L1=0.0000 R2=0.1025
+2026-04-07 19:41:48,302 - INFO - CCC: 0.3022
+2026-04-07 19:41:48,915 - INFO - CCC: 0.6744
+2026-04-07 19:41:48,917 - INFO - Epoch 032/200 | Train Loss 0.2220 R2 0.1025 | Val Loss 0.9966 R2 0.0957 RMSE 1.6920 MAE 1.3286 CCC 0.6744
+2026-04-07 19:41:49,593 - INFO -   [Regularized] Loss=0.1904 L1=0.0000 R2=0.2405
+2026-04-07 19:41:50,125 - INFO - CCC: 0.3309
+2026-04-07 19:41:50,685 - INFO - CCC: 0.6746
+2026-04-07 19:41:50,686 - INFO - Epoch 033/200 | Train Loss 0.1904 R2 0.2405 | Val Loss 0.9959 R2 0.0953 RMSE 1.6924 MAE 1.3293 CCC 0.6746
+2026-04-07 19:41:51,338 - INFO -   [Regularized] Loss=0.1966 L1=0.0000 R2=0.2199
+2026-04-07 19:41:51,917 - INFO - CCC: 0.3597
+2026-04-07 19:41:52,401 - INFO - CCC: 0.6743
+2026-04-07 19:41:52,402 - INFO - Epoch 034/200 | Train Loss 0.1966 R2 0.2199 | Val Loss 0.9943 R2 0.0940 RMSE 1.6936 MAE 1.3278 CCC 0.6743
+2026-04-07 19:41:53,064 - INFO -   [Regularized] Loss=0.1829 L1=0.0000 R2=0.2810
+2026-04-07 19:41:53,770 - INFO - CCC: 0.3880
+2026-04-07 19:41:54,385 - INFO - CCC: 0.6743
+2026-04-07 19:41:54,386 - INFO - Epoch 035/200 | Train Loss 0.1829 R2 0.2810 | Val Loss 0.9928 R2 0.0929 RMSE 1.6947 MAE 1.3260 CCC 0.6743
+2026-04-07 19:41:55,020 - INFO -   [Regularized] Loss=0.1849 L1=0.0000 R2=0.2701
+2026-04-07 19:41:55,699 - INFO - CCC: 0.4223
+2026-04-07 19:41:56,216 - INFO - CCC: 0.6754
+2026-04-07 19:41:56,219 - INFO - Epoch 036/200 | Train Loss 0.1849 R2 0.2701 | Val Loss 0.9909 R2 0.0943 RMSE 1.6933 MAE 1.3249 CCC 0.6754
+2026-04-07 19:41:56,888 - INFO -   [Regularized] Loss=0.2002 L1=0.0000 R2=0.2052
+2026-04-07 19:41:57,452 - INFO - CCC: 0.4570
+2026-04-07 19:41:58,042 - INFO - CCC: 0.6767
+2026-04-07 19:41:58,043 - INFO - Epoch 037/200 | Train Loss 0.2002 R2 0.2052 | Val Loss 0.9886 R2 0.0960 RMSE 1.6918 MAE 1.3229 CCC 0.6767
+2026-04-07 19:41:58,618 - INFO -   [Regularized] Loss=0.1656 L1=0.0000 R2=0.3462
+2026-04-07 19:41:59,198 - INFO - CCC: 0.4939
+2026-04-07 19:41:59,659 - INFO - CCC: 0.6786
+2026-04-07 19:41:59,660 - INFO - Epoch 038/200 | Train Loss 0.1656 R2 0.3462 | Val Loss 0.9864 R2 0.0993 RMSE 1.6886 MAE 1.3221 CCC 0.6786
+2026-04-07 19:41:59,703 - INFO -  ✓ New best model saved (Val R² = 0.0993)
+2026-04-07 19:42:00,178 - INFO -   [Regularized] Loss=0.1638 L1=0.0000 R2=0.3353
+2026-04-07 19:42:00,604 - INFO - CCC: 0.5291
+2026-04-07 19:42:01,029 - INFO - CCC: 0.6810
+2026-04-07 19:42:01,030 - INFO - Epoch 039/200 | Train Loss 0.1638 R2 0.3353 | Val Loss 0.9842 R2 0.1037 RMSE 1.6845 MAE 1.3250 CCC 0.6810
+2026-04-07 19:42:01,078 - INFO -  ✓ New best model saved (Val R² = 0.1037)
+2026-04-07 19:42:01,527 - INFO -   [Regularized] Loss=0.1559 L1=0.0000 R2=0.3982
+2026-04-07 19:42:01,919 - INFO - CCC: 0.5570
+2026-04-07 19:42:02,357 - INFO - CCC: 0.6832
+2026-04-07 19:42:02,358 - INFO - Epoch 040/200 | Train Loss 0.1559 R2 0.3982 | Val Loss 0.9814 R2 0.1077 RMSE 1.6807 MAE 1.3257 CCC 0.6832
+2026-04-07 19:42:02,404 - INFO -  ✓ New best model saved (Val R² = 0.1077)
+2026-04-07 19:42:02,861 - INFO -   [Regularized] Loss=0.1453 L1=0.0000 R2=0.4384
+2026-04-07 19:42:03,263 - INFO - CCC: 0.5801
+2026-04-07 19:42:03,722 - INFO - CCC: 0.6851
+2026-04-07 19:42:03,723 - INFO - Epoch 041/200 | Train Loss 0.1453 R2 0.4384 | Val Loss 0.9784 R2 0.1112 RMSE 1.6774 MAE 1.3246 CCC 0.6851
+2026-04-07 19:42:03,770 - INFO -  ✓ New best model saved (Val R² = 0.1112)
+2026-04-07 19:42:04,237 - INFO -   [Regularized] Loss=0.1576 L1=0.0000 R2=0.3776
+2026-04-07 19:42:04,632 - INFO - CCC: 0.6007
+2026-04-07 19:42:05,086 - INFO - CCC: 0.6869
+2026-04-07 19:42:05,087 - INFO - Epoch 042/200 | Train Loss 0.1576 R2 0.3776 | Val Loss 0.9762 R2 0.1144 RMSE 1.6744 MAE 1.3255 CCC 0.6869
+2026-04-07 19:42:05,135 - INFO -  ✓ New best model saved (Val R² = 0.1144)
+2026-04-07 19:42:05,658 - INFO -   [Regularized] Loss=0.1443 L1=0.0000 R2=0.4412
+2026-04-07 19:42:06,065 - INFO - CCC: 0.6172
+2026-04-07 19:42:06,536 - INFO - CCC: 0.6882
+2026-04-07 19:42:06,537 - INFO - Epoch 043/200 | Train Loss 0.1443 R2 0.4412 | Val Loss 0.9735 R2 0.1168 RMSE 1.6722 MAE 1.3233 CCC 0.6882
+2026-04-07 19:42:06,581 - INFO -  ✓ New best model saved (Val R² = 0.1168)
+2026-04-07 19:42:07,118 - INFO -   [Regularized] Loss=0.1506 L1=0.0000 R2=0.4137
+2026-04-07 19:42:07,532 - INFO - CCC: 0.6313
+2026-04-07 19:42:07,987 - INFO - CCC: 0.6891
+2026-04-07 19:42:07,988 - INFO - Epoch 044/200 | Train Loss 0.1506 R2 0.4137 | Val Loss 0.9712 R2 0.1182 RMSE 1.6708 MAE 1.3208 CCC 0.6891
+2026-04-07 19:42:08,038 - INFO -  ✓ New best model saved (Val R² = 0.1182)
+2026-04-07 19:42:08,466 - INFO -   [Regularized] Loss=0.1513 L1=0.0000 R2=0.4243
+2026-04-07 19:42:08,878 - INFO - CCC: 0.6422
+2026-04-07 19:42:09,311 - INFO - CCC: 0.6897
+2026-04-07 19:42:09,312 - INFO - Epoch 045/200 | Train Loss 0.1513 R2 0.4243 | Val Loss 0.9685 R2 0.1189 RMSE 1.6702 MAE 1.3152 CCC 0.6897
+2026-04-07 19:42:09,753 - INFO -   [Regularized] Loss=0.1406 L1=0.0000 R2=0.4669
+2026-04-07 19:42:10,212 - INFO - CCC: 0.6481
+2026-04-07 19:42:10,567 - INFO - CCC: 0.6903
+2026-04-07 19:42:10,568 - INFO - Epoch 046/200 | Train Loss 0.1406 R2 0.4669 | Val Loss 0.9650 R2 0.1196 RMSE 1.6696 MAE 1.3054 CCC 0.6903
+2026-04-07 19:42:10,612 - INFO -  ✓ New best model saved (Val R² = 0.1196)
+2026-04-07 19:42:11,040 - INFO -   [Regularized] Loss=0.1331 L1=0.0000 R2=0.4879
+2026-04-07 19:42:11,435 - INFO - CCC: 0.6557
+2026-04-07 19:42:11,858 - INFO - CCC: 0.6911
+2026-04-07 19:42:11,859 - INFO - Epoch 047/200 | Train Loss 0.1331 R2 0.4879 | Val Loss 0.9627 R2 0.1206 RMSE 1.6686 MAE 1.3009 CCC 0.6911
+2026-04-07 19:42:11,903 - INFO -  ✓ New best model saved (Val R² = 0.1206)
+2026-04-07 19:42:12,323 - INFO -   [Regularized] Loss=0.1320 L1=0.0000 R2=0.4917
+2026-04-07 19:42:12,743 - INFO - CCC: 0.6661
+2026-04-07 19:42:13,199 - INFO - CCC: 0.6921
+2026-04-07 19:42:13,201 - INFO - Epoch 048/200 | Train Loss 0.1320 R2 0.4917 | Val Loss 0.9612 R2 0.1221 RMSE 1.6672 MAE 1.3020 CCC 0.6921
+2026-04-07 19:42:13,245 - INFO -  ✓ New best model saved (Val R² = 0.1221)
+2026-04-07 19:42:13,750 - INFO -   [Regularized] Loss=0.1389 L1=0.0000 R2=0.4531
+2026-04-07 19:42:14,106 - INFO - CCC: 0.6768
+2026-04-07 19:42:14,487 - INFO - CCC: 0.6928
+2026-04-07 19:42:14,488 - INFO - Epoch 049/200 | Train Loss 0.1389 R2 0.4531 | Val Loss 0.9605 R2 0.1230 RMSE 1.6663 MAE 1.3062 CCC 0.6928
+2026-04-07 19:42:15,026 - INFO -   [Regularized] Loss=0.1199 L1=0.0000 R2=0.5386
+2026-04-07 19:42:15,560 - INFO - CCC: 0.6861
+2026-04-07 19:42:16,124 - INFO - CCC: 0.6932
+2026-04-07 19:42:16,125 - INFO - Epoch 050/200 | Train Loss 0.1199 R2 0.5386 | Val Loss 0.9603 R2 0.1235 RMSE 1.6658 MAE 1.3107 CCC 0.6932
+2026-04-07 19:42:16,174 - INFO -  ✓ New best model saved (Val R² = 0.1235)
+2026-04-07 19:42:16,784 - INFO -   [Regularized] Loss=0.1233 L1=0.0000 R2=0.5289
+2026-04-07 19:42:17,364 - INFO - CCC: 0.6938
+2026-04-07 19:42:17,952 - INFO - CCC: 0.6936
+2026-04-07 19:42:17,953 - INFO - Epoch 051/200 | Train Loss 0.1233 R2 0.5289 | Val Loss 0.9599 R2 0.1240 RMSE 1.6653 MAE 1.3141 CCC 0.6936
+2026-04-07 19:42:18,555 - INFO -   [Regularized] Loss=0.1214 L1=0.0000 R2=0.5370
+2026-04-07 19:42:19,123 - INFO - CCC: 0.7013
+2026-04-07 19:42:19,797 - INFO - CCC: 0.6939
+2026-04-07 19:42:19,797 - INFO - Epoch 052/200 | Train Loss 0.1214 R2 0.5370 | Val Loss 0.9604 R2 0.1245 RMSE 1.6649 MAE 1.3204 CCC 0.6939
+2026-04-07 19:42:20,388 - INFO -   [Regularized] Loss=0.1211 L1=0.0000 R2=0.5235
+2026-04-07 19:42:20,938 - INFO - CCC: 0.7070
+2026-04-07 19:42:21,478 - INFO - CCC: 0.6941
+2026-04-07 19:42:21,479 - INFO - Epoch 053/200 | Train Loss 0.1211 R2 0.5235 | Val Loss 0.9608 R2 0.1247 RMSE 1.6647 MAE 1.3249 CCC 0.6941
+2026-04-07 19:42:21,523 - INFO -  ✓ New best model saved (Val R² = 0.1247)
+2026-04-07 19:42:22,145 - INFO -   [Regularized] Loss=0.1331 L1=0.0000 R2=0.5001
+2026-04-07 19:42:22,705 - INFO - CCC: 0.7119
+2026-04-07 19:42:23,366 - INFO - CCC: 0.6942
+2026-04-07 19:42:23,367 - INFO - Epoch 054/200 | Train Loss 0.1331 R2 0.5001 | Val Loss 0.9618 R2 0.1248 RMSE 1.6645 MAE 1.3308 CCC 0.6942
+2026-04-07 19:42:24,018 - INFO -   [Regularized] Loss=0.1248 L1=0.0000 R2=0.5165
+2026-04-07 19:42:24,657 - INFO - CCC: 0.7155
+2026-04-07 19:42:25,275 - INFO - CCC: 0.6944
+2026-04-07 19:42:25,276 - INFO - Epoch 055/200 | Train Loss 0.1248 R2 0.5165 | Val Loss 0.9626 R2 0.1251 RMSE 1.6643 MAE 1.3356 CCC 0.6944
+2026-04-07 19:42:25,893 - INFO -   [Regularized] Loss=0.1413 L1=0.0000 R2=0.4686
+2026-04-07 19:42:26,434 - INFO - CCC: 0.7181
+2026-04-07 19:42:27,015 - INFO - CCC: 0.6946
+2026-04-07 19:42:27,017 - INFO - Epoch 056/200 | Train Loss 0.1413 R2 0.4686 | Val Loss 0.9627 R2 0.1252 RMSE 1.6642 MAE 1.3374 CCC 0.6946
+2026-04-07 19:42:27,614 - INFO -   [Regularized] Loss=0.2466 L1=0.0000 R2=-0.0106
+2026-04-07 19:42:28,147 - INFO - CCC: 0.7194
+2026-04-07 19:42:28,725 - INFO - CCC: 0.6947
+2026-04-07 19:42:28,726 - INFO - Epoch 057/200 | Train Loss 0.2466 R2 -0.0106 | Val Loss 0.9625 R2 0.1254 RMSE 1.6640 MAE 1.3375 CCC 0.6947
+2026-04-07 19:42:29,358 - INFO -   [Regularized] Loss=0.1181 L1=0.0000 R2=0.5517
+2026-04-07 19:42:29,909 - INFO - CCC: 0.7210
+2026-04-07 19:42:30,522 - INFO - CCC: 0.6947
+2026-04-07 19:42:30,523 - INFO - Epoch 058/200 | Train Loss 0.1181 R2 0.5517 | Val Loss 0.9625 R2 0.1255 RMSE 1.6639 MAE 1.3385 CCC 0.6947
+2026-04-07 19:42:31,151 - INFO -   [Regularized] Loss=0.1355 L1=0.0000 R2=0.4727
+2026-04-07 19:42:31,740 - INFO - CCC: 0.7222
+2026-04-07 19:42:32,412 - INFO - CCC: 0.6948
+2026-04-07 19:42:32,413 - INFO - Epoch 059/200 | Train Loss 0.1355 R2 0.4727 | Val Loss 0.9624 R2 0.1255 RMSE 1.6639 MAE 1.3388 CCC 0.6948
+2026-04-07 19:42:33,025 - INFO -   [Regularized] Loss=0.1313 L1=0.0000 R2=0.4923
+2026-04-07 19:42:33,665 - INFO - CCC: 0.7232
+2026-04-07 19:42:34,260 - INFO - CCC: 0.6948
+2026-04-07 19:42:34,260 - INFO - Epoch 060/200 | Train Loss 0.1313 R2 0.4923 | Val Loss 0.9622 R2 0.1255 RMSE 1.6639 MAE 1.3385 CCC 0.6948
+2026-04-07 19:42:34,878 - INFO -   [Regularized] Loss=0.1205 L1=0.0000 R2=0.5331
+2026-04-07 19:42:35,457 - INFO - CCC: 0.7239
+2026-04-07 19:42:36,107 - INFO - CCC: 0.6948
+2026-04-07 19:42:36,108 - INFO - Epoch 061/200 | Train Loss 0.1205 R2 0.5331 | Val Loss 0.9620 R2 0.1255 RMSE 1.6639 MAE 1.3385 CCC 0.6948
+2026-04-07 19:42:36,696 - INFO -   [Regularized] Loss=0.2151 L1=0.0000 R2=0.1320
+2026-04-07 19:42:37,230 - INFO - CCC: 0.7243
+2026-04-07 19:42:37,900 - INFO - CCC: 0.6949
+2026-04-07 19:42:37,902 - INFO - Epoch 062/200 | Train Loss 0.2151 R2 0.1320 | Val Loss 0.9620 R2 0.1255 RMSE 1.6639 MAE 1.3385 CCC 0.6949
+2026-04-07 19:42:38,555 - INFO -   [Regularized] Loss=0.1249 L1=0.0000 R2=0.5383
+2026-04-07 19:42:39,188 - INFO - CCC: 0.7245
+2026-04-07 19:42:39,841 - INFO - CCC: 0.6949
+2026-04-07 19:42:39,842 - INFO - Epoch 063/200 | Train Loss 0.1249 R2 0.5383 | Val Loss 0.9619 R2 0.1256 RMSE 1.6639 MAE 1.3384 CCC 0.6949
+2026-04-07 19:42:40,466 - INFO -   [Regularized] Loss=0.1125 L1=0.0000 R2=0.5672
+2026-04-07 19:42:41,119 - INFO - CCC: 0.7247
+2026-04-07 19:42:41,705 - INFO - CCC: 0.6949
+2026-04-07 19:42:41,706 - INFO - Epoch 064/200 | Train Loss 0.1125 R2 0.5672 | Val Loss 0.9618 R2 0.1256 RMSE 1.6639 MAE 1.3383 CCC 0.6949
+2026-04-07 19:42:42,331 - INFO -   [Regularized] Loss=0.1272 L1=0.0000 R2=0.5255
+2026-04-07 19:42:42,897 - INFO - CCC: 0.7248
+2026-04-07 19:42:43,526 - INFO - CCC: 0.6949
+2026-04-07 19:42:43,527 - INFO - Epoch 065/200 | Train Loss 0.1272 R2 0.5255 | Val Loss 0.9618 R2 0.1256 RMSE 1.6639 MAE 1.3383 CCC 0.6949
+2026-04-07 19:42:44,097 - INFO -   [Regularized] Loss=0.1245 L1=0.0000 R2=0.5221
+2026-04-07 19:42:44,676 - INFO - CCC: 0.7248
+2026-04-07 19:42:45,199 - INFO - CCC: 0.6949
+2026-04-07 19:42:45,200 - INFO - Epoch 066/200 | Train Loss 0.1245 R2 0.5221 | Val Loss 0.9618 R2 0.1256 RMSE 1.6639 MAE 1.3383 CCC 0.6949
+2026-04-07 19:42:45,783 - INFO -   [Regularized] Loss=0.1260 L1=0.0000 R2=0.5136
+2026-04-07 19:42:46,326 - INFO - CCC: 0.7404
+2026-04-07 19:42:46,879 - INFO - CCC: 0.6905
+2026-04-07 19:42:46,879 - INFO - Epoch 067/200 | Train Loss 0.1260 R2 0.5136 | Val Loss 0.9619 R2 0.1030 RMSE 1.6852 MAE 1.3144 CCC 0.6905
+2026-04-07 19:42:47,523 - INFO -   [Regularized] Loss=0.1155 L1=0.0000 R2=0.5655
+2026-04-07 19:42:48,072 - INFO - CCC: 0.7452
+2026-04-07 19:42:48,636 - INFO - CCC: 0.6829
+2026-04-07 19:42:48,637 - INFO - Epoch 068/200 | Train Loss 0.1155 R2 0.5655 | Val Loss 0.9757 R2 0.0728 RMSE 1.7133 MAE 1.3217 CCC 0.6829
+2026-04-07 19:42:49,201 - INFO -   [Regularized] Loss=0.1150 L1=0.0000 R2=0.5737
+2026-04-07 19:42:49,708 - INFO - CCC: 0.7872
+2026-04-07 19:42:50,256 - INFO - CCC: 0.6859
+2026-04-07 19:42:50,258 - INFO - Epoch 069/200 | Train Loss 0.1150 R2 0.5737 | Val Loss 0.9701 R2 0.0806 RMSE 1.7061 MAE 1.3333 CCC 0.6859
+2026-04-07 19:42:50,890 - INFO -   [Regularized] Loss=0.1193 L1=0.0000 R2=0.5547
+2026-04-07 19:42:51,419 - INFO - CCC: 0.8155
+2026-04-07 19:42:51,923 - INFO - CCC: 0.6976
+2026-04-07 19:42:51,924 - INFO - Epoch 070/200 | Train Loss 0.1193 R2 0.5547 | Val Loss 0.9534 R2 0.1221 RMSE 1.6671 MAE 1.3496 CCC 0.6976
+2026-04-07 19:42:52,574 - INFO -   [Regularized] Loss=0.1366 L1=0.0000 R2=0.4913
+2026-04-07 19:42:53,206 - INFO - CCC: 0.8187
+2026-04-07 19:42:53,737 - INFO - CCC: 0.7025
+2026-04-07 19:42:53,739 - INFO - Epoch 071/200 | Train Loss 0.1366 R2 0.4913 | Val Loss 0.9552 R2 0.1321 RMSE 1.6576 MAE 1.3661 CCC 0.7025
+2026-04-07 19:42:53,780 - INFO -  ✓ New best model saved (Val R² = 0.1321)
+2026-04-07 19:42:54,425 - INFO -   [Regularized] Loss=0.1127 L1=0.0000 R2=0.5550
+2026-04-07 19:42:55,043 - INFO - CCC: 0.8372
+2026-04-07 19:42:55,605 - INFO - CCC: 0.7066
+2026-04-07 19:42:55,607 - INFO - Epoch 072/200 | Train Loss 0.1127 R2 0.5550 | Val Loss 0.9477 R2 0.1401 RMSE 1.6500 MAE 1.3575 CCC 0.7066
+2026-04-07 19:42:55,653 - INFO -  ✓ New best model saved (Val R² = 0.1401)
+2026-04-07 19:42:56,256 - INFO -   [Regularized] Loss=0.0925 L1=0.0000 R2=0.6551
+2026-04-07 19:42:56,833 - INFO - CCC: 0.8606
+2026-04-07 19:42:57,399 - INFO - CCC: 0.7123
+2026-04-07 19:42:57,400 - INFO - Epoch 073/200 | Train Loss 0.0925 R2 0.6551 | Val Loss 0.9297 R2 0.1530 RMSE 1.6375 MAE 1.3224 CCC 0.7123
+2026-04-07 19:42:57,445 - INFO -  ✓ New best model saved (Val R² = 0.1530)
+2026-04-07 19:42:58,072 - INFO -   [Regularized] Loss=0.0875 L1=0.0000 R2=0.6669
+2026-04-07 19:42:58,633 - INFO - CCC: 0.8745
+2026-04-07 19:42:59,300 - INFO - CCC: 0.7142
+2026-04-07 19:42:59,302 - INFO - Epoch 074/200 | Train Loss 0.0875 R2 0.6669 | Val Loss 0.9196 R2 0.1565 RMSE 1.6342 MAE 1.2986 CCC 0.7142
+2026-04-07 19:42:59,349 - INFO -  ✓ New best model saved (Val R² = 0.1565)
+2026-04-07 19:42:59,957 - INFO -   [Regularized] Loss=0.1075 L1=0.0000 R2=0.6213
+2026-04-07 19:43:00,526 - INFO - CCC: 0.8952
+2026-04-07 19:43:01,111 - INFO - CCC: 0.7142
+2026-04-07 19:43:01,112 - INFO - Epoch 075/200 | Train Loss 0.1075 R2 0.6213 | Val Loss 0.9158 R2 0.1593 RMSE 1.6315 MAE 1.2973 CCC 0.7142
+2026-04-07 19:43:01,159 - INFO -  ✓ New best model saved (Val R² = 0.1593)
+2026-04-07 19:43:01,759 - INFO -   [Regularized] Loss=0.0863 L1=0.0000 R2=0.6816
+2026-04-07 19:43:02,311 - INFO - CCC: 0.9169
+2026-04-07 19:43:02,875 - INFO - CCC: 0.7138
+2026-04-07 19:43:02,876 - INFO - Epoch 076/200 | Train Loss 0.0863 R2 0.6816 | Val Loss 0.9121 R2 0.1659 RMSE 1.6250 MAE 1.3070 CCC 0.7138
+2026-04-07 19:43:02,928 - INFO -  ✓ New best model saved (Val R² = 0.1659)
+2026-04-07 19:43:03,527 - INFO -   [Regularized] Loss=0.2152 L1=0.0000 R2=0.1433
+2026-04-07 19:43:04,077 - INFO - CCC: 0.9303
+2026-04-07 19:43:04,651 - INFO - CCC: 0.7150
+2026-04-07 19:43:04,653 - INFO - Epoch 077/200 | Train Loss 0.2152 R2 0.1433 | Val Loss 0.9084 R2 0.1712 RMSE 1.6199 MAE 1.3053 CCC 0.7150
+2026-04-07 19:43:04,699 - INFO -  ✓ New best model saved (Val R² = 0.1712)
+2026-04-07 19:43:05,363 - INFO -   [Regularized] Loss=0.0977 L1=0.0000 R2=0.6269
+2026-04-07 19:43:05,923 - INFO - CCC: 0.9293
+2026-04-07 19:43:06,499 - INFO - CCC: 0.7147
+2026-04-07 19:43:06,501 - INFO - Epoch 078/200 | Train Loss 0.0977 R2 0.6269 | Val Loss 0.9150 R2 0.1766 RMSE 1.6145 MAE 1.3283 CCC 0.7147
+2026-04-07 19:43:06,546 - INFO -  ✓ New best model saved (Val R² = 0.1766)
+2026-04-07 19:43:07,138 - INFO -   [Regularized] Loss=0.0688 L1=0.0000 R2=0.7375
+2026-04-07 19:43:07,694 - INFO - CCC: 0.9335
+2026-04-07 19:43:08,248 - INFO - CCC: 0.7145
+2026-04-07 19:43:08,249 - INFO - Epoch 079/200 | Train Loss 0.0688 R2 0.7375 | Val Loss 0.9199 R2 0.1764 RMSE 1.6148 MAE 1.3375 CCC 0.7145
+2026-04-07 19:43:08,843 - INFO -   [Regularized] Loss=0.0794 L1=0.0000 R2=0.7008
+2026-04-07 19:43:09,464 - INFO - CCC: 0.9482
+2026-04-07 19:43:10,013 - INFO - CCC: 0.7152
+2026-04-07 19:43:10,014 - INFO - Epoch 080/200 | Train Loss 0.0794 R2 0.7008 | Val Loss 0.9170 R2 0.1796 RMSE 1.6117 MAE 1.3348 CCC 0.7152
+2026-04-07 19:43:10,061 - INFO -  ✓ New best model saved (Val R² = 0.1796)
+2026-04-07 19:43:10,677 - INFO -   [Regularized] Loss=0.0922 L1=0.0000 R2=0.6775
+2026-04-07 19:43:11,301 - INFO - CCC: 0.9772
+2026-04-07 19:43:11,991 - INFO - CCC: 0.7143
+2026-04-07 19:43:11,992 - INFO - Epoch 081/200 | Train Loss 0.0922 R2 0.6775 | Val Loss 0.9076 R2 0.1807 RMSE 1.6105 MAE 1.3194 CCC 0.7143
+2026-04-07 19:43:12,040 - INFO -  ✓ New best model saved (Val R² = 0.1807)
+2026-04-07 19:43:12,674 - INFO -   [Regularized] Loss=0.0489 L1=0.0000 R2=0.8173
+2026-04-07 19:43:13,178 - INFO - CCC: 0.9725
+2026-04-07 19:43:13,726 - INFO - CCC: 0.7063
+2026-04-07 19:43:13,727 - INFO - Epoch 082/200 | Train Loss 0.0489 R2 0.8173 | Val Loss 0.9164 R2 0.1569 RMSE 1.6338 MAE 1.3157 CCC 0.7063
+2026-04-07 19:43:14,320 - INFO -   [Regularized] Loss=0.0670 L1=0.0000 R2=0.7426
+2026-04-07 19:43:14,821 - INFO - CCC: 0.9811
+2026-04-07 19:43:15,354 - INFO - CCC: 0.7071
+2026-04-07 19:43:15,355 - INFO - Epoch 083/200 | Train Loss 0.0670 R2 0.7426 | Val Loss 0.9148 R2 0.1576 RMSE 1.6331 MAE 1.3100 CCC 0.7071
+2026-04-07 19:43:15,966 - INFO -   [Regularized] Loss=0.0581 L1=0.0000 R2=0.7773
+2026-04-07 19:43:16,512 - INFO - CCC: 1.0066
+2026-04-07 19:43:17,080 - INFO - CCC: 0.7168
+2026-04-07 19:43:17,081 - INFO - Epoch 084/200 | Train Loss 0.0581 R2 0.7773 | Val Loss 0.9005 R2 0.1836 RMSE 1.6077 MAE 1.2998 CCC 0.7168
+2026-04-07 19:43:17,130 - INFO -  ✓ New best model saved (Val R² = 0.1836)
+2026-04-07 19:43:17,719 - INFO -   [Regularized] Loss=0.2108 L1=0.0000 R2=0.1816
+2026-04-07 19:43:18,332 - INFO - CCC: 1.0167
+2026-04-07 19:43:18,963 - INFO - CCC: 0.7184
+2026-04-07 19:43:18,964 - INFO - Epoch 085/200 | Train Loss 0.2108 R2 0.1816 | Val Loss 0.8981 R2 0.1873 RMSE 1.6041 MAE 1.2967 CCC 0.7184
+2026-04-07 19:43:19,006 - INFO -  ✓ New best model saved (Val R² = 0.1873)
+2026-04-07 19:43:19,625 - INFO -   [Regularized] Loss=0.0586 L1=0.0000 R2=0.8050
+2026-04-07 19:43:20,250 - INFO - CCC: 1.0197
+2026-04-07 19:43:20,796 - INFO - CCC: 0.7275
+2026-04-07 19:43:20,798 - INFO - Epoch 086/200 | Train Loss 0.0586 R2 0.8050 | Val Loss 0.8949 R2 0.2059 RMSE 1.5856 MAE 1.3009 CCC 0.7275
+2026-04-07 19:43:20,847 - INFO -  ✓ New best model saved (Val R² = 0.2059)
+2026-04-07 19:43:21,436 - INFO -   [Regularized] Loss=0.0479 L1=0.0000 R2=0.8144
+2026-04-07 19:43:21,984 - INFO - CCC: 1.0170
+2026-04-07 19:43:22,535 - INFO - CCC: 0.7303
+2026-04-07 19:43:22,536 - INFO - Epoch 087/200 | Train Loss 0.0479 R2 0.8144 | Val Loss 0.8954 R2 0.2092 RMSE 1.5823 MAE 1.3024 CCC 0.7303
+2026-04-07 19:43:22,583 - INFO -  ✓ New best model saved (Val R² = 0.2092)
+2026-04-07 19:43:23,148 - INFO -   [Regularized] Loss=0.1951 L1=0.0000 R2=0.2478
+2026-04-07 19:43:23,737 - INFO - CCC: 1.0197
+2026-04-07 19:43:24,404 - INFO - CCC: 0.7319
+2026-04-07 19:43:24,405 - INFO - Epoch 088/200 | Train Loss 0.1951 R2 0.2478 | Val Loss 0.8937 R2 0.2119 RMSE 1.5796 MAE 1.3011 CCC 0.7319
+2026-04-07 19:43:24,452 - INFO -  ✓ New best model saved (Val R² = 0.2119)
+2026-04-07 19:43:25,107 - INFO -   [Regularized] Loss=0.0697 L1=0.0000 R2=0.7583
+2026-04-07 19:43:25,675 - INFO - CCC: 1.0275
+2026-04-07 19:43:26,219 - INFO - CCC: 0.7376
+2026-04-07 19:43:26,220 - INFO - Epoch 089/200 | Train Loss 0.0697 R2 0.7583 | Val Loss 0.8828 R2 0.2243 RMSE 1.5671 MAE 1.2839 CCC 0.7376
+2026-04-07 19:43:26,259 - INFO -  ✓ New best model saved (Val R² = 0.2243)
+2026-04-07 19:43:26,870 - INFO -   [Regularized] Loss=0.0395 L1=0.0000 R2=0.8483
+2026-04-07 19:43:27,494 - INFO - CCC: 1.0393
+2026-04-07 19:43:28,061 - INFO - CCC: 0.7438
+2026-04-07 19:43:28,062 - INFO - Epoch 090/200 | Train Loss 0.0395 R2 0.8483 | Val Loss 0.8686 R2 0.2391 RMSE 1.5521 MAE 1.2594 CCC 0.7438
+2026-04-07 19:43:28,111 - INFO -  ✓ New best model saved (Val R² = 0.2391)
+2026-04-07 19:43:28,725 - INFO -   [Regularized] Loss=0.0387 L1=0.0000 R2=0.8684
+2026-04-07 19:43:29,250 - INFO - CCC: 1.0550
+2026-04-07 19:43:29,781 - INFO - CCC: 0.7435
+2026-04-07 19:43:29,782 - INFO - Epoch 091/200 | Train Loss 0.0387 R2 0.8684 | Val Loss 0.8663 R2 0.2393 RMSE 1.5519 MAE 1.2559 CCC 0.7435
+2026-04-07 19:43:30,401 - INFO -   [Regularized] Loss=0.0335 L1=0.0000 R2=0.8859
+2026-04-07 19:43:30,930 - INFO - CCC: 1.0666
+2026-04-07 19:43:31,468 - INFO - CCC: 0.7379
+2026-04-07 19:43:31,469 - INFO - Epoch 092/200 | Train Loss 0.0335 R2 0.8859 | Val Loss 0.8733 R2 0.2279 RMSE 1.5635 MAE 1.2705 CCC 0.7379
+2026-04-07 19:43:32,076 - INFO -   [Regularized] Loss=0.0309 L1=0.0000 R2=0.8813
+2026-04-07 19:43:32,623 - INFO - CCC: 1.0676
+2026-04-07 19:43:33,182 - INFO - CCC: 0.7344
+2026-04-07 19:43:33,183 - INFO - Epoch 093/200 | Train Loss 0.0309 R2 0.8813 | Val Loss 0.8787 R2 0.2206 RMSE 1.5708 MAE 1.2810 CCC 0.7344
+2026-04-07 19:43:33,785 - INFO -   [Regularized] Loss=0.0501 L1=0.0000 R2=0.8214
+2026-04-07 19:43:34,332 - INFO - CCC: 1.0704
+2026-04-07 19:43:34,950 - INFO - CCC: 0.7350
+2026-04-07 19:43:34,951 - INFO - Epoch 094/200 | Train Loss 0.0501 R2 0.8214 | Val Loss 0.8847 R2 0.2197 RMSE 1.5717 MAE 1.2931 CCC 0.7350
+2026-04-07 19:43:35,506 - INFO -   [Regularized] Loss=0.0706 L1=0.0000 R2=0.7661
+2026-04-07 19:43:36,049 - INFO - CCC: 1.0748
+2026-04-07 19:43:36,675 - INFO - CCC: 0.7354
+2026-04-07 19:43:36,677 - INFO - Epoch 095/200 | Train Loss 0.0706 R2 0.7661 | Val Loss 0.8840 R2 0.2204 RMSE 1.5711 MAE 1.2919 CCC 0.7354
+2026-04-07 19:43:37,258 - INFO -   [Regularized] Loss=0.0367 L1=0.0000 R2=0.8920
+2026-04-07 19:43:37,797 - INFO - CCC: 1.0791
+2026-04-07 19:43:38,312 - INFO - CCC: 0.7379
+2026-04-07 19:43:38,313 - INFO - Epoch 096/200 | Train Loss 0.0367 R2 0.8920 | Val Loss 0.8799 R2 0.2251 RMSE 1.5663 MAE 1.2839 CCC 0.7379
+2026-04-07 19:43:38,995 - INFO -   [Regularized] Loss=0.0276 L1=0.0000 R2=0.8938
+2026-04-07 19:43:39,637 - INFO - CCC: 1.0831
+2026-04-07 19:43:40,197 - INFO - CCC: 0.7394
+2026-04-07 19:43:40,198 - INFO - Epoch 097/200 | Train Loss 0.0276 R2 0.8938 | Val Loss 0.8753 R2 0.2286 RMSE 1.5628 MAE 1.2741 CCC 0.7394
+2026-04-07 19:43:40,884 - INFO -   [Regularized] Loss=0.0323 L1=0.0000 R2=0.8895
+2026-04-07 19:43:41,550 - INFO - CCC: 1.0855
+2026-04-07 19:43:42,188 - INFO - CCC: 0.7387
+2026-04-07 19:43:42,190 - INFO - Epoch 098/200 | Train Loss 0.0323 R2 0.8895 | Val Loss 0.8751 R2 0.2268 RMSE 1.5646 MAE 1.2728 CCC 0.7387
+2026-04-07 19:43:42,929 - INFO -   [Regularized] Loss=0.0233 L1=0.0000 R2=0.9149
+2026-04-07 19:43:43,562 - INFO - CCC: 1.0880
+2026-04-07 19:43:44,157 - INFO - CCC: 0.7380
+2026-04-07 19:43:44,158 - INFO - Epoch 099/200 | Train Loss 0.0233 R2 0.9149 | Val Loss 0.8771 R2 0.2248 RMSE 1.5666 MAE 1.2777 CCC 0.7380
+2026-04-07 19:43:44,875 - INFO -   [Regularized] Loss=0.0243 L1=0.0000 R2=0.9125
+2026-04-07 19:43:45,540 - INFO - CCC: 1.0913
+2026-04-07 19:43:46,170 - INFO - CCC: 0.7388
+2026-04-07 19:43:46,171 - INFO - Epoch 100/200 | Train Loss 0.0243 R2 0.9125 | Val Loss 0.8784 R2 0.2255 RMSE 1.5659 MAE 1.2827 CCC 0.7388
+2026-04-07 19:43:46,790 - INFO -   [Regularized] Loss=0.0268 L1=0.0000 R2=0.9014
+2026-04-07 19:43:47,381 - INFO - CCC: 1.0919
+2026-04-07 19:43:47,949 - INFO - CCC: 0.7394
+2026-04-07 19:43:47,950 - INFO - Epoch 101/200 | Train Loss 0.0268 R2 0.9014 | Val Loss 0.8820 R2 0.2250 RMSE 1.5664 MAE 1.2913 CCC 0.7394
+2026-04-07 19:43:48,566 - INFO -   [Regularized] Loss=0.0278 L1=0.0000 R2=0.8919
+2026-04-07 19:43:49,131 - INFO - CCC: 1.0842
+2026-04-07 19:43:49,708 - INFO - CCC: 0.7400
+2026-04-07 19:43:49,709 - INFO - Epoch 102/200 | Train Loss 0.0278 R2 0.8919 | Val Loss 0.8862 R2 0.2238 RMSE 1.5677 MAE 1.2990 CCC 0.7400
+2026-04-07 19:43:50,298 - INFO -   [Regularized] Loss=0.0209 L1=0.0000 R2=0.9266
+2026-04-07 19:43:50,818 - INFO - CCC: 1.0666
+2026-04-07 19:43:51,390 - INFO - CCC: 0.7411
+2026-04-07 19:43:51,391 - INFO - Epoch 103/200 | Train Loss 0.0209 R2 0.9266 | Val Loss 0.8885 R2 0.2233 RMSE 1.5682 MAE 1.3027 CCC 0.7411
+2026-04-07 19:43:51,998 - INFO -   [Regularized] Loss=0.0408 L1=0.0000 R2=0.8704
+2026-04-07 19:43:52,617 - INFO - CCC: 1.0648
+2026-04-07 19:43:53,236 - INFO - CCC: 0.7428
+2026-04-07 19:43:53,237 - INFO - Epoch 104/200 | Train Loss 0.0408 R2 0.8704 | Val Loss 0.8863 R2 0.2260 RMSE 1.5654 MAE 1.2991 CCC 0.7428
+2026-04-07 19:43:53,975 - INFO -   [Regularized] Loss=0.0363 L1=0.0000 R2=0.8555
+2026-04-07 19:43:54,518 - INFO - CCC: 1.0738
+2026-04-07 19:43:55,058 - INFO - CCC: 0.7443
+2026-04-07 19:43:55,059 - INFO - Epoch 105/200 | Train Loss 0.0363 R2 0.8555 | Val Loss 0.8827 R2 0.2297 RMSE 1.5616 MAE 1.2932 CCC 0.7443
+2026-04-07 19:43:55,686 - INFO -   [Regularized] Loss=0.0466 L1=0.0000 R2=0.8429
+2026-04-07 19:43:56,259 - INFO - CCC: 1.0888
+2026-04-07 19:43:56,835 - INFO - CCC: 0.7470
+2026-04-07 19:43:56,837 - INFO - Epoch 106/200 | Train Loss 0.0466 R2 0.8429 | Val Loss 0.8757 R2 0.2367 RMSE 1.5546 MAE 1.2805 CCC 0.7470
+2026-04-07 19:43:57,466 - INFO -   [Regularized] Loss=0.0291 L1=0.0000 R2=0.8952
+2026-04-07 19:43:58,098 - INFO - CCC: 1.1036
+2026-04-07 19:43:58,651 - INFO - CCC: 0.7496
+2026-04-07 19:43:58,652 - INFO - Epoch 107/200 | Train Loss 0.0291 R2 0.8952 | Val Loss 0.8664 R2 0.2445 RMSE 1.5466 MAE 1.2623 CCC 0.7496
+2026-04-07 19:43:58,695 - INFO -  ✓ New best model saved (Val R² = 0.2445)
+2026-04-07 19:43:59,323 - INFO -   [Regularized] Loss=0.0253 L1=0.0000 R2=0.9040
+2026-04-07 19:43:59,863 - INFO - CCC: 1.1016
+2026-04-07 19:44:00,500 - INFO - CCC: 0.7512
+2026-04-07 19:44:00,502 - INFO - Epoch 108/200 | Train Loss 0.0253 R2 0.9040 | Val Loss 0.8587 R2 0.2492 RMSE 1.5418 MAE 1.2436 CCC 0.7512
+2026-04-07 19:44:00,545 - INFO -  ✓ New best model saved (Val R² = 0.2492)
+2026-04-07 19:44:01,191 - INFO -   [Regularized] Loss=0.0217 L1=0.0000 R2=0.9174
+2026-04-07 19:44:01,720 - INFO - CCC: 1.0856
+2026-04-07 19:44:02,273 - INFO - CCC: 0.7505
+2026-04-07 19:44:02,274 - INFO - Epoch 109/200 | Train Loss 0.0217 R2 0.9174 | Val Loss 0.8549 R2 0.2477 RMSE 1.5433 MAE 1.2255 CCC 0.7505
+2026-04-07 19:44:02,857 - INFO -   [Regularized] Loss=0.0512 L1=0.0000 R2=0.8182
+2026-04-07 19:44:03,387 - INFO - CCC: 1.0754
+2026-04-07 19:44:03,935 - INFO - CCC: 0.7488
+2026-04-07 19:44:03,936 - INFO - Epoch 110/200 | Train Loss 0.0512 R2 0.8182 | Val Loss 0.8560 R2 0.2428 RMSE 1.5484 MAE 1.2180 CCC 0.7488
+2026-04-07 19:44:04,526 - INFO -   [Regularized] Loss=0.0505 L1=0.0000 R2=0.8332
+2026-04-07 19:44:05,069 - INFO - CCC: 1.0731
+2026-04-07 19:44:05,588 - INFO - CCC: 0.7475
+2026-04-07 19:44:05,589 - INFO - Epoch 111/200 | Train Loss 0.0505 R2 0.8332 | Val Loss 0.8578 R2 0.2392 RMSE 1.5519 MAE 1.2187 CCC 0.7475
+2026-04-07 19:44:06,203 - INFO -   [Regularized] Loss=0.0351 L1=0.0000 R2=0.8874
+2026-04-07 19:44:06,751 - INFO - CCC: 1.0768
+2026-04-07 19:44:07,303 - INFO - CCC: 0.7472
+2026-04-07 19:44:07,304 - INFO - Epoch 112/200 | Train Loss 0.0351 R2 0.8874 | Val Loss 0.8590 R2 0.2384 RMSE 1.5528 MAE 1.2244 CCC 0.7472
+2026-04-07 19:44:07,934 - INFO -   [Regularized] Loss=0.0456 L1=0.0000 R2=0.8612
+2026-04-07 19:44:08,463 - INFO - CCC: 1.0841
+2026-04-07 19:44:09,023 - INFO - CCC: 0.7468
+2026-04-07 19:44:09,025 - INFO - Epoch 113/200 | Train Loss 0.0456 R2 0.8612 | Val Loss 0.8606 R2 0.2381 RMSE 1.5531 MAE 1.2342 CCC 0.7468
+2026-04-07 19:44:09,609 - INFO -   [Regularized] Loss=0.0401 L1=0.0000 R2=0.8777
+2026-04-07 19:44:10,167 - INFO - CCC: 1.0902
+2026-04-07 19:44:10,706 - INFO - CCC: 0.7457
+2026-04-07 19:44:10,707 - INFO - Epoch 114/200 | Train Loss 0.0401 R2 0.8777 | Val Loss 0.8637 R2 0.2359 RMSE 1.5554 MAE 1.2455 CCC 0.7457
+2026-04-07 19:44:11,121 - INFO -   [Regularized] Loss=0.0363 L1=0.0000 R2=0.8649
+2026-04-07 19:44:11,515 - INFO - CCC: 1.0973
+2026-04-07 19:44:12,019 - INFO - CCC: 0.7452
+2026-04-07 19:44:12,021 - INFO - Epoch 115/200 | Train Loss 0.0363 R2 0.8649 | Val Loss 0.8670 R2 0.2349 RMSE 1.5563 MAE 1.2568 CCC 0.7452
+2026-04-07 19:44:12,479 - INFO -   [Regularized] Loss=0.0388 L1=0.0000 R2=0.8831
+2026-04-07 19:44:12,875 - INFO - CCC: 1.1034
+2026-04-07 19:44:13,338 - INFO - CCC: 0.7444
+2026-04-07 19:44:13,339 - INFO - Epoch 116/200 | Train Loss 0.0388 R2 0.8831 | Val Loss 0.8715 R2 0.2329 RMSE 1.5584 MAE 1.2690 CCC 0.7444
+2026-04-07 19:44:13,879 - INFO -   [Regularized] Loss=0.0369 L1=0.0000 R2=0.8825
+2026-04-07 19:44:14,298 - INFO - CCC: 1.1086
+2026-04-07 19:44:14,747 - INFO - CCC: 0.7436
+2026-04-07 19:44:14,749 - INFO - Epoch 117/200 | Train Loss 0.0369 R2 0.8825 | Val Loss 0.8767 R2 0.2304 RMSE 1.5610 MAE 1.2807 CCC 0.7436
+2026-04-07 19:44:15,273 - INFO -   [Regularized] Loss=0.0184 L1=0.0000 R2=0.9323
+2026-04-07 19:44:15,720 - INFO - CCC: 1.1107
+2026-04-07 19:44:16,082 - INFO - CCC: 0.7428
+2026-04-07 19:44:16,083 - INFO - Epoch 118/200 | Train Loss 0.0184 R2 0.9323 | Val Loss 0.8815 R2 0.2277 RMSE 1.5636 MAE 1.2899 CCC 0.7428
+2026-04-07 19:44:16,544 - INFO -   [Regularized] Loss=0.0237 L1=0.0000 R2=0.9114
+2026-04-07 19:44:16,925 - INFO - CCC: 1.1102
+2026-04-07 19:44:17,361 - INFO - CCC: 0.7421
+2026-04-07 19:44:17,362 - INFO - Epoch 119/200 | Train Loss 0.0237 R2 0.9114 | Val Loss 0.8846 R2 0.2255 RMSE 1.5659 MAE 1.2956 CCC 0.7421
+2026-04-07 19:44:17,819 - INFO -   [Regularized] Loss=0.0213 L1=0.0000 R2=0.9232
+2026-04-07 19:44:18,256 - INFO - CCC: 1.1087
+2026-04-07 19:44:18,741 - INFO - CCC: 0.7417
+2026-04-07 19:44:18,742 - INFO - Epoch 120/200 | Train Loss 0.0213 R2 0.9232 | Val Loss 0.8869 R2 0.2240 RMSE 1.5674 MAE 1.2997 CCC 0.7417
+2026-04-07 19:44:19,270 - INFO -   [Regularized] Loss=0.0330 L1=0.0000 R2=0.8938
+2026-04-07 19:44:19,642 - INFO - CCC: 1.1064
+2026-04-07 19:44:20,068 - INFO - CCC: 0.7416
+2026-04-07 19:44:20,069 - INFO - Epoch 121/200 | Train Loss 0.0330 R2 0.8938 | Val Loss 0.8883 R2 0.2232 RMSE 1.5682 MAE 1.3021 CCC 0.7416
+2026-04-07 19:44:20,536 - INFO -   [Regularized] Loss=0.0157 L1=0.0000 R2=0.9442
+2026-04-07 19:44:21,009 - INFO - CCC: 1.1024
+2026-04-07 19:44:21,531 - INFO - CCC: 0.7416
+2026-04-07 19:44:21,532 - INFO - Epoch 122/200 | Train Loss 0.0157 R2 0.9442 | Val Loss 0.8894 R2 0.2227 RMSE 1.5688 MAE 1.3042 CCC 0.7416
+2026-04-07 19:44:22,130 - INFO -   [Regularized] Loss=0.0224 L1=0.0000 R2=0.9230
+2026-04-07 19:44:22,653 - INFO - CCC: 1.1002
+2026-04-07 19:44:23,168 - INFO - CCC: 0.7416
+2026-04-07 19:44:23,170 - INFO - Epoch 123/200 | Train Loss 0.0224 R2 0.9230 | Val Loss 0.8900 R2 0.2224 RMSE 1.5690 MAE 1.3052 CCC 0.7416
+2026-04-07 19:44:23,800 - INFO -   [Regularized] Loss=0.0171 L1=0.0000 R2=0.9354
+2026-04-07 19:44:24,337 - INFO - CCC: 1.0997
+2026-04-07 19:44:24,904 - INFO - CCC: 0.7416
+2026-04-07 19:44:24,907 - INFO - Epoch 124/200 | Train Loss 0.0171 R2 0.9354 | Val Loss 0.8902 R2 0.2222 RMSE 1.5692 MAE 1.3056 CCC 0.7416
+2026-04-07 19:44:25,442 - INFO -   [Regularized] Loss=0.0449 L1=0.0000 R2=0.8342
+2026-04-07 19:44:25,992 - INFO - CCC: 1.1002
+2026-04-07 19:44:26,567 - INFO - CCC: 0.7416
+2026-04-07 19:44:26,568 - INFO - Epoch 125/200 | Train Loss 0.0449 R2 0.8342 | Val Loss 0.8902 R2 0.2222 RMSE 1.5693 MAE 1.3057 CCC 0.7416
+2026-04-07 19:44:27,206 - INFO -   [Regularized] Loss=0.1802 L1=0.0000 R2=0.3614
+2026-04-07 19:44:27,767 - INFO - CCC: 1.1003
+2026-04-07 19:44:28,363 - INFO - CCC: 0.7416
+2026-04-07 19:44:28,365 - INFO - Epoch 126/200 | Train Loss 0.1802 R2 0.3614 | Val Loss 0.8902 R2 0.2222 RMSE 1.5692 MAE 1.3057 CCC 0.7416
+2026-04-07 19:44:28,941 - INFO -   [Regularized] Loss=0.0476 L1=0.0000 R2=0.8099
+2026-04-07 19:44:29,478 - INFO - CCC: 1.1009
+2026-04-07 19:44:30,019 - INFO - CCC: 0.7416
+2026-04-07 19:44:30,022 - INFO - Epoch 127/200 | Train Loss 0.0476 R2 0.8099 | Val Loss 0.8901 R2 0.2222 RMSE 1.5692 MAE 1.3057 CCC 0.7416
+2026-04-07 19:44:30,618 - INFO -   [Regularized] Loss=0.0309 L1=0.0000 R2=0.8874
+2026-04-07 19:44:31,124 - INFO - CCC: 1.1012
+2026-04-07 19:44:31,700 - INFO - CCC: 0.7416
+2026-04-07 19:44:31,701 - INFO - Epoch 128/200 | Train Loss 0.0309 R2 0.8874 | Val Loss 0.8901 R2 0.2222 RMSE 1.5692 MAE 1.3056 CCC 0.7416
+2026-04-07 19:44:31,701 - INFO - Early stopping triggered (no val R2 improvement in 20 epochs).
+2026-04-07 19:44:31,761 - INFO - Loaded checkpoint from best_model_tmp.pt (strict).
+2026-04-07 19:44:32,396 - INFO - CCC: 0.7512
+2026-04-07 19:44:33,059 - INFO - CCC: 0.6734
+2026-04-07 19:45:27,954 - INFO - Signal analysis complete -> results_signal_d4_polyploid/tier2_env_fold2
+2026-04-07 19:45:28,342 - INFO - Auto thresholds (weekly): heat=30.159, cold=9.021, vpd=1.359
+2026-04-07 19:45:28,352 - INFO - [tier2_env Fold 3/4] Tensor dims →’ genomic_feat=88, chrom=3, locations=2, years=2, pops=3
+2026-04-07 19:45:28,353 - INFO - [tier2_env Fold 3/4] Tensor feature indices: block_id_raw_idx=84, te_hotspot_idx=77, is_te_idx=76, is_genic_idx=78, is_promoter_idx=79, block_gene_count_idx=80, block_snp_density_idx=82, block_mean_maf_idx=81, dosage_idx=0, token_rank_idx=2, dosage_local_mean_idx=3, dosage_local_std_idx=4, te_dist_idx=74, gene_dist_idx=75
+2026-04-07 19:45:28,783 - INFO - [tier2_env Fold 3] Diagnostic loc_ids min=0 max=1 (expected 0–1), year_ids min=0 max=1 (expected 0–1)
+2026-04-07 19:45:28,872 - INFO - Creating GxE_Transformer_Tensor model (CV path)...
+2026-04-07 19:45:28,873 - INFO - Functional channel idx (CV): block_id_raw=84, te_hotspot=77, is_te=76, is_genic=78, is_promoter=79, block_gene=80, block_density=82, block_maf=81, dosage=0, te_dist=74, gene_dist=75
+2026-04-07 19:45:28,874 - WARNING - homeolog_group_token_split_subgenome requested but sg_channel_idx is missing; disabling split.
+2026-04-07 19:45:28,874 - WARNING - use_homeolog_auxiliary requested but hom_gid_channel_idx/sg_channel_idx is missing; disabling auxiliary loss.
+2026-04-07 19:45:28,926 - INFO - [tier2_env Fold 3/4] Model parameters: 605,075
+2026-04-07 19:45:29,406 - INFO - TE indicator is near-constant (mean=1.000); ignoring it for hotspots/func types.
+2026-04-07 19:45:29,429 - INFO - HABE tokens/sample: min=16 mean=16.0 max=16 | hotspot tokens/sample: min=15 mean=15.0 max=15 | func_type_counts=[18, 81, 54, 0]
+2026-04-07 19:45:29,575 - INFO -   [Regularized] Loss=0.3761 L1=0.0000 R2=-0.5304
+2026-04-07 19:45:30,091 - INFO - CCC: 0.1038
+2026-04-07 19:45:30,635 - INFO - CCC: 0.3939
+2026-04-07 19:45:30,636 - INFO - Epoch 001/200 | Train Loss 0.3761 R2 -0.5304 | Val Loss 0.5054 R2 0.2837 RMSE 1.3119 MAE 1.0898 CCC 0.3939
+2026-04-07 19:45:30,684 - INFO -  ✓ New best model saved (Val R² = 0.2837)
+2026-04-07 19:45:31,297 - INFO -   [Regularized] Loss=0.2814 L1=0.0000 R2=-0.4181
+2026-04-07 19:45:31,849 - INFO - CCC: 0.1385
+2026-04-07 19:45:32,397 - INFO - CCC: 0.4232
+2026-04-07 19:45:32,399 - INFO - Epoch 002/200 | Train Loss 0.2814 R2 -0.4181 | Val Loss 0.5006 R2 0.3301 RMSE 1.2687 MAE 1.0677 CCC 0.4232
+2026-04-07 19:45:32,446 - INFO -  ✓ New best model saved (Val R² = 0.3301)
+2026-04-07 19:45:33,005 - INFO -   [Regularized] Loss=0.1955 L1=0.0000 R2=0.0617
+2026-04-07 19:45:33,547 - INFO - CCC: 0.1642
+2026-04-07 19:45:34,088 - INFO - CCC: 0.4377
+2026-04-07 19:45:34,089 - INFO - Epoch 003/200 | Train Loss 0.1955 R2 0.0617 | Val Loss 0.5025 R2 0.3471 RMSE 1.2525 MAE 1.0539 CCC 0.4377
+2026-04-07 19:45:34,137 - INFO -  ✓ New best model saved (Val R² = 0.3471)
+2026-04-07 19:45:34,791 - INFO -   [Regularized] Loss=0.1670 L1=0.0000 R2=0.1267
+2026-04-07 19:45:35,300 - INFO - CCC: 0.1993
+2026-04-07 19:45:35,835 - INFO - CCC: 0.4528
+2026-04-07 19:45:35,836 - INFO - Epoch 004/200 | Train Loss 0.1670 R2 0.1267 | Val Loss 0.5091 R2 0.3603 RMSE 1.2398 MAE 1.0367 CCC 0.4528
+2026-04-07 19:45:35,883 - INFO -  ✓ New best model saved (Val R² = 0.3603)
+2026-04-07 19:45:36,478 - INFO -   [Regularized] Loss=0.1695 L1=0.0000 R2=0.1439
+2026-04-07 19:45:37,042 - INFO - CCC: 0.2321
+2026-04-07 19:45:37,618 - INFO - CCC: 0.4655
+2026-04-07 19:45:37,620 - INFO - Epoch 005/200 | Train Loss 0.1695 R2 0.1439 | Val Loss 0.5185 R2 0.3670 RMSE 1.2333 MAE 1.0252 CCC 0.4655
+2026-04-07 19:45:37,667 - INFO -  ✓ New best model saved (Val R² = 0.3670)
+2026-04-07 19:45:38,299 - INFO -   [Regularized] Loss=0.1559 L1=0.0000 R2=0.3113
+2026-04-07 19:45:38,841 - INFO - CCC: 0.2652
+2026-04-07 19:45:39,417 - INFO - CCC: 0.4760
+2026-04-07 19:45:39,419 - INFO - Epoch 006/200 | Train Loss 0.1559 R2 0.3113 | Val Loss 0.5243 R2 0.3729 RMSE 1.2275 MAE 1.0208 CCC 0.4760
+2026-04-07 19:45:39,465 - INFO -  ✓ New best model saved (Val R² = 0.3729)
+2026-04-07 19:45:40,060 - INFO -   [Regularized] Loss=0.1942 L1=0.0000 R2=0.0574
+2026-04-07 19:45:40,604 - INFO - CCC: 0.2989
+2026-04-07 19:45:41,170 - INFO - CCC: 0.4828
+2026-04-07 19:45:41,171 - INFO - Epoch 007/200 | Train Loss 0.1942 R2 0.0574 | Val Loss 0.5274 R2 0.3777 RMSE 1.2228 MAE 1.0144 CCC 0.4828
+2026-04-07 19:45:41,221 - INFO -  ✓ New best model saved (Val R² = 0.3777)
+2026-04-07 19:45:41,847 - INFO -   [Regularized] Loss=0.2316 L1=0.0000 R2=-0.1661
+2026-04-07 19:45:42,403 - INFO - CCC: 0.3251
+2026-04-07 19:45:42,968 - INFO - CCC: 0.4889
+2026-04-07 19:45:42,969 - INFO - Epoch 008/200 | Train Loss 0.2316 R2 -0.1661 | Val Loss 0.5304 R2 0.3807 RMSE 1.2198 MAE 1.0077 CCC 0.4889
+2026-04-07 19:45:43,017 - INFO -  ✓ New best model saved (Val R² = 0.3807)
+2026-04-07 19:45:43,610 - INFO -   [Regularized] Loss=0.1400 L1=0.0000 R2=0.4285
+2026-04-07 19:45:44,173 - INFO - CCC: 0.3517
+2026-04-07 19:45:44,712 - INFO - CCC: 0.4953
+2026-04-07 19:45:44,713 - INFO - Epoch 009/200 | Train Loss 0.1400 R2 0.4285 | Val Loss 0.5287 R2 0.3867 RMSE 1.2139 MAE 1.0004 CCC 0.4953
+2026-04-07 19:45:44,756 - INFO -  ✓ New best model saved (Val R² = 0.3867)
+2026-04-07 19:45:45,364 - INFO -   [Regularized] Loss=0.1815 L1=0.0000 R2=0.0839
+2026-04-07 19:45:45,898 - INFO - CCC: 0.3776
+2026-04-07 19:45:46,469 - INFO - CCC: 0.5005
+2026-04-07 19:45:46,469 - INFO - Epoch 010/200 | Train Loss 0.1815 R2 0.0839 | Val Loss 0.5265 R2 0.3921 RMSE 1.2086 MAE 0.9929 CCC 0.5005
+2026-04-07 19:45:46,514 - INFO -  ✓ New best model saved (Val R² = 0.3921)
+2026-04-07 19:45:47,107 - INFO -   [Regularized] Loss=0.1792 L1=0.0000 R2=0.1583
+2026-04-07 19:45:47,621 - INFO - CCC: 0.4023
+2026-04-07 19:45:48,130 - INFO - CCC: 0.5069
+2026-04-07 19:45:48,133 - INFO - Epoch 011/200 | Train Loss 0.1792 R2 0.1583 | Val Loss 0.5201 R2 0.4000 RMSE 1.2007 MAE 0.9849 CCC 0.5069
+2026-04-07 19:45:48,181 - INFO -  ✓ New best model saved (Val R² = 0.4000)
+2026-04-07 19:45:48,782 - INFO -   [Regularized] Loss=0.1494 L1=0.0000 R2=0.3849
+2026-04-07 19:45:49,310 - INFO - CCC: 0.4248
+2026-04-07 19:45:49,861 - INFO - CCC: 0.5137
+2026-04-07 19:45:49,863 - INFO - Epoch 012/200 | Train Loss 0.1494 R2 0.3849 | Val Loss 0.5105 R2 0.4098 RMSE 1.1909 MAE 0.9768 CCC 0.5137
+2026-04-07 19:45:49,911 - INFO -  ✓ New best model saved (Val R² = 0.4098)
+2026-04-07 19:45:50,554 - INFO -   [Regularized] Loss=0.1914 L1=0.0000 R2=0.0946
+2026-04-07 19:45:51,065 - INFO - CCC: 0.4452
+2026-04-07 19:45:51,617 - INFO - CCC: 0.5195
+2026-04-07 19:45:51,620 - INFO - Epoch 013/200 | Train Loss 0.1914 R2 0.0946 | Val Loss 0.5008 R2 0.4187 RMSE 1.1818 MAE 0.9697 CCC 0.5195
+2026-04-07 19:45:51,669 - INFO -  ✓ New best model saved (Val R² = 0.4187)
+2026-04-07 19:45:52,245 - INFO -   [Regularized] Loss=0.1341 L1=0.0000 R2=0.3532
+2026-04-07 19:45:52,775 - INFO - CCC: 0.4622
+2026-04-07 19:45:53,325 - INFO - CCC: 0.5251
+2026-04-07 19:45:53,327 - INFO - Epoch 014/200 | Train Loss 0.1341 R2 0.3532 | Val Loss 0.4907 R2 0.4269 RMSE 1.1735 MAE 0.9633 CCC 0.5251
+2026-04-07 19:45:53,375 - INFO -  ✓ New best model saved (Val R² = 0.4269)
+2026-04-07 19:45:54,006 - INFO -   [Regularized] Loss=0.1380 L1=0.0000 R2=0.3203
+2026-04-07 19:45:54,552 - INFO - CCC: 0.4798
+2026-04-07 19:45:55,102 - INFO - CCC: 0.5302
+2026-04-07 19:45:55,105 - INFO - Epoch 015/200 | Train Loss 0.1380 R2 0.3203 | Val Loss 0.4836 R2 0.4332 RMSE 1.1670 MAE 0.9573 CCC 0.5302
+2026-04-07 19:45:55,153 - INFO -  ✓ New best model saved (Val R² = 0.4332)
+2026-04-07 19:45:55,765 - INFO -   [Regularized] Loss=0.1135 L1=0.0000 R2=0.4132
+2026-04-07 19:45:56,322 - INFO - CCC: 0.4970
+2026-04-07 19:45:56,851 - INFO - CCC: 0.5347
+2026-04-07 19:45:56,852 - INFO - Epoch 016/200 | Train Loss 0.1135 R2 0.4132 | Val Loss 0.4767 R2 0.4387 RMSE 1.1614 MAE 0.9512 CCC 0.5347
+2026-04-07 19:45:56,900 - INFO -  ✓ New best model saved (Val R² = 0.4387)
+2026-04-07 19:45:57,511 - INFO -   [Regularized] Loss=0.1418 L1=0.0000 R2=0.3010
+2026-04-07 19:45:58,060 - INFO - CCC: 0.5150
+2026-04-07 19:45:58,608 - INFO - CCC: 0.5402
+2026-04-07 19:45:58,611 - INFO - Epoch 017/200 | Train Loss 0.1418 R2 0.3010 | Val Loss 0.4711 R2 0.4441 RMSE 1.1557 MAE 0.9446 CCC 0.5402
+2026-04-07 19:45:58,658 - INFO -  ✓ New best model saved (Val R² = 0.4441)
+2026-04-07 19:45:59,249 - INFO -   [Regularized] Loss=0.1492 L1=0.0000 R2=0.4006
+2026-04-07 19:45:59,745 - INFO - CCC: 0.5343
+2026-04-07 19:46:00,271 - INFO - CCC: 0.5464
+2026-04-07 19:46:00,272 - INFO - Epoch 018/200 | Train Loss 0.1492 R2 0.4006 | Val Loss 0.4669 R2 0.4498 RMSE 1.1497 MAE 0.9383 CCC 0.5464
+2026-04-07 19:46:00,319 - INFO -  ✓ New best model saved (Val R² = 0.4498)
+2026-04-07 19:46:00,929 - INFO -   [Regularized] Loss=0.1142 L1=0.0000 R2=0.4191
+2026-04-07 19:46:01,451 - INFO - CCC: 0.5559
+2026-04-07 19:46:01,923 - INFO - CCC: 0.5526
+2026-04-07 19:46:01,925 - INFO - Epoch 019/200 | Train Loss 0.1142 R2 0.4191 | Val Loss 0.4647 R2 0.4555 RMSE 1.1439 MAE 0.9332 CCC 0.5526
+2026-04-07 19:46:01,965 - INFO -  ✓ New best model saved (Val R² = 0.4555)
+2026-04-07 19:46:02,547 - INFO -   [Regularized] Loss=0.2039 L1=0.0000 R2=-0.0088
+2026-04-07 19:46:03,099 - INFO - CCC: 0.5751
+2026-04-07 19:46:03,643 - INFO - CCC: 0.5583
+2026-04-07 19:46:03,644 - INFO - Epoch 020/200 | Train Loss 0.2039 R2 -0.0088 | Val Loss 0.4633 R2 0.4606 RMSE 1.1384 MAE 0.9284 CCC 0.5583
+2026-04-07 19:46:03,683 - INFO -  ✓ New best model saved (Val R² = 0.4606)
+2026-04-07 19:46:04,308 - INFO -   [Regularized] Loss=0.1430 L1=0.0000 R2=0.3753
+2026-04-07 19:46:04,949 - INFO - CCC: 0.5963
+2026-04-07 19:46:05,504 - INFO - CCC: 0.5646
+2026-04-07 19:46:05,505 - INFO - Epoch 021/200 | Train Loss 0.1430 R2 0.3753 | Val Loss 0.4629 R2 0.4662 RMSE 1.1326 MAE 0.9236 CCC 0.5646
+2026-04-07 19:46:05,557 - INFO -  ✓ New best model saved (Val R² = 0.4662)
+2026-04-07 19:46:06,129 - INFO -   [Regularized] Loss=0.1267 L1=0.0000 R2=0.4073
+2026-04-07 19:46:06,671 - INFO - CCC: 0.6168
+2026-04-07 19:46:07,208 - INFO - CCC: 0.5704
+2026-04-07 19:46:07,210 - INFO - Epoch 022/200 | Train Loss 0.1267 R2 0.4073 | Val Loss 0.4618 R2 0.4713 RMSE 1.1271 MAE 0.9185 CCC 0.5704
+2026-04-07 19:46:07,260 - INFO -  ✓ New best model saved (Val R² = 0.4713)
+2026-04-07 19:46:07,872 - INFO -   [Regularized] Loss=0.0952 L1=0.0000 R2=0.5311
+2026-04-07 19:46:08,530 - INFO - CCC: 0.6380
+2026-04-07 19:46:09,126 - INFO - CCC: 0.5765
+2026-04-07 19:46:09,128 - INFO - Epoch 023/200 | Train Loss 0.0952 R2 0.5311 | Val Loss 0.4618 R2 0.4765 RMSE 1.1216 MAE 0.9139 CCC 0.5765
+2026-04-07 19:46:09,181 - INFO -  ✓ New best model saved (Val R² = 0.4765)
+2026-04-07 19:46:09,802 - INFO -   [Regularized] Loss=0.0894 L1=0.0000 R2=0.5433
+2026-04-07 19:46:10,307 - INFO - CCC: 0.6597
+2026-04-07 19:46:10,757 - INFO - CCC: 0.5825
+2026-04-07 19:46:10,758 - INFO - Epoch 024/200 | Train Loss 0.0894 R2 0.5433 | Val Loss 0.4633 R2 0.4811 RMSE 1.1166 MAE 0.9101 CCC 0.5825
+2026-04-07 19:46:10,806 - INFO -  ✓ New best model saved (Val R² = 0.4811)
+2026-04-07 19:46:11,403 - INFO -   [Regularized] Loss=0.1362 L1=0.0000 R2=0.3041
+2026-04-07 19:46:11,936 - INFO - CCC: 0.6805
+2026-04-07 19:46:12,527 - INFO - CCC: 0.5883
+2026-04-07 19:46:12,528 - INFO - Epoch 025/200 | Train Loss 0.1362 R2 0.3041 | Val Loss 0.4661 R2 0.4852 RMSE 1.1122 MAE 0.9074 CCC 0.5883
+2026-04-07 19:46:12,576 - INFO -  ✓ New best model saved (Val R² = 0.4852)
+2026-04-07 19:46:13,171 - INFO -   [Regularized] Loss=0.1069 L1=0.0000 R2=0.5162
+2026-04-07 19:46:13,680 - INFO - CCC: 0.6995
+2026-04-07 19:46:14,222 - INFO - CCC: 0.5934
+2026-04-07 19:46:14,223 - INFO - Epoch 026/200 | Train Loss 0.1069 R2 0.5162 | Val Loss 0.4683 R2 0.4885 RMSE 1.1086 MAE 0.9033 CCC 0.5934
+2026-04-07 19:46:14,271 - INFO -  ✓ New best model saved (Val R² = 0.4885)
+2026-04-07 19:46:14,885 - INFO -   [Regularized] Loss=0.1074 L1=0.0000 R2=0.5762
+2026-04-07 19:46:15,411 - INFO - CCC: 0.7166
+2026-04-07 19:46:15,939 - INFO - CCC: 0.5976
+2026-04-07 19:46:15,939 - INFO - Epoch 027/200 | Train Loss 0.1074 R2 0.5762 | Val Loss 0.4718 R2 0.4906 RMSE 1.1063 MAE 0.8997 CCC 0.5976
+2026-04-07 19:46:15,985 - INFO -  ✓ New best model saved (Val R² = 0.4906)
+2026-04-07 19:46:16,538 - INFO -   [Regularized] Loss=0.1036 L1=0.0000 R2=0.5611
+2026-04-07 19:46:17,107 - INFO - CCC: 0.7317
+2026-04-07 19:46:17,674 - INFO - CCC: 0.6015
+2026-04-07 19:46:17,676 - INFO - Epoch 028/200 | Train Loss 0.1036 R2 0.5611 | Val Loss 0.4730 R2 0.4932 RMSE 1.1036 MAE 0.8955 CCC 0.6015
+2026-04-07 19:46:17,720 - INFO -  ✓ New best model saved (Val R² = 0.4932)
+2026-04-07 19:46:18,295 - INFO -   [Regularized] Loss=0.1188 L1=0.0000 R2=0.4476
+2026-04-07 19:46:18,885 - INFO - CCC: 0.7464
+2026-04-07 19:46:19,412 - INFO - CCC: 0.6053
+2026-04-07 19:46:19,414 - INFO - Epoch 029/200 | Train Loss 0.1188 R2 0.4476 | Val Loss 0.4720 R2 0.4963 RMSE 1.1001 MAE 0.8898 CCC 0.6053
+2026-04-07 19:46:19,461 - INFO -  ✓ New best model saved (Val R² = 0.4963)
+2026-04-07 19:46:20,056 - INFO -   [Regularized] Loss=0.0874 L1=0.0000 R2=0.5691
+2026-04-07 19:46:20,628 - INFO - CCC: 0.7600
+2026-04-07 19:46:21,185 - INFO - CCC: 0.6098
+2026-04-07 19:46:21,189 - INFO - Epoch 030/200 | Train Loss 0.0874 R2 0.5691 | Val Loss 0.4693 R2 0.5005 RMSE 1.0955 MAE 0.8834 CCC 0.6098
+2026-04-07 19:46:21,237 - INFO -  ✓ New best model saved (Val R² = 0.5005)
+2026-04-07 19:46:21,818 - INFO -   [Regularized] Loss=0.1231 L1=0.0000 R2=0.4190
+2026-04-07 19:46:22,354 - INFO - CCC: 0.7723
+2026-04-07 19:46:22,971 - INFO - CCC: 0.6147
+2026-04-07 19:46:22,973 - INFO - Epoch 031/200 | Train Loss 0.1231 R2 0.4190 | Val Loss 0.4649 R2 0.5055 RMSE 1.0900 MAE 0.8765 CCC 0.6147
+2026-04-07 19:46:23,019 - INFO -  ✓ New best model saved (Val R² = 0.5055)
+2026-04-07 19:46:23,646 - INFO -   [Regularized] Loss=0.1029 L1=0.0000 R2=0.5982
+2026-04-07 19:46:24,192 - INFO - CCC: 0.7805
+2026-04-07 19:46:24,760 - INFO - CCC: 0.6195
+2026-04-07 19:46:24,763 - INFO - Epoch 032/200 | Train Loss 0.1029 R2 0.5982 | Val Loss 0.4584 R2 0.5112 RMSE 1.0838 MAE 0.8693 CCC 0.6195
+2026-04-07 19:46:24,806 - INFO -  ✓ New best model saved (Val R² = 0.5112)
+2026-04-07 19:46:25,455 - INFO -   [Regularized] Loss=0.1367 L1=0.0000 R2=0.3578
+2026-04-07 19:46:25,998 - INFO - CCC: 0.7859
+2026-04-07 19:46:26,553 - INFO - CCC: 0.6236
+2026-04-07 19:46:26,556 - INFO - Epoch 033/200 | Train Loss 0.1367 R2 0.3578 | Val Loss 0.4524 R2 0.5163 RMSE 1.0780 MAE 0.8631 CCC 0.6236
+2026-04-07 19:46:26,604 - INFO -  ✓ New best model saved (Val R² = 0.5163)
+2026-04-07 19:46:27,156 - INFO -   [Regularized] Loss=0.1110 L1=0.0000 R2=0.4943
+2026-04-07 19:46:27,701 - INFO - CCC: 0.7894
+2026-04-07 19:46:28,267 - INFO - CCC: 0.6275
+2026-04-07 19:46:28,268 - INFO - Epoch 034/200 | Train Loss 0.1110 R2 0.4943 | Val Loss 0.4470 R2 0.5210 RMSE 1.0728 MAE 0.8586 CCC 0.6275
+2026-04-07 19:46:28,317 - INFO -  ✓ New best model saved (Val R² = 0.5210)
+2026-04-07 19:46:28,932 - INFO -   [Regularized] Loss=0.1058 L1=0.0000 R2=0.5001
+2026-04-07 19:46:29,468 - INFO - CCC: 0.7929
+2026-04-07 19:46:30,056 - INFO - CCC: 0.6317
+2026-04-07 19:46:30,057 - INFO - Epoch 035/200 | Train Loss 0.1058 R2 0.5001 | Val Loss 0.4419 R2 0.5256 RMSE 1.0676 MAE 0.8549 CCC 0.6317
+2026-04-07 19:46:30,105 - INFO -  ✓ New best model saved (Val R² = 0.5256)
+2026-04-07 19:46:30,672 - INFO -   [Regularized] Loss=0.1177 L1=0.0000 R2=0.3655
+2026-04-07 19:46:31,252 - INFO - CCC: 0.7946
+2026-04-07 19:46:31,806 - INFO - CCC: 0.6360
+2026-04-07 19:46:31,808 - INFO - Epoch 036/200 | Train Loss 0.1177 R2 0.3655 | Val Loss 0.4369 R2 0.5302 RMSE 1.0625 MAE 0.8510 CCC 0.6360
+2026-04-07 19:46:31,855 - INFO -  ✓ New best model saved (Val R² = 0.5302)
+2026-04-07 19:46:32,476 - INFO -   [Regularized] Loss=0.1093 L1=0.0000 R2=0.4102
+2026-04-07 19:46:32,989 - INFO - CCC: 0.8028
+2026-04-07 19:46:33,523 - INFO - CCC: 0.6406
+2026-04-07 19:46:33,525 - INFO - Epoch 037/200 | Train Loss 0.1093 R2 0.4102 | Val Loss 0.4344 R2 0.5342 RMSE 1.0579 MAE 0.8484 CCC 0.6406
+2026-04-07 19:46:33,574 - INFO -  ✓ New best model saved (Val R² = 0.5342)
+2026-04-07 19:46:34,216 - INFO -   [Regularized] Loss=0.0838 L1=0.0000 R2=0.6631
+2026-04-07 19:46:34,701 - INFO - CCC: 0.8093
+2026-04-07 19:46:35,193 - INFO - CCC: 0.6449
+2026-04-07 19:46:35,195 - INFO - Epoch 038/200 | Train Loss 0.0838 R2 0.6631 | Val Loss 0.4315 R2 0.5381 RMSE 1.0535 MAE 0.8458 CCC 0.6449
+2026-04-07 19:46:35,241 - INFO -  ✓ New best model saved (Val R² = 0.5381)
+2026-04-07 19:46:35,854 - INFO -   [Regularized] Loss=0.0613 L1=0.0000 R2=0.7256
+2026-04-07 19:46:36,395 - INFO - CCC: 0.8176
+2026-04-07 19:46:36,898 - INFO - CCC: 0.6495
+2026-04-07 19:46:36,899 - INFO - Epoch 039/200 | Train Loss 0.0613 R2 0.7256 | Val Loss 0.4290 R2 0.5422 RMSE 1.0488 MAE 0.8436 CCC 0.6495
+2026-04-07 19:46:36,950 - INFO -  ✓ New best model saved (Val R² = 0.5422)
+2026-04-07 19:46:37,566 - INFO -   [Regularized] Loss=0.0797 L1=0.0000 R2=0.6554
+2026-04-07 19:46:38,090 - INFO - CCC: 0.8288
+2026-04-07 19:46:38,674 - INFO - CCC: 0.6544
+2026-04-07 19:46:38,676 - INFO - Epoch 040/200 | Train Loss 0.0797 R2 0.6554 | Val Loss 0.4275 R2 0.5464 RMSE 1.0440 MAE 0.8418 CCC 0.6544
+2026-04-07 19:46:38,725 - INFO -  ✓ New best model saved (Val R² = 0.5464)
+2026-04-07 19:46:39,325 - INFO -   [Regularized] Loss=0.0871 L1=0.0000 R2=0.6090
+2026-04-07 19:46:39,854 - INFO - CCC: 0.8390
+2026-04-07 19:46:40,398 - INFO - CCC: 0.6593
+2026-04-07 19:46:40,401 - INFO - Epoch 041/200 | Train Loss 0.0871 R2 0.6090 | Val Loss 0.4259 R2 0.5503 RMSE 1.0394 MAE 0.8398 CCC 0.6593
+2026-04-07 19:46:40,448 - INFO -  ✓ New best model saved (Val R² = 0.5503)
+2026-04-07 19:46:41,065 - INFO -   [Regularized] Loss=0.0909 L1=0.0000 R2=0.5108
+2026-04-07 19:46:41,685 - INFO - CCC: 0.8484
+2026-04-07 19:46:42,218 - INFO - CCC: 0.6640
+2026-04-07 19:46:42,220 - INFO - Epoch 042/200 | Train Loss 0.0909 R2 0.5108 | Val Loss 0.4243 R2 0.5541 RMSE 1.0351 MAE 0.8375 CCC 0.6640
+2026-04-07 19:46:42,267 - INFO -  ✓ New best model saved (Val R² = 0.5541)
+2026-04-07 19:46:42,891 - INFO -   [Regularized] Loss=0.0941 L1=0.0000 R2=0.5713
+2026-04-07 19:46:43,410 - INFO - CCC: 0.8584
+2026-04-07 19:46:43,937 - INFO - CCC: 0.6683
+2026-04-07 19:46:43,938 - INFO - Epoch 043/200 | Train Loss 0.0941 R2 0.5713 | Val Loss 0.4235 R2 0.5574 RMSE 1.0312 MAE 0.8355 CCC 0.6683
+2026-04-07 19:46:43,986 - INFO -  ✓ New best model saved (Val R² = 0.5574)
+2026-04-07 19:46:44,623 - INFO -   [Regularized] Loss=0.0958 L1=0.0000 R2=0.5476
+2026-04-07 19:46:45,260 - INFO - CCC: 0.8675
+2026-04-07 19:46:45,826 - INFO - CCC: 0.6719
+2026-04-07 19:46:45,827 - INFO - Epoch 044/200 | Train Loss 0.0958 R2 0.5476 | Val Loss 0.4240 R2 0.5598 RMSE 1.0284 MAE 0.8349 CCC 0.6719
+2026-04-07 19:46:45,877 - INFO -  ✓ New best model saved (Val R² = 0.5598)
+2026-04-07 19:46:46,474 - INFO -   [Regularized] Loss=0.0573 L1=0.0000 R2=0.7271
+2026-04-07 19:46:47,064 - INFO - CCC: 0.8743
+2026-04-07 19:46:47,617 - INFO - CCC: 0.6752
+2026-04-07 19:46:47,618 - INFO - Epoch 045/200 | Train Loss 0.0573 R2 0.7271 | Val Loss 0.4241 R2 0.5620 RMSE 1.0258 MAE 0.8338 CCC 0.6752
+2026-04-07 19:46:47,666 - INFO -  ✓ New best model saved (Val R² = 0.5620)
+2026-04-07 19:46:48,259 - INFO -   [Regularized] Loss=0.0596 L1=0.0000 R2=0.7725
+2026-04-07 19:46:48,790 - INFO - CCC: 0.8794
+2026-04-07 19:46:49,372 - INFO - CCC: 0.6780
+2026-04-07 19:46:49,374 - INFO - Epoch 046/200 | Train Loss 0.0596 R2 0.7725 | Val Loss 0.4242 R2 0.5638 RMSE 1.0237 MAE 0.8328 CCC 0.6780
+2026-04-07 19:46:49,419 - INFO -  ✓ New best model saved (Val R² = 0.5638)
+2026-04-07 19:46:50,003 - INFO -   [Regularized] Loss=0.1017 L1=0.0000 R2=0.5375
+2026-04-07 19:46:50,540 - INFO - CCC: 0.8836
+2026-04-07 19:46:51,066 - INFO - CCC: 0.6804
+2026-04-07 19:46:51,068 - INFO - Epoch 047/200 | Train Loss 0.1017 R2 0.5375 | Val Loss 0.4236 R2 0.5656 RMSE 1.0216 MAE 0.8317 CCC 0.6804
+2026-04-07 19:46:51,117 - INFO -  ✓ New best model saved (Val R² = 0.5656)
+2026-04-07 19:46:51,723 - INFO -   [Regularized] Loss=0.0897 L1=0.0000 R2=0.4969
+2026-04-07 19:46:52,239 - INFO - CCC: 0.8879
+2026-04-07 19:46:52,777 - INFO - CCC: 0.6830
+2026-04-07 19:46:52,779 - INFO - Epoch 048/200 | Train Loss 0.0897 R2 0.4969 | Val Loss 0.4223 R2 0.5678 RMSE 1.0191 MAE 0.8299 CCC 0.6830
+2026-04-07 19:46:52,827 - INFO -  ✓ New best model saved (Val R² = 0.5678)
+2026-04-07 19:46:53,456 - INFO -   [Regularized] Loss=0.0780 L1=0.0000 R2=0.6688
+2026-04-07 19:46:53,957 - INFO - CCC: 0.8918
+2026-04-07 19:46:54,494 - INFO - CCC: 0.6855
+2026-04-07 19:46:54,496 - INFO - Epoch 049/200 | Train Loss 0.0780 R2 0.6688 | Val Loss 0.4199 R2 0.5702 RMSE 1.0162 MAE 0.8272 CCC 0.6855
+2026-04-07 19:46:54,545 - INFO -  ✓ New best model saved (Val R² = 0.5702)
+2026-04-07 19:46:55,133 - INFO -   [Regularized] Loss=0.1200 L1=0.0000 R2=0.4151
+2026-04-07 19:46:55,668 - INFO - CCC: 0.8952
+2026-04-07 19:46:56,201 - INFO - CCC: 0.6876
+2026-04-07 19:46:56,203 - INFO - Epoch 050/200 | Train Loss 0.1200 R2 0.4151 | Val Loss 0.4179 R2 0.5723 RMSE 1.0138 MAE 0.8248 CCC 0.6876
+2026-04-07 19:46:56,252 - INFO -  ✓ New best model saved (Val R² = 0.5723)
+2026-04-07 19:46:56,859 - INFO -   [Regularized] Loss=0.0655 L1=0.0000 R2=0.7075
+2026-04-07 19:46:57,381 - INFO - CCC: 0.8983
+2026-04-07 19:46:57,947 - INFO - CCC: 0.6895
+2026-04-07 19:46:57,950 - INFO - Epoch 051/200 | Train Loss 0.0655 R2 0.7075 | Val Loss 0.4165 R2 0.5739 RMSE 1.0118 MAE 0.8227 CCC 0.6895
+2026-04-07 19:46:57,998 - INFO -  ✓ New best model saved (Val R² = 0.5739)
+2026-04-07 19:46:58,597 - INFO -   [Regularized] Loss=0.0778 L1=0.0000 R2=0.6623
+2026-04-07 19:46:59,149 - INFO - CCC: 0.9012
+2026-04-07 19:46:59,714 - INFO - CCC: 0.6912
+2026-04-07 19:46:59,716 - INFO - Epoch 052/200 | Train Loss 0.0778 R2 0.6623 | Val Loss 0.4153 R2 0.5754 RMSE 1.0100 MAE 0.8209 CCC 0.6912
+2026-04-07 19:46:59,765 - INFO -  ✓ New best model saved (Val R² = 0.5754)
+2026-04-07 19:47:00,388 - INFO -   [Regularized] Loss=0.0721 L1=0.0000 R2=0.7591
+2026-04-07 19:47:00,917 - INFO - CCC: 0.9036
+2026-04-07 19:47:01,487 - INFO - CCC: 0.6928
+2026-04-07 19:47:01,489 - INFO - Epoch 053/200 | Train Loss 0.0721 R2 0.7591 | Val Loss 0.4141 R2 0.5768 RMSE 1.0084 MAE 0.8194 CCC 0.6928
+2026-04-07 19:47:01,540 - INFO -  ✓ New best model saved (Val R² = 0.5768)
+2026-04-07 19:47:02,117 - INFO -   [Regularized] Loss=0.0666 L1=0.0000 R2=0.7186
+2026-04-07 19:47:02,691 - INFO - CCC: 0.9059
+2026-04-07 19:47:03,251 - INFO - CCC: 0.6942
+2026-04-07 19:47:03,252 - INFO - Epoch 054/200 | Train Loss 0.0666 R2 0.7186 | Val Loss 0.4129 R2 0.5782 RMSE 1.0068 MAE 0.8179 CCC 0.6942
+2026-04-07 19:47:03,301 - INFO -  ✓ New best model saved (Val R² = 0.5782)
+2026-04-07 19:47:03,923 - INFO -   [Regularized] Loss=0.0647 L1=0.0000 R2=0.7019
+2026-04-07 19:47:04,505 - INFO - CCC: 0.9081
+2026-04-07 19:47:05,059 - INFO - CCC: 0.6955
+2026-04-07 19:47:05,060 - INFO - Epoch 055/200 | Train Loss 0.0647 R2 0.7019 | Val Loss 0.4118 R2 0.5794 RMSE 1.0053 MAE 0.8165 CCC 0.6955
+2026-04-07 19:47:05,107 - INFO -  ✓ New best model saved (Val R² = 0.5794)
+2026-04-07 19:47:05,700 - INFO -   [Regularized] Loss=0.0575 L1=0.0000 R2=0.7719
+2026-04-07 19:47:06,233 - INFO - CCC: 0.9100
+2026-04-07 19:47:06,743 - INFO - CCC: 0.6965
+2026-04-07 19:47:06,745 - INFO - Epoch 056/200 | Train Loss 0.0575 R2 0.7719 | Val Loss 0.4110 R2 0.5804 RMSE 1.0041 MAE 0.8153 CCC 0.6965
+2026-04-07 19:47:07,339 - INFO -   [Regularized] Loss=0.0846 L1=0.0000 R2=0.5698
+2026-04-07 19:47:07,903 - INFO - CCC: 0.9116
+2026-04-07 19:47:08,435 - INFO - CCC: 0.6974
+2026-04-07 19:47:08,436 - INFO - Epoch 057/200 | Train Loss 0.0846 R2 0.5698 | Val Loss 0.4103 R2 0.5812 RMSE 1.0031 MAE 0.8143 CCC 0.6974
+2026-04-07 19:47:08,474 - INFO -  ✓ New best model saved (Val R² = 0.5812)
+2026-04-07 19:47:09,100 - INFO -   [Regularized] Loss=0.0895 L1=0.0000 R2=0.5578
+2026-04-07 19:47:09,610 - INFO - CCC: 0.9129
+2026-04-07 19:47:10,148 - INFO - CCC: 0.6982
+2026-04-07 19:47:10,149 - INFO - Epoch 058/200 | Train Loss 0.0895 R2 0.5578 | Val Loss 0.4095 R2 0.5820 RMSE 1.0022 MAE 0.8133 CCC 0.6982
+2026-04-07 19:47:10,732 - INFO -   [Regularized] Loss=0.0555 L1=0.0000 R2=0.7810
+2026-04-07 19:47:11,216 - INFO - CCC: 0.9140
+2026-04-07 19:47:11,754 - INFO - CCC: 0.6988
+2026-04-07 19:47:11,755 - INFO - Epoch 059/200 | Train Loss 0.0555 R2 0.7810 | Val Loss 0.4090 R2 0.5826 RMSE 1.0015 MAE 0.8126 CCC 0.6988
+2026-04-07 19:47:11,800 - INFO -  ✓ New best model saved (Val R² = 0.5826)
+2026-04-07 19:47:12,359 - INFO -   [Regularized] Loss=0.1232 L1=0.0000 R2=0.4170
+2026-04-07 19:47:12,849 - INFO - CCC: 0.9145
+2026-04-07 19:47:13,444 - INFO - CCC: 0.6990
+2026-04-07 19:47:13,446 - INFO - Epoch 060/200 | Train Loss 0.1232 R2 0.4170 | Val Loss 0.4089 R2 0.5828 RMSE 1.0012 MAE 0.8123 CCC 0.6990
+2026-04-07 19:47:14,036 - INFO -   [Regularized] Loss=0.0893 L1=0.0000 R2=0.6248
+2026-04-07 19:47:14,607 - INFO - CCC: 0.9150
+2026-04-07 19:47:15,130 - INFO - CCC: 0.6993
+2026-04-07 19:47:15,132 - INFO - Epoch 061/200 | Train Loss 0.0893 R2 0.6248 | Val Loss 0.4087 R2 0.5831 RMSE 1.0009 MAE 0.8120 CCC 0.6993
+2026-04-07 19:47:15,766 - INFO -   [Regularized] Loss=0.0683 L1=0.0000 R2=0.7314
+2026-04-07 19:47:16,331 - INFO - CCC: 0.9154
+2026-04-07 19:47:16,904 - INFO - CCC: 0.6995
+2026-04-07 19:47:16,905 - INFO - Epoch 062/200 | Train Loss 0.0683 R2 0.7314 | Val Loss 0.4086 R2 0.5832 RMSE 1.0007 MAE 0.8117 CCC 0.6995
+2026-04-07 19:47:17,506 - INFO -   [Regularized] Loss=0.0449 L1=0.0000 R2=0.7940
+2026-04-07 19:47:18,060 - INFO - CCC: 0.9157
+2026-04-07 19:47:18,569 - INFO - CCC: 0.6997
+2026-04-07 19:47:18,570 - INFO - Epoch 063/200 | Train Loss 0.0449 R2 0.7940 | Val Loss 0.4085 R2 0.5834 RMSE 1.0005 MAE 0.8116 CCC 0.6997
+2026-04-07 19:47:19,185 - INFO -   [Regularized] Loss=0.0812 L1=0.0000 R2=0.6766
+2026-04-07 19:47:19,750 - INFO - CCC: 0.9158
+2026-04-07 19:47:20,324 - INFO - CCC: 0.6998
+2026-04-07 19:47:20,326 - INFO - Epoch 064/200 | Train Loss 0.0812 R2 0.6766 | Val Loss 0.4085 R2 0.5834 RMSE 1.0005 MAE 0.8115 CCC 0.6998
+2026-04-07 19:47:20,931 - INFO -   [Regularized] Loss=0.0872 L1=0.0000 R2=0.6535
+2026-04-07 19:47:21,462 - INFO - CCC: 0.9159
+2026-04-07 19:47:22,010 - INFO - CCC: 0.6998
+2026-04-07 19:47:22,011 - INFO - Epoch 065/200 | Train Loss 0.0872 R2 0.6535 | Val Loss 0.4084 R2 0.5835 RMSE 1.0004 MAE 0.8114 CCC 0.6998
+2026-04-07 19:47:22,599 - INFO -   [Regularized] Loss=0.0644 L1=0.0000 R2=0.7002
+2026-04-07 19:47:23,120 - INFO - CCC: 0.9159
+2026-04-07 19:47:23,649 - INFO - CCC: 0.6998
+2026-04-07 19:47:23,651 - INFO - Epoch 066/200 | Train Loss 0.0644 R2 0.7002 | Val Loss 0.4084 R2 0.5835 RMSE 1.0004 MAE 0.8114 CCC 0.6998
+2026-04-07 19:47:24,297 - INFO -   [Regularized] Loss=0.1178 L1=0.0000 R2=0.3570
+2026-04-07 19:47:24,917 - INFO - CCC: 0.9403
+2026-04-07 19:47:25,465 - INFO - CCC: 0.7130
+2026-04-07 19:47:25,467 - INFO - Epoch 067/200 | Train Loss 0.1178 R2 0.3570 | Val Loss 0.4028 R2 0.5931 RMSE 0.9888 MAE 0.7945 CCC 0.7130
+2026-04-07 19:47:25,514 - INFO -  ✓ New best model saved (Val R² = 0.5931)
+2026-04-07 19:47:26,126 - INFO -   [Regularized] Loss=0.0571 L1=0.0000 R2=0.7955
+2026-04-07 19:47:26,649 - INFO - CCC: 0.9613
+2026-04-07 19:47:27,197 - INFO - CCC: 0.7254
+2026-04-07 19:47:27,199 - INFO - Epoch 068/200 | Train Loss 0.0571 R2 0.7955 | Val Loss 0.3949 R2 0.6026 RMSE 0.9772 MAE 0.7795 CCC 0.7254
+2026-04-07 19:47:27,245 - INFO -  ✓ New best model saved (Val R² = 0.6026)
+2026-04-07 19:47:27,822 - INFO -   [Regularized] Loss=0.0708 L1=0.0000 R2=0.6741
+2026-04-07 19:47:28,338 - INFO - CCC: 0.9771
+2026-04-07 19:47:28,902 - INFO - CCC: 0.7378
+2026-04-07 19:47:28,904 - INFO - Epoch 069/200 | Train Loss 0.0708 R2 0.6741 | Val Loss 0.3872 R2 0.6114 RMSE 0.9663 MAE 0.7653 CCC 0.7378
+2026-04-07 19:47:28,932 - INFO -  ✓ New best model saved (Val R² = 0.6114)
+2026-04-07 19:47:29,515 - INFO -   [Regularized] Loss=0.0589 L1=0.0000 R2=0.7968
+2026-04-07 19:47:30,079 - INFO - CCC: 0.9914
+2026-04-07 19:47:30,661 - INFO - CCC: 0.7512
+2026-04-07 19:47:30,663 - INFO - Epoch 070/200 | Train Loss 0.0589 R2 0.7968 | Val Loss 0.3756 R2 0.6221 RMSE 0.9528 MAE 0.7467 CCC 0.7512
+2026-04-07 19:47:30,711 - INFO -  ✓ New best model saved (Val R² = 0.6221)
+2026-04-07 19:47:31,308 - INFO -   [Regularized] Loss=0.0951 L1=0.0000 R2=0.6884
+2026-04-07 19:47:31,905 - INFO - CCC: 0.9998
+2026-04-07 19:47:32,394 - INFO - CCC: 0.7627
+2026-04-07 19:47:32,395 - INFO - Epoch 071/200 | Train Loss 0.0951 R2 0.6884 | Val Loss 0.3644 R2 0.6324 RMSE 0.9398 MAE 0.7396 CCC 0.7627
+2026-04-07 19:47:32,442 - INFO -  ✓ New best model saved (Val R² = 0.6324)
+2026-04-07 19:47:33,036 - INFO -   [Regularized] Loss=0.0713 L1=0.0000 R2=0.6924
+2026-04-07 19:47:33,604 - INFO - CCC: 1.0065
+2026-04-07 19:47:34,148 - INFO - CCC: 0.7704
+2026-04-07 19:47:34,149 - INFO - Epoch 072/200 | Train Loss 0.0713 R2 0.6924 | Val Loss 0.3603 R2 0.6370 RMSE 0.9339 MAE 0.7368 CCC 0.7704
+2026-04-07 19:47:34,197 - INFO -  ✓ New best model saved (Val R² = 0.6370)
+2026-04-07 19:47:34,777 - INFO -   [Regularized] Loss=0.0687 L1=0.0000 R2=0.7241
+2026-04-07 19:47:35,343 - INFO - CCC: 1.0159
+2026-04-07 19:47:35,836 - INFO - CCC: 0.7751
+2026-04-07 19:47:35,837 - INFO - Epoch 073/200 | Train Loss 0.0687 R2 0.7241 | Val Loss 0.3585 R2 0.6402 RMSE 0.9298 MAE 0.7339 CCC 0.7751
+2026-04-07 19:47:35,887 - INFO -  ✓ New best model saved (Val R² = 0.6402)
+2026-04-07 19:47:36,474 - INFO -   [Regularized] Loss=0.0601 L1=0.0000 R2=0.8030
+2026-04-07 19:47:36,981 - INFO - CCC: 1.0298
+2026-04-07 19:47:37,560 - INFO - CCC: 0.7807
+2026-04-07 19:47:37,562 - INFO - Epoch 074/200 | Train Loss 0.0601 R2 0.8030 | Val Loss 0.3523 R2 0.6470 RMSE 0.9210 MAE 0.7345 CCC 0.7807
+2026-04-07 19:47:37,611 - INFO -  ✓ New best model saved (Val R² = 0.6470)
+2026-04-07 19:47:38,207 - INFO -   [Regularized] Loss=0.0474 L1=0.0000 R2=0.7928
+2026-04-07 19:47:38,721 - INFO - CCC: 1.0404
+2026-04-07 19:47:39,277 - INFO - CCC: 0.7842
+2026-04-07 19:47:39,279 - INFO - Epoch 075/200 | Train Loss 0.0474 R2 0.7928 | Val Loss 0.3499 R2 0.6506 RMSE 0.9163 MAE 0.7361 CCC 0.7842
+2026-04-07 19:47:39,327 - INFO -  ✓ New best model saved (Val R² = 0.6506)
+2026-04-07 19:47:39,889 - INFO -   [Regularized] Loss=0.0224 L1=0.0000 R2=0.8917
+2026-04-07 19:47:40,425 - INFO - CCC: 1.0493
+2026-04-07 19:47:40,970 - INFO - CCC: 0.7895
+2026-04-07 19:47:40,971 - INFO - Epoch 076/200 | Train Loss 0.0224 R2 0.8917 | Val Loss 0.3429 R2 0.6583 RMSE 0.9061 MAE 0.7360 CCC 0.7895
+2026-04-07 19:47:41,012 - INFO -  ✓ New best model saved (Val R² = 0.6583)
+2026-04-07 19:47:41,636 - INFO -   [Regularized] Loss=0.0398 L1=0.0000 R2=0.8340
+2026-04-07 19:47:42,174 - INFO - CCC: 1.0551
+2026-04-07 19:47:42,755 - INFO - CCC: 0.7921
+2026-04-07 19:47:42,757 - INFO - Epoch 077/200 | Train Loss 0.0398 R2 0.8340 | Val Loss 0.3421 R2 0.6602 RMSE 0.9036 MAE 0.7414 CCC 0.7921
+2026-04-07 19:47:42,807 - INFO -  ✓ New best model saved (Val R² = 0.6602)
+2026-04-07 19:47:43,347 - INFO -   [Regularized] Loss=0.0423 L1=0.0000 R2=0.8252
+2026-04-07 19:47:43,898 - INFO - CCC: 1.0582
+2026-04-07 19:47:44,413 - INFO - CCC: 0.7982
+2026-04-07 19:47:44,414 - INFO - Epoch 078/200 | Train Loss 0.0423 R2 0.8252 | Val Loss 0.3367 R2 0.6668 RMSE 0.8948 MAE 0.7426 CCC 0.7982
+2026-04-07 19:47:44,461 - INFO -  ✓ New best model saved (Val R² = 0.6668)
+2026-04-07 19:47:45,092 - INFO -   [Regularized] Loss=0.0338 L1=0.0000 R2=0.8623
+2026-04-07 19:47:45,636 - INFO - CCC: 1.0621
+2026-04-07 19:47:46,193 - INFO - CCC: 0.8085
+2026-04-07 19:47:46,195 - INFO - Epoch 079/200 | Train Loss 0.0338 R2 0.8623 | Val Loss 0.3249 R2 0.6782 RMSE 0.8793 MAE 0.7371 CCC 0.8085
+2026-04-07 19:47:46,243 - INFO -  ✓ New best model saved (Val R² = 0.6782)
+2026-04-07 19:47:46,834 - INFO -   [Regularized] Loss=0.0580 L1=0.0000 R2=0.8021
+2026-04-07 19:47:47,353 - INFO - CCC: 1.0612
+2026-04-07 19:47:47,852 - INFO - CCC: 0.8217
+2026-04-07 19:47:47,854 - INFO - Epoch 080/200 | Train Loss 0.0580 R2 0.8021 | Val Loss 0.3081 R2 0.6942 RMSE 0.8572 MAE 0.7147 CCC 0.8217
+2026-04-07 19:47:47,898 - INFO -  ✓ New best model saved (Val R² = 0.6942)
+2026-04-07 19:47:48,479 - INFO -   [Regularized] Loss=0.1365 L1=0.0000 R2=0.4266
+2026-04-07 19:47:49,024 - INFO - CCC: 1.0626
+2026-04-07 19:47:49,604 - INFO - CCC: 0.8250
+2026-04-07 19:47:49,605 - INFO - Epoch 081/200 | Train Loss 0.1365 R2 0.4266 | Val Loss 0.3050 R2 0.6973 RMSE 0.8528 MAE 0.7109 CCC 0.8250
+2026-04-07 19:47:49,656 - INFO -  ✓ New best model saved (Val R² = 0.6973)
+2026-04-07 19:47:50,234 - INFO -   [Regularized] Loss=0.0235 L1=0.0000 R2=0.8931
+2026-04-07 19:47:50,799 - INFO - CCC: 1.0594
+2026-04-07 19:47:51,357 - INFO - CCC: 0.8301
+2026-04-07 19:47:51,358 - INFO - Epoch 082/200 | Train Loss 0.0235 R2 0.8931 | Val Loss 0.2941 R2 0.7040 RMSE 0.8434 MAE 0.7037 CCC 0.8301
+2026-04-07 19:47:51,406 - INFO -  ✓ New best model saved (Val R² = 0.7040)
+2026-04-07 19:47:51,980 - INFO -   [Regularized] Loss=0.0305 L1=0.0000 R2=0.8835
+2026-04-07 19:47:52,481 - INFO - CCC: 1.0661
+2026-04-07 19:47:53,050 - INFO - CCC: 0.8328
+2026-04-07 19:47:53,051 - INFO - Epoch 083/200 | Train Loss 0.0305 R2 0.8835 | Val Loss 0.2915 R2 0.7054 RMSE 0.8413 MAE 0.7084 CCC 0.8328
+2026-04-07 19:47:53,100 - INFO -  ✓ New best model saved (Val R² = 0.7054)
+2026-04-07 19:47:53,709 - INFO -   [Regularized] Loss=0.0590 L1=0.0000 R2=0.7324
+2026-04-07 19:47:54,250 - INFO - CCC: 1.0750
+2026-04-07 19:47:54,753 - INFO - CCC: 0.8315
+2026-04-07 19:47:54,754 - INFO - Epoch 084/200 | Train Loss 0.0590 R2 0.7324 | Val Loss 0.2953 R2 0.7016 RMSE 0.8467 MAE 0.7241 CCC 0.8315
+2026-04-07 19:47:55,260 - INFO -   [Regularized] Loss=0.0313 L1=0.0000 R2=0.8680
+2026-04-07 19:47:55,767 - INFO - CCC: 1.0834
+2026-04-07 19:47:56,323 - INFO - CCC: 0.8249
+2026-04-07 19:47:56,325 - INFO - Epoch 085/200 | Train Loss 0.0313 R2 0.8680 | Val Loss 0.3075 R2 0.6897 RMSE 0.8635 MAE 0.7465 CCC 0.8249
+2026-04-07 19:47:56,915 - INFO -   [Regularized] Loss=0.0778 L1=0.0000 R2=0.6755
+2026-04-07 19:47:57,471 - INFO - CCC: 1.0735
+2026-04-07 19:47:58,046 - INFO - CCC: 0.8204
+2026-04-07 19:47:58,047 - INFO - Epoch 086/200 | Train Loss 0.0778 R2 0.6755 | Val Loss 0.3164 R2 0.6796 RMSE 0.8774 MAE 0.7481 CCC 0.8204
+2026-04-07 19:47:58,634 - INFO -   [Regularized] Loss=0.0304 L1=0.0000 R2=0.8989
+2026-04-07 19:47:59,203 - INFO - CCC: 1.0602
+2026-04-07 19:47:59,755 - INFO - CCC: 0.8193
+2026-04-07 19:47:59,757 - INFO - Epoch 087/200 | Train Loss 0.0304 R2 0.8989 | Val Loss 0.3202 R2 0.6744 RMSE 0.8845 MAE 0.7420 CCC 0.8193
+2026-04-07 19:48:00,344 - INFO -   [Regularized] Loss=0.0447 L1=0.0000 R2=0.8282
+2026-04-07 19:48:00,879 - INFO - CCC: 1.0580
+2026-04-07 19:48:01,386 - INFO - CCC: 0.8199
+2026-04-07 19:48:01,388 - INFO - Epoch 088/200 | Train Loss 0.0447 R2 0.8282 | Val Loss 0.3193 R2 0.6739 RMSE 0.8852 MAE 0.7449 CCC 0.8199
+2026-04-07 19:48:01,974 - INFO -   [Regularized] Loss=0.0471 L1=0.0000 R2=0.8314
+2026-04-07 19:48:02,506 - INFO - CCC: 1.0607
+2026-04-07 19:48:03,046 - INFO - CCC: 0.8217
+2026-04-07 19:48:03,048 - INFO - Epoch 089/200 | Train Loss 0.0471 R2 0.8314 | Val Loss 0.3172 R2 0.6750 RMSE 0.8837 MAE 0.7449 CCC 0.8217
+2026-04-07 19:48:03,638 - INFO -   [Regularized] Loss=0.0470 L1=0.0000 R2=0.8256
+2026-04-07 19:48:04,194 - INFO - CCC: 1.0695
+2026-04-07 19:48:04,750 - INFO - CCC: 0.8241
+2026-04-07 19:48:04,751 - INFO - Epoch 090/200 | Train Loss 0.0470 R2 0.8256 | Val Loss 0.3141 R2 0.6776 RMSE 0.8801 MAE 0.7395 CCC 0.8241
+2026-04-07 19:48:05,348 - INFO -   [Regularized] Loss=0.0171 L1=0.0000 R2=0.9316
+2026-04-07 19:48:05,878 - INFO - CCC: 1.0787
+2026-04-07 19:48:06,400 - INFO - CCC: 0.8256
+2026-04-07 19:48:06,401 - INFO - Epoch 091/200 | Train Loss 0.0171 R2 0.9316 | Val Loss 0.3120 R2 0.6797 RMSE 0.8773 MAE 0.7430 CCC 0.8256
+2026-04-07 19:48:07,004 - INFO -   [Regularized] Loss=0.0415 L1=0.0000 R2=0.8510
+2026-04-07 19:48:07,560 - INFO - CCC: 1.0881
+2026-04-07 19:48:08,098 - INFO - CCC: 0.8270
+2026-04-07 19:48:08,101 - INFO - Epoch 092/200 | Train Loss 0.0415 R2 0.8510 | Val Loss 0.3098 R2 0.6822 RMSE 0.8738 MAE 0.7488 CCC 0.8270
+2026-04-07 19:48:08,638 - INFO -   [Regularized] Loss=0.0126 L1=0.0000 R2=0.9456
+2026-04-07 19:48:09,189 - INFO - CCC: 1.0946
+2026-04-07 19:48:09,764 - INFO - CCC: 0.8275
+2026-04-07 19:48:09,766 - INFO - Epoch 093/200 | Train Loss 0.0126 R2 0.9456 | Val Loss 0.3083 R2 0.6842 RMSE 0.8711 MAE 0.7535 CCC 0.8275
+2026-04-07 19:48:10,388 - INFO -   [Regularized] Loss=0.0090 L1=0.0000 R2=0.9742
+2026-04-07 19:48:10,924 - INFO - CCC: 1.0960
+2026-04-07 19:48:11,489 - INFO - CCC: 0.8275
+2026-04-07 19:48:11,490 - INFO - Epoch 094/200 | Train Loss 0.0090 R2 0.9742 | Val Loss 0.3081 R2 0.6847 RMSE 0.8704 MAE 0.7541 CCC 0.8275
+2026-04-07 19:48:12,089 - INFO -   [Regularized] Loss=0.0530 L1=0.0000 R2=0.7601
+2026-04-07 19:48:12,612 - INFO - CCC: 1.0953
+2026-04-07 19:48:13,162 - INFO - CCC: 0.8274
+2026-04-07 19:48:13,164 - INFO - Epoch 095/200 | Train Loss 0.0530 R2 0.7601 | Val Loss 0.3080 R2 0.6849 RMSE 0.8702 MAE 0.7554 CCC 0.8274
+2026-04-07 19:48:13,769 - INFO -   [Regularized] Loss=0.0459 L1=0.0000 R2=0.8124
+2026-04-07 19:48:14,322 - INFO - CCC: 1.0951
+2026-04-07 19:48:14,844 - INFO - CCC: 0.8273
+2026-04-07 19:48:14,846 - INFO - Epoch 096/200 | Train Loss 0.0459 R2 0.8124 | Val Loss 0.3089 R2 0.6841 RMSE 0.8713 MAE 0.7548 CCC 0.8273
+2026-04-07 19:48:15,397 - INFO -   [Regularized] Loss=0.0287 L1=0.0000 R2=0.8900
+2026-04-07 19:48:15,925 - INFO - CCC: 1.0953
+2026-04-07 19:48:16,465 - INFO - CCC: 0.8269
+2026-04-07 19:48:16,466 - INFO - Epoch 097/200 | Train Loss 0.0287 R2 0.8900 | Val Loss 0.3098 R2 0.6827 RMSE 0.8731 MAE 0.7564 CCC 0.8269
+2026-04-07 19:48:17,050 - INFO -   [Regularized] Loss=0.0172 L1=0.0000 R2=0.9422
+2026-04-07 19:48:17,609 - INFO - CCC: 1.0952
+2026-04-07 19:48:18,161 - INFO - CCC: 0.8271
+2026-04-07 19:48:18,163 - INFO - Epoch 098/200 | Train Loss 0.0172 R2 0.9422 | Val Loss 0.3099 R2 0.6823 RMSE 0.8738 MAE 0.7573 CCC 0.8271
+2026-04-07 19:48:18,752 - INFO -   [Regularized] Loss=0.0302 L1=0.0000 R2=0.8776
+2026-04-07 19:48:19,278 - INFO - CCC: 1.0941
+2026-04-07 19:48:19,843 - INFO - CCC: 0.8284
+2026-04-07 19:48:19,844 - INFO - Epoch 099/200 | Train Loss 0.0302 R2 0.8776 | Val Loss 0.3087 R2 0.6833 RMSE 0.8723 MAE 0.7551 CCC 0.8284
+2026-04-07 19:48:20,402 - INFO -   [Regularized] Loss=0.0610 L1=0.0000 R2=0.7176
+2026-04-07 19:48:20,860 - INFO - CCC: 1.0941
+2026-04-07 19:48:21,409 - INFO - CCC: 0.8301
+2026-04-07 19:48:21,410 - INFO - Epoch 100/200 | Train Loss 0.0610 R2 0.7176 | Val Loss 0.3070 R2 0.6847 RMSE 0.8704 MAE 0.7523 CCC 0.8301
+2026-04-07 19:48:22,006 - INFO -   [Regularized] Loss=0.0321 L1=0.0000 R2=0.8903
+2026-04-07 19:48:22,515 - INFO - CCC: 1.0943
+2026-04-07 19:48:23,083 - INFO - CCC: 0.8322
+2026-04-07 19:48:23,084 - INFO - Epoch 101/200 | Train Loss 0.0321 R2 0.8903 | Val Loss 0.3051 R2 0.6865 RMSE 0.8679 MAE 0.7492 CCC 0.8322
+2026-04-07 19:48:23,679 - INFO -   [Regularized] Loss=0.0365 L1=0.0000 R2=0.8756
+2026-04-07 19:48:24,192 - INFO - CCC: 1.0949
+2026-04-07 19:48:24,661 - INFO - CCC: 0.8338
+2026-04-07 19:48:24,663 - INFO - Epoch 102/200 | Train Loss 0.0365 R2 0.8756 | Val Loss 0.3038 R2 0.6879 RMSE 0.8660 MAE 0.7470 CCC 0.8338
+2026-04-07 19:48:25,277 - INFO -   [Regularized] Loss=0.0470 L1=0.0000 R2=0.8773
+2026-04-07 19:48:25,812 - INFO - CCC: 1.0955
+2026-04-07 19:48:26,393 - INFO - CCC: 0.8346
+2026-04-07 19:48:26,394 - INFO - Epoch 103/200 | Train Loss 0.0470 R2 0.8773 | Val Loss 0.3035 R2 0.6882 RMSE 0.8656 MAE 0.7457 CCC 0.8346
+2026-04-07 19:48:26,394 - INFO - Early stopping triggered (no val R2 improvement in 20 epochs).
+2026-04-07 19:48:26,454 - INFO - Loaded checkpoint from best_model_tmp.pt (strict).
+2026-04-07 19:48:26,985 - INFO - CCC: 0.8328
+2026-04-07 19:48:27,566 - INFO - CCC: 0.7790
+2026-04-07 19:49:26,751 - INFO - Signal analysis complete -> results_signal_d4_polyploid/tier2_env_fold3
+2026-04-07 19:49:27,127 - INFO - Auto thresholds (weekly): heat=30.159, cold=9.021, vpd=1.359
+2026-04-07 19:49:27,137 - INFO - [tier2_env Fold 4/4] Tensor dims →’ genomic_feat=88, chrom=3, locations=2, years=2, pops=3
+2026-04-07 19:49:27,138 - INFO - [tier2_env Fold 4/4] Tensor feature indices: block_id_raw_idx=84, te_hotspot_idx=77, is_te_idx=76, is_genic_idx=78, is_promoter_idx=79, block_gene_count_idx=80, block_snp_density_idx=82, block_mean_maf_idx=81, dosage_idx=0, token_rank_idx=2, dosage_local_mean_idx=3, dosage_local_std_idx=4, te_dist_idx=74, gene_dist_idx=75
+2026-04-07 19:49:27,138 - INFO - Creating GxE_Transformer_Tensor model (CV path)...
+2026-04-07 19:49:27,138 - INFO - Functional channel idx (CV): block_id_raw=84, te_hotspot=77, is_te=76, is_genic=78, is_promoter=79, block_gene=80, block_density=82, block_maf=81, dosage=0, te_dist=74, gene_dist=75
+2026-04-07 19:49:27,139 - WARNING - homeolog_group_token_split_subgenome requested but sg_channel_idx is missing; disabling split.
+2026-04-07 19:49:27,139 - WARNING - use_homeolog_auxiliary requested but hom_gid_channel_idx/sg_channel_idx is missing; disabling auxiliary loss.
+2026-04-07 19:49:27,158 - INFO - [tier2_env Fold 4/4] Model parameters: 605,075
+2026-04-07 19:49:27,620 - INFO - TE indicator is near-constant (mean=1.000); ignoring it for hotspots/func types.
+2026-04-07 19:49:27,644 - INFO - HABE tokens/sample: min=16 mean=16.0 max=16 | hotspot tokens/sample: min=15 mean=15.0 max=15 | func_type_counts=[22, 99, 66, 0]
+2026-04-07 19:49:27,807 - INFO -   [Regularized] Loss=0.4365 L1=0.0000 R2=0.0983
+2026-04-07 19:49:28,359 - INFO - CCC: 0.0104
+2026-04-07 19:49:28,905 - INFO - CCC: 0.4504
+2026-04-07 19:49:28,908 - INFO - Epoch 001/200 | Train Loss 0.4365 R2 0.0983 | Val Loss 5.5774 R2 -0.2384 RMSE 1.7495 MAE 1.6172 CCC 0.4504
+2026-04-07 19:49:28,960 - INFO -  ✓ New best model saved (Val R² = -0.2384)
+2026-04-07 19:49:29,568 - INFO -   [Regularized] Loss=0.4705 L1=0.0000 R2=0.0161
+2026-04-07 19:49:30,098 - INFO - CCC: 0.0297
+2026-04-07 19:49:30,665 - INFO - CCC: 0.4474
+2026-04-07 19:49:30,667 - INFO - Epoch 002/200 | Train Loss 0.4705 R2 0.0161 | Val Loss 5.5563 R2 -0.2507 RMSE 1.7581 MAE 1.6300 CCC 0.4474
+2026-04-07 19:49:31,277 - INFO -   [Regularized] Loss=0.4313 L1=0.0000 R2=0.0487
+2026-04-07 19:49:31,831 - INFO - CCC: 0.0548
+2026-04-07 19:49:32,366 - INFO - CCC: 0.4413
+2026-04-07 19:49:32,368 - INFO - Epoch 003/200 | Train Loss 0.4313 R2 0.0487 | Val Loss 5.5369 R2 -0.2742 RMSE 1.7746 MAE 1.6496 CCC 0.4413
+2026-04-07 19:49:32,988 - INFO -   [Regularized] Loss=0.5075 L1=0.0000 R2=-0.1183
+2026-04-07 19:49:33,526 - INFO - CCC: 0.0766
+2026-04-07 19:49:34,081 - INFO - CCC: 0.4360
+2026-04-07 19:49:34,083 - INFO - Epoch 004/200 | Train Loss 0.5075 R2 -0.1183 | Val Loss 5.5183 R2 -0.2966 RMSE 1.7901 MAE 1.6657 CCC 0.4360
+2026-04-07 19:49:34,654 - INFO -   [Regularized] Loss=0.4823 L1=0.0000 R2=-0.0898
+2026-04-07 19:49:35,245 - INFO - CCC: 0.0951
+2026-04-07 19:49:35,773 - INFO - CCC: 0.4364
+2026-04-07 19:49:35,774 - INFO - Epoch 005/200 | Train Loss 0.4823 R2 -0.0898 | Val Loss 5.5039 R2 -0.2996 RMSE 1.7922 MAE 1.6677 CCC 0.4364
+2026-04-07 19:49:36,364 - INFO -   [Regularized] Loss=0.4516 L1=0.0000 R2=-0.0520
+2026-04-07 19:49:36,927 - INFO - CCC: 0.1147
+2026-04-07 19:49:37,457 - INFO - CCC: 0.4437
+2026-04-07 19:49:37,458 - INFO - Epoch 006/200 | Train Loss 0.4516 R2 -0.0520 | Val Loss 5.4975 R2 -0.2781 RMSE 1.7773 MAE 1.6533 CCC 0.4437
+2026-04-07 19:49:38,052 - INFO -   [Regularized] Loss=0.4647 L1=0.0000 R2=0.0421
+2026-04-07 19:49:38,609 - INFO - CCC: 0.1335
+2026-04-07 19:49:39,172 - INFO - CCC: 0.4511
+2026-04-07 19:49:39,175 - INFO - Epoch 007/200 | Train Loss 0.4647 R2 0.0421 | Val Loss 5.4908 R2 -0.2566 RMSE 1.7622 MAE 1.6385 CCC 0.4511
+2026-04-07 19:49:39,766 - INFO -   [Regularized] Loss=0.4970 L1=0.0000 R2=-0.1023
+2026-04-07 19:49:40,312 - INFO - CCC: 0.1522
+2026-04-07 19:49:40,859 - INFO - CCC: 0.4581
+2026-04-07 19:49:40,860 - INFO - Epoch 008/200 | Train Loss 0.4970 R2 -0.1023 | Val Loss 5.4851 R2 -0.2369 RMSE 1.7484 MAE 1.6245 CCC 0.4581
+2026-04-07 19:49:40,910 - INFO -  ✓ New best model saved (Val R² = -0.2369)
+2026-04-07 19:49:41,530 - INFO -   [Regularized] Loss=0.4922 L1=0.0000 R2=-0.0838
+2026-04-07 19:49:42,111 - INFO - CCC: 0.1695
+2026-04-07 19:49:42,661 - INFO - CCC: 0.4635
+2026-04-07 19:49:42,664 - INFO - Epoch 009/200 | Train Loss 0.4922 R2 -0.0838 | Val Loss 5.4773 R2 -0.2225 RMSE 1.7382 MAE 1.6141 CCC 0.4635
+2026-04-07 19:49:42,714 - INFO -  ✓ New best model saved (Val R² = -0.2225)
+2026-04-07 19:49:43,325 - INFO -   [Regularized] Loss=0.4522 L1=0.0000 R2=0.0753
+2026-04-07 19:49:43,928 - INFO - CCC: 0.1807
+2026-04-07 19:49:44,472 - INFO - CCC: 0.4654
+2026-04-07 19:49:44,474 - INFO - Epoch 010/200 | Train Loss 0.4522 R2 0.0753 | Val Loss 5.4708 R2 -0.2188 RMSE 1.7355 MAE 1.6116 CCC 0.4654
+2026-04-07 19:49:44,517 - INFO -  ✓ New best model saved (Val R² = -0.2188)
+2026-04-07 19:49:45,139 - INFO -   [Regularized] Loss=0.3644 L1=0.0000 R2=0.2570
+2026-04-07 19:49:45,686 - INFO - CCC: 0.1938
+2026-04-07 19:49:46,223 - INFO - CCC: 0.4701
+2026-04-07 19:49:46,225 - INFO - Epoch 011/200 | Train Loss 0.3644 R2 0.2570 | Val Loss 5.4649 R2 -0.2061 RMSE 1.7265 MAE 1.6025 CCC 0.4701
+2026-04-07 19:49:46,271 - INFO -  ✓ New best model saved (Val R² = -0.2061)
+2026-04-07 19:49:46,901 - INFO -   [Regularized] Loss=0.4453 L1=0.0000 R2=0.1086
+2026-04-07 19:49:47,490 - INFO - CCC: 0.2058
+2026-04-07 19:49:48,149 - INFO - CCC: 0.4742
+2026-04-07 19:49:48,150 - INFO - Epoch 012/200 | Train Loss 0.4453 R2 0.1086 | Val Loss 5.4597 R2 -0.1948 RMSE 1.7184 MAE 1.5942 CCC 0.4742
+2026-04-07 19:49:48,199 - INFO -  ✓ New best model saved (Val R² = -0.1948)
+2026-04-07 19:49:48,852 - INFO -   [Regularized] Loss=0.4909 L1=0.0000 R2=0.0322
+2026-04-07 19:49:49,398 - INFO - CCC: 0.2167
+2026-04-07 19:49:49,947 - INFO - CCC: 0.4765
+2026-04-07 19:49:49,948 - INFO - Epoch 013/200 | Train Loss 0.4909 R2 0.0322 | Val Loss 5.4538 R2 -0.1889 RMSE 1.7141 MAE 1.5900 CCC 0.4765
+2026-04-07 19:49:49,993 - INFO -  ✓ New best model saved (Val R² = -0.1889)
+2026-04-07 19:49:50,622 - INFO -   [Regularized] Loss=0.3874 L1=0.0000 R2=0.1962
+2026-04-07 19:49:51,206 - INFO - CCC: 0.2285
+2026-04-07 19:49:51,738 - INFO - CCC: 0.4805
+2026-04-07 19:49:51,740 - INFO - Epoch 014/200 | Train Loss 0.3874 R2 0.1962 | Val Loss 5.4488 R2 -0.1779 RMSE 1.7062 MAE 1.5818 CCC 0.4805
+2026-04-07 19:49:51,786 - INFO -  ✓ New best model saved (Val R² = -0.1779)
+2026-04-07 19:49:52,414 - INFO -   [Regularized] Loss=0.4713 L1=0.0000 R2=0.0112
+2026-04-07 19:49:52,970 - INFO - CCC: 0.2400
+2026-04-07 19:49:53,511 - INFO - CCC: 0.4830
+2026-04-07 19:49:53,513 - INFO - Epoch 015/200 | Train Loss 0.4713 R2 0.0112 | Val Loss 5.4428 R2 -0.1715 RMSE 1.7016 MAE 1.5771 CCC 0.4830
+2026-04-07 19:49:53,562 - INFO -  ✓ New best model saved (Val R² = -0.1715)
+2026-04-07 19:49:54,211 - INFO -   [Regularized] Loss=0.3708 L1=0.0000 R2=0.2504
+2026-04-07 19:49:54,809 - INFO - CCC: 0.2512
+2026-04-07 19:49:55,377 - INFO - CCC: 0.4855
+2026-04-07 19:49:55,378 - INFO - Epoch 016/200 | Train Loss 0.3708 R2 0.2504 | Val Loss 5.4371 R2 -0.1646 RMSE 1.6966 MAE 1.5719 CCC 0.4855
+2026-04-07 19:49:55,428 - INFO -  ✓ New best model saved (Val R² = -0.1646)
+2026-04-07 19:49:56,055 - INFO -   [Regularized] Loss=0.4168 L1=0.0000 R2=0.1951
+2026-04-07 19:49:56,619 - INFO - CCC: 0.2624
+2026-04-07 19:49:57,206 - INFO - CCC: 0.4882
+2026-04-07 19:49:57,208 - INFO - Epoch 017/200 | Train Loss 0.4168 R2 0.1951 | Val Loss 5.4320 R2 -0.1568 RMSE 1.6908 MAE 1.5660 CCC 0.4882
+2026-04-07 19:49:57,256 - INFO -  ✓ New best model saved (Val R² = -0.1568)
+2026-04-07 19:49:57,873 - INFO -   [Regularized] Loss=0.3524 L1=0.0000 R2=0.3292
+2026-04-07 19:49:58,343 - INFO - CCC: 0.2733
+2026-04-07 19:49:58,894 - INFO - CCC: 0.4919
+2026-04-07 19:49:58,896 - INFO - Epoch 018/200 | Train Loss 0.3524 R2 0.3292 | Val Loss 5.4265 R2 -0.1466 RMSE 1.6834 MAE 1.5580 CCC 0.4919
+2026-04-07 19:49:58,945 - INFO -  ✓ New best model saved (Val R² = -0.1466)
+2026-04-07 19:49:59,547 - INFO -   [Regularized] Loss=0.4432 L1=0.0000 R2=0.0825
+2026-04-07 19:50:00,092 - INFO - CCC: 0.2824
+2026-04-07 19:50:00,645 - INFO - CCC: 0.4937
+2026-04-07 19:50:00,648 - INFO - Epoch 019/200 | Train Loss 0.4432 R2 0.0825 | Val Loss 5.4206 R2 -0.1421 RMSE 1.6800 MAE 1.5548 CCC 0.4937
+2026-04-07 19:50:00,695 - INFO -  ✓ New best model saved (Val R² = -0.1421)
+2026-04-07 19:50:01,335 - INFO -   [Regularized] Loss=0.3647 L1=0.0000 R2=0.2824
+2026-04-07 19:50:01,820 - INFO - CCC: 0.2927
+2026-04-07 19:50:02,336 - INFO - CCC: 0.4952
+2026-04-07 19:50:02,340 - INFO - Epoch 020/200 | Train Loss 0.3647 R2 0.2824 | Val Loss 5.4137 R2 -0.1385 RMSE 1.6774 MAE 1.5523 CCC 0.4952
+2026-04-07 19:50:02,387 - INFO -  ✓ New best model saved (Val R² = -0.1385)
+2026-04-07 19:50:03,004 - INFO -   [Regularized] Loss=0.3886 L1=0.0000 R2=0.2591
+2026-04-07 19:50:03,567 - INFO - CCC: 0.3036
+2026-04-07 19:50:04,121 - INFO - CCC: 0.4975
+2026-04-07 19:50:04,123 - INFO - Epoch 021/200 | Train Loss 0.3886 R2 0.2591 | Val Loss 5.4063 R2 -0.1323 RMSE 1.6729 MAE 1.5477 CCC 0.4975
+2026-04-07 19:50:04,172 - INFO -  ✓ New best model saved (Val R² = -0.1323)
+2026-04-07 19:50:04,794 - INFO -   [Regularized] Loss=0.4400 L1=0.0000 R2=0.1102
+2026-04-07 19:50:05,334 - INFO - CCC: 0.3146
+2026-04-07 19:50:05,883 - INFO - CCC: 0.4990
+2026-04-07 19:50:05,884 - INFO - Epoch 022/200 | Train Loss 0.4400 R2 0.1102 | Val Loss 5.3973 R2 -0.1286 RMSE 1.6701 MAE 1.5452 CCC 0.4990
+2026-04-07 19:50:05,932 - INFO -  ✓ New best model saved (Val R² = -0.1286)
+2026-04-07 19:50:06,593 - INFO -   [Regularized] Loss=0.4363 L1=0.0000 R2=0.0981
+2026-04-07 19:50:07,137 - INFO - CCC: 0.3273
+2026-04-07 19:50:07,717 - INFO - CCC: 0.4999
+2026-04-07 19:50:07,718 - INFO - Epoch 023/200 | Train Loss 0.4363 R2 0.0981 | Val Loss 5.3870 R2 -0.1258 RMSE 1.6680 MAE 1.5436 CCC 0.4999
+2026-04-07 19:50:07,767 - INFO -  ✓ New best model saved (Val R² = -0.1258)
+2026-04-07 19:50:08,378 - INFO -   [Regularized] Loss=0.4474 L1=0.0000 R2=0.0445
+2026-04-07 19:50:08,952 - INFO - CCC: 0.3397
+2026-04-07 19:50:09,505 - INFO - CCC: 0.5018
+2026-04-07 19:50:09,507 - INFO - Epoch 024/200 | Train Loss 0.4474 R2 0.0445 | Val Loss 5.3774 R2 -0.1203 RMSE 1.6640 MAE 1.5397 CCC 0.5018
+2026-04-07 19:50:09,552 - INFO -  ✓ New best model saved (Val R² = -0.1203)
+2026-04-07 19:50:10,164 - INFO -   [Regularized] Loss=0.4665 L1=0.0000 R2=0.0679
+2026-04-07 19:50:10,697 - INFO - CCC: 0.3524
+2026-04-07 19:50:11,267 - INFO - CCC: 0.5039
+2026-04-07 19:50:11,268 - INFO - Epoch 025/200 | Train Loss 0.4665 R2 0.0679 | Val Loss 5.3675 R2 -0.1146 RMSE 1.6597 MAE 1.5355 CCC 0.5039
+2026-04-07 19:50:11,318 - INFO -  ✓ New best model saved (Val R² = -0.1146)
+2026-04-07 19:50:11,934 - INFO -   [Regularized] Loss=0.4007 L1=0.0000 R2=0.1789
+2026-04-07 19:50:12,486 - INFO - CCC: 0.3669
+2026-04-07 19:50:13,002 - INFO - CCC: 0.5052
+2026-04-07 19:50:13,003 - INFO - Epoch 026/200 | Train Loss 0.4007 R2 0.1789 | Val Loss 5.3535 R2 -0.1105 RMSE 1.6567 MAE 1.5330 CCC 0.5052
+2026-04-07 19:50:13,051 - INFO -  ✓ New best model saved (Val R² = -0.1105)
+2026-04-07 19:50:13,644 - INFO -   [Regularized] Loss=0.3783 L1=0.0000 R2=0.2181
+2026-04-07 19:50:14,193 - INFO - CCC: 0.3806
+2026-04-07 19:50:14,726 - INFO - CCC: 0.5071
+2026-04-07 19:50:14,727 - INFO - Epoch 027/200 | Train Loss 0.3783 R2 0.2181 | Val Loss 5.3403 R2 -0.1045 RMSE 1.6522 MAE 1.5288 CCC 0.5071
+2026-04-07 19:50:14,776 - INFO -  ✓ New best model saved (Val R² = -0.1045)
+2026-04-07 19:50:15,388 - INFO -   [Regularized] Loss=0.3585 L1=0.0000 R2=0.2802
+2026-04-07 19:50:15,846 - INFO - CCC: 0.3933
+2026-04-07 19:50:16,400 - INFO - CCC: 0.5096
+2026-04-07 19:50:16,401 - INFO - Epoch 028/200 | Train Loss 0.3585 R2 0.2802 | Val Loss 5.3278 R2 -0.0965 RMSE 1.6462 MAE 1.5227 CCC 0.5096
+2026-04-07 19:50:16,448 - INFO -  ✓ New best model saved (Val R² = -0.0965)
+2026-04-07 19:50:17,053 - INFO -   [Regularized] Loss=0.3882 L1=0.0000 R2=0.2449
+2026-04-07 19:50:17,940 - INFO - CCC: 0.4050
+2026-04-07 19:50:18,839 - INFO - CCC: 0.5112
+2026-04-07 19:50:18,842 - INFO - Epoch 029/200 | Train Loss 0.3882 R2 0.2449 | Val Loss 5.3124 R2 -0.0911 RMSE 1.6421 MAE 1.5191 CCC 0.5112
+2026-04-07 19:50:19,212 - INFO -  ✓ New best model saved (Val R² = -0.0911)
+2026-04-07 19:50:19,816 - INFO -   [Regularized] Loss=0.3437 L1=0.0000 R2=0.3468
+2026-04-07 19:50:20,342 - INFO - CCC: 0.4167
+2026-04-07 19:50:20,810 - INFO - CCC: 0.5138
+2026-04-07 19:50:20,812 - INFO - Epoch 030/200 | Train Loss 0.3437 R2 0.3468 | Val Loss 5.2962 R2 -0.0829 RMSE 1.6360 MAE 1.5131 CCC 0.5138
+2026-04-07 19:50:20,862 - INFO -  ✓ New best model saved (Val R² = -0.0829)
+2026-04-07 19:50:21,448 - INFO -   [Regularized] Loss=0.3258 L1=0.0000 R2=0.3349
+2026-04-07 19:50:22,007 - INFO - CCC: 0.4303
+2026-04-07 19:50:22,532 - INFO - CCC: 0.5191
+2026-04-07 19:50:22,532 - INFO - Epoch 031/200 | Train Loss 0.3258 R2 0.3349 | Val Loss 5.2837 R2 -0.0681 RMSE 1.6247 MAE 1.5008 CCC 0.5191
+2026-04-07 19:50:22,575 - INFO -  ✓ New best model saved (Val R² = -0.0681)
+2026-04-07 19:50:23,304 - INFO -   [Regularized] Loss=0.3225 L1=0.0000 R2=0.3686
+2026-04-07 19:50:23,815 - INFO - CCC: 0.4441
+2026-04-07 19:50:24,335 - INFO - CCC: 0.5253
+2026-04-07 19:50:24,337 - INFO - Epoch 032/200 | Train Loss 0.3225 R2 0.3686 | Val Loss 5.2738 R2 -0.0516 RMSE 1.6121 MAE 1.4860 CCC 0.5253
+2026-04-07 19:50:24,385 - INFO -  ✓ New best model saved (Val R² = -0.0516)
+2026-04-07 19:50:24,983 - INFO -   [Regularized] Loss=0.3602 L1=0.0000 R2=0.3353
+2026-04-07 19:50:25,563 - INFO - CCC: 0.4561
+2026-04-07 19:50:26,114 - INFO - CCC: 0.5299
+2026-04-07 19:50:26,117 - INFO - Epoch 033/200 | Train Loss 0.3602 R2 0.3353 | Val Loss 5.2586 R2 -0.0390 RMSE 1.6024 MAE 1.4751 CCC 0.5299
+2026-04-07 19:50:26,166 - INFO -  ✓ New best model saved (Val R² = -0.0390)
+2026-04-07 19:50:26,747 - INFO -   [Regularized] Loss=0.2604 L1=0.0000 R2=0.4976
+2026-04-07 19:50:27,367 - INFO - CCC: 0.4684
+2026-04-07 19:50:27,922 - INFO - CCC: 0.5335
+2026-04-07 19:50:27,923 - INFO - Epoch 034/200 | Train Loss 0.2604 R2 0.4976 | Val Loss 5.2417 R2 -0.0296 RMSE 1.5952 MAE 1.4674 CCC 0.5335
+2026-04-07 19:50:27,971 - INFO -  ✓ New best model saved (Val R² = -0.0296)
+2026-04-07 19:50:28,689 - INFO -   [Regularized] Loss=0.4058 L1=0.0000 R2=0.2164
+2026-04-07 19:50:29,243 - INFO - CCC: 0.4793
+2026-04-07 19:50:29,779 - INFO - CCC: 0.5347
+2026-04-07 19:50:29,780 - INFO - Epoch 035/200 | Train Loss 0.4058 R2 0.2164 | Val Loss 5.2206 R2 -0.0257 RMSE 1.5922 MAE 1.4658 CCC 0.5347
+2026-04-07 19:50:29,831 - INFO -  ✓ New best model saved (Val R² = -0.0257)
+2026-04-07 19:50:30,440 - INFO -   [Regularized] Loss=0.2770 L1=0.0000 R2=0.4216
+2026-04-07 19:50:30,986 - INFO - CCC: 0.4875
+2026-04-07 19:50:31,528 - INFO - CCC: 0.5352
+2026-04-07 19:50:31,530 - INFO - Epoch 036/200 | Train Loss 0.2770 R2 0.4216 | Val Loss 5.1950 R2 -0.0241 RMSE 1.5909 MAE 1.4671 CCC 0.5352
+2026-04-07 19:50:31,578 - INFO -  ✓ New best model saved (Val R² = -0.0241)
+2026-04-07 19:50:32,213 - INFO -   [Regularized] Loss=0.2851 L1=0.0000 R2=0.4335
+2026-04-07 19:50:32,774 - INFO - CCC: 0.4976
+2026-04-07 19:50:33,346 - INFO - CCC: 0.5363
+2026-04-07 19:50:33,349 - INFO - Epoch 037/200 | Train Loss 0.2851 R2 0.4335 | Val Loss 5.1773 R2 -0.0212 RMSE 1.5886 MAE 1.4663 CCC 0.5363
+2026-04-07 19:50:33,397 - INFO -  ✓ New best model saved (Val R² = -0.0212)
+2026-04-07 19:50:34,038 - INFO -   [Regularized] Loss=0.2952 L1=0.0000 R2=0.3760
+2026-04-07 19:50:34,606 - INFO - CCC: 0.5118
+2026-04-07 19:50:35,139 - INFO - CCC: 0.5401
+2026-04-07 19:50:35,140 - INFO - Epoch 038/200 | Train Loss 0.2952 R2 0.3760 | Val Loss 5.1646 R2 -0.0118 RMSE 1.5813 MAE 1.4582 CCC 0.5401
+2026-04-07 19:50:35,187 - INFO -  ✓ New best model saved (Val R² = -0.0118)
+2026-04-07 19:50:35,793 - INFO -   [Regularized] Loss=0.3719 L1=0.0000 R2=0.3022
+2026-04-07 19:50:36,318 - INFO - CCC: 0.5272
+2026-04-07 19:50:36,855 - INFO - CCC: 0.5443
+2026-04-07 19:50:36,856 - INFO - Epoch 039/200 | Train Loss 0.3719 R2 0.3022 | Val Loss 5.1544 R2 -0.0013 RMSE 1.5731 MAE 1.4484 CCC 0.5443
+2026-04-07 19:50:36,904 - INFO -  ✓ New best model saved (Val R² = -0.0013)
+2026-04-07 19:50:37,487 - INFO -   [Regularized] Loss=0.2928 L1=0.0000 R2=0.3931
+2026-04-07 19:50:38,045 - INFO - CCC: 0.5423
+2026-04-07 19:50:38,583 - INFO - CCC: 0.5480
+2026-04-07 19:50:38,584 - INFO - Epoch 040/200 | Train Loss 0.2928 R2 0.3931 | Val Loss 5.1431 R2 0.0076 RMSE 1.5661 MAE 1.4404 CCC 0.5480
+2026-04-07 19:50:38,633 - INFO -  ✓ New best model saved (Val R² = 0.0076)
+2026-04-07 19:50:39,261 - INFO -   [Regularized] Loss=0.4171 L1=0.0000 R2=0.2226
+2026-04-07 19:50:39,799 - INFO - CCC: 0.5566
+2026-04-07 19:50:40,343 - INFO - CCC: 0.5519
+2026-04-07 19:50:40,344 - INFO - Epoch 041/200 | Train Loss 0.4171 R2 0.2226 | Val Loss 5.1350 R2 0.0169 RMSE 1.5587 MAE 1.4314 CCC 0.5519
+2026-04-07 19:50:40,393 - INFO -  ✓ New best model saved (Val R² = 0.0169)
+2026-04-07 19:50:40,997 - INFO -   [Regularized] Loss=0.3273 L1=0.0000 R2=0.3665
+2026-04-07 19:50:41,563 - INFO - CCC: 0.5698
+2026-04-07 19:50:42,070 - INFO - CCC: 0.5536
+2026-04-07 19:50:42,072 - INFO - Epoch 042/200 | Train Loss 0.3273 R2 0.3665 | Val Loss 5.1238 R2 0.0217 RMSE 1.5549 MAE 1.4279 CCC 0.5536
+2026-04-07 19:50:42,122 - INFO -  ✓ New best model saved (Val R² = 0.0217)
+2026-04-07 19:50:42,751 - INFO -   [Regularized] Loss=0.2585 L1=0.0000 R2=0.4562
+2026-04-07 19:50:43,382 - INFO - CCC: 0.5815
+2026-04-07 19:50:43,913 - INFO - CCC: 0.5561
+2026-04-07 19:50:43,913 - INFO - Epoch 043/200 | Train Loss 0.2585 R2 0.4562 | Val Loss 5.1138 R2 0.0286 RMSE 1.5494 MAE 1.4216 CCC 0.5561
+2026-04-07 19:50:43,948 - INFO -  ✓ New best model saved (Val R² = 0.0286)
+2026-04-07 19:50:44,583 - INFO -   [Regularized] Loss=0.1971 L1=0.0000 R2=0.5959
+2026-04-07 19:50:45,159 - INFO - CCC: 0.5933
+2026-04-07 19:50:45,673 - INFO - CCC: 0.5572
+2026-04-07 19:50:45,676 - INFO - Epoch 044/200 | Train Loss 0.1971 R2 0.5959 | Val Loss 5.1063 R2 0.0322 RMSE 1.5466 MAE 1.4185 CCC 0.5572
+2026-04-07 19:50:45,725 - INFO -  ✓ New best model saved (Val R² = 0.0322)
+2026-04-07 19:50:46,312 - INFO -   [Regularized] Loss=0.2321 L1=0.0000 R2=0.5435
+2026-04-07 19:50:46,859 - INFO - CCC: 0.6051
+2026-04-07 19:50:47,369 - INFO - CCC: 0.5578
+2026-04-07 19:50:47,371 - INFO - Epoch 045/200 | Train Loss 0.2321 R2 0.5435 | Val Loss 5.0989 R2 0.0339 RMSE 1.5452 MAE 1.4178 CCC 0.5578
+2026-04-07 19:50:47,420 - INFO -  ✓ New best model saved (Val R² = 0.0339)
+2026-04-07 19:50:48,053 - INFO -   [Regularized] Loss=0.3160 L1=0.0000 R2=0.4019
+2026-04-07 19:50:48,616 - INFO - CCC: 0.6168
+2026-04-07 19:50:49,147 - INFO - CCC: 0.5570
+2026-04-07 19:50:49,148 - INFO - Epoch 046/200 | Train Loss 0.3160 R2 0.4019 | Val Loss 5.0878 R2 0.0327 RMSE 1.5462 MAE 1.4211 CCC 0.5570
+2026-04-07 19:50:49,757 - INFO -   [Regularized] Loss=0.2622 L1=0.0000 R2=0.4398
+2026-04-07 19:50:50,297 - INFO - CCC: 0.6265
+2026-04-07 19:50:50,825 - INFO - CCC: 0.5571
+2026-04-07 19:50:50,825 - INFO - Epoch 047/200 | Train Loss 0.2622 R2 0.4398 | Val Loss 5.0801 R2 0.0333 RMSE 1.5457 MAE 1.4216 CCC 0.5571
+2026-04-07 19:50:51,505 - INFO -   [Regularized] Loss=0.2705 L1=0.0000 R2=0.5175
+2026-04-07 19:50:52,052 - INFO - CCC: 0.6352
+2026-04-07 19:50:52,598 - INFO - CCC: 0.5576
+2026-04-07 19:50:52,600 - INFO - Epoch 048/200 | Train Loss 0.2705 R2 0.5175 | Val Loss 5.0752 R2 0.0350 RMSE 1.5443 MAE 1.4204 CCC 0.5576
+2026-04-07 19:50:52,647 - INFO -  ✓ New best model saved (Val R² = 0.0350)
+2026-04-07 19:50:53,243 - INFO -   [Regularized] Loss=0.1964 L1=0.0000 R2=0.6207
+2026-04-07 19:50:53,785 - INFO - CCC: 0.6434
+2026-04-07 19:50:54,351 - INFO - CCC: 0.5569
+2026-04-07 19:50:54,352 - INFO - Epoch 049/200 | Train Loss 0.1964 R2 0.6207 | Val Loss 5.0695 R2 0.0334 RMSE 1.5456 MAE 1.4231 CCC 0.5569
+2026-04-07 19:50:54,909 - INFO -   [Regularized] Loss=0.1550 L1=0.0000 R2=0.6783
+2026-04-07 19:50:55,441 - INFO - CCC: 0.6497
+2026-04-07 19:50:55,929 - INFO - CCC: 0.5576
+2026-04-07 19:50:55,930 - INFO - Epoch 050/200 | Train Loss 0.1550 R2 0.6783 | Val Loss 5.0672 R2 0.0354 RMSE 1.5440 MAE 1.4213 CCC 0.5576
+2026-04-07 19:50:56,456 - INFO -   [Regularized] Loss=0.2494 L1=0.0000 R2=0.5257
+2026-04-07 19:50:56,880 - INFO - CCC: 0.6547
+2026-04-07 19:50:57,350 - INFO - CCC: 0.5589
+2026-04-07 19:50:57,352 - INFO - Epoch 051/200 | Train Loss 0.2494 R2 0.5257 | Val Loss 5.0680 R2 0.0388 RMSE 1.5413 MAE 1.4175 CCC 0.5589
+2026-04-07 19:50:57,396 - INFO -  ✓ New best model saved (Val R² = 0.0388)
+2026-04-07 19:50:57,877 - INFO -   [Regularized] Loss=0.2838 L1=0.0000 R2=0.4426
+2026-04-07 19:50:58,302 - INFO - CCC: 0.6583
+2026-04-07 19:50:58,729 - INFO - CCC: 0.5603
+2026-04-07 19:50:58,731 - INFO - Epoch 052/200 | Train Loss 0.2838 R2 0.4426 | Val Loss 5.0687 R2 0.0421 RMSE 1.5386 MAE 1.4138 CCC 0.5603
+2026-04-07 19:50:58,776 - INFO -  ✓ New best model saved (Val R² = 0.0421)
+2026-04-07 19:50:59,255 - INFO -   [Regularized] Loss=0.3250 L1=0.0000 R2=0.4080
+2026-04-07 19:50:59,698 - INFO - CCC: 0.6615
+2026-04-07 19:51:00,154 - INFO - CCC: 0.5614
+2026-04-07 19:51:00,155 - INFO - Epoch 053/200 | Train Loss 0.3250 R2 0.4080 | Val Loss 5.0684 R2 0.0448 RMSE 1.5365 MAE 1.4109 CCC 0.5614
+2026-04-07 19:51:00,201 - INFO -  ✓ New best model saved (Val R² = 0.0448)
+2026-04-07 19:51:00,722 - INFO -   [Regularized] Loss=0.2382 L1=0.0000 R2=0.5381
+2026-04-07 19:51:01,109 - INFO - CCC: 0.6651
+2026-04-07 19:51:01,511 - INFO - CCC: 0.5619
+2026-04-07 19:51:01,512 - INFO - Epoch 054/200 | Train Loss 0.2382 R2 0.5381 | Val Loss 5.0649 R2 0.0463 RMSE 1.5352 MAE 1.4097 CCC 0.5619
+2026-04-07 19:51:01,538 - INFO -  ✓ New best model saved (Val R² = 0.0463)
+2026-04-07 19:51:02,017 - INFO -   [Regularized] Loss=0.3296 L1=0.0000 R2=0.3788
+2026-04-07 19:51:02,482 - INFO - CCC: 0.6688
+2026-04-07 19:51:03,048 - INFO - CCC: 0.5621
+2026-04-07 19:51:03,049 - INFO - Epoch 055/200 | Train Loss 0.3296 R2 0.3788 | Val Loss 5.0605 R2 0.0469 RMSE 1.5348 MAE 1.4097 CCC 0.5621
+2026-04-07 19:51:03,529 - INFO -   [Regularized] Loss=0.1607 L1=0.0000 R2=0.6559
+2026-04-07 19:51:03,955 - INFO - CCC: 0.6715
+2026-04-07 19:51:04,320 - INFO - CCC: 0.5626
+2026-04-07 19:51:04,321 - INFO - Epoch 056/200 | Train Loss 0.1607 R2 0.6559 | Val Loss 5.0576 R2 0.0483 RMSE 1.5336 MAE 1.4085 CCC 0.5626
+2026-04-07 19:51:04,368 - INFO -  ✓ New best model saved (Val R² = 0.0483)
+2026-04-07 19:51:04,845 - INFO -   [Regularized] Loss=0.2326 L1=0.0000 R2=0.5076
+2026-04-07 19:51:05,273 - INFO - CCC: 0.6736
+2026-04-07 19:51:05,646 - INFO - CCC: 0.5632
+2026-04-07 19:51:05,648 - INFO - Epoch 057/200 | Train Loss 0.2326 R2 0.5076 | Val Loss 5.0554 R2 0.0500 RMSE 1.5322 MAE 1.4069 CCC 0.5632
+2026-04-07 19:51:05,689 - INFO -  ✓ New best model saved (Val R² = 0.0500)
+2026-04-07 19:51:06,144 - INFO -   [Regularized] Loss=0.3342 L1=0.0000 R2=0.3389
+2026-04-07 19:51:06,503 - INFO - CCC: 0.6754
+2026-04-07 19:51:06,917 - INFO - CCC: 0.5636
+2026-04-07 19:51:06,919 - INFO - Epoch 058/200 | Train Loss 0.3342 R2 0.3389 | Val Loss 5.0530 R2 0.0512 RMSE 1.5313 MAE 1.4059 CCC 0.5636
+2026-04-07 19:51:06,962 - INFO -  ✓ New best model saved (Val R² = 0.0512)
+2026-04-07 19:51:07,502 - INFO -   [Regularized] Loss=0.3407 L1=0.0000 R2=0.3068
+2026-04-07 19:51:07,920 - INFO - CCC: 0.6771
+2026-04-07 19:51:08,288 - INFO - CCC: 0.5638
+2026-04-07 19:51:08,288 - INFO - Epoch 059/200 | Train Loss 0.3407 R2 0.3068 | Val Loss 5.0512 R2 0.0518 RMSE 1.5308 MAE 1.4055 CCC 0.5638
+2026-04-07 19:51:08,734 - INFO -   [Regularized] Loss=0.3722 L1=0.0000 R2=0.2884
+2026-04-07 19:51:09,179 - INFO - CCC: 0.6785
+2026-04-07 19:51:09,614 - INFO - CCC: 0.5640
+2026-04-07 19:51:09,615 - INFO - Epoch 060/200 | Train Loss 0.3722 R2 0.2884 | Val Loss 5.0496 R2 0.0522 RMSE 1.5305 MAE 1.4052 CCC 0.5640
+2026-04-07 19:51:09,659 - INFO -  ✓ New best model saved (Val R² = 0.0522)
+2026-04-07 19:51:10,110 - INFO -   [Regularized] Loss=0.3123 L1=0.0000 R2=0.3899
+2026-04-07 19:51:10,510 - INFO - CCC: 0.6796
+2026-04-07 19:51:10,914 - INFO - CCC: 0.5640
+2026-04-07 19:51:10,915 - INFO - Epoch 061/200 | Train Loss 0.3123 R2 0.3899 | Val Loss 5.0483 R2 0.0523 RMSE 1.5304 MAE 1.4053 CCC 0.5640
+2026-04-07 19:51:11,410 - INFO -   [Regularized] Loss=0.2967 L1=0.0000 R2=0.3989
+2026-04-07 19:51:11,826 - INFO - CCC: 0.6802
+2026-04-07 19:51:12,242 - INFO - CCC: 0.5641
+2026-04-07 19:51:12,243 - INFO - Epoch 062/200 | Train Loss 0.2967 R2 0.3989 | Val Loss 5.0477 R2 0.0526 RMSE 1.5302 MAE 1.4051 CCC 0.5641
+2026-04-07 19:51:12,658 - INFO -   [Regularized] Loss=0.3436 L1=0.0000 R2=0.3533
+2026-04-07 19:51:13,069 - INFO - CCC: 0.6805
+2026-04-07 19:51:13,477 - INFO - CCC: 0.5642
+2026-04-07 19:51:13,478 - INFO - Epoch 063/200 | Train Loss 0.3436 R2 0.3533 | Val Loss 5.0476 R2 0.0528 RMSE 1.5300 MAE 1.4049 CCC 0.5642
+2026-04-07 19:51:13,889 - INFO -   [Regularized] Loss=0.1796 L1=0.0000 R2=0.6586
+2026-04-07 19:51:14,288 - INFO - CCC: 0.6807
+2026-04-07 19:51:14,718 - INFO - CCC: 0.5643
+2026-04-07 19:51:14,719 - INFO - Epoch 064/200 | Train Loss 0.1796 R2 0.6586 | Val Loss 5.0475 R2 0.0529 RMSE 1.5299 MAE 1.4048 CCC 0.5643
+2026-04-07 19:51:15,169 - INFO -   [Regularized] Loss=0.2476 L1=0.0000 R2=0.5312
+2026-04-07 19:51:15,573 - INFO - CCC: 0.6808
+2026-04-07 19:51:15,955 - INFO - CCC: 0.5643
+2026-04-07 19:51:15,957 - INFO - Epoch 065/200 | Train Loss 0.2476 R2 0.5312 | Val Loss 5.0475 R2 0.0530 RMSE 1.5299 MAE 1.4047 CCC 0.5643
+2026-04-07 19:51:16,447 - INFO -   [Regularized] Loss=0.3173 L1=0.0000 R2=0.4303
+2026-04-07 19:51:16,913 - INFO - CCC: 0.6808
+2026-04-07 19:51:17,387 - INFO - CCC: 0.5643
+2026-04-07 19:51:17,388 - INFO - Epoch 066/200 | Train Loss 0.3173 R2 0.4303 | Val Loss 5.0474 R2 0.0530 RMSE 1.5298 MAE 1.4047 CCC 0.5643
+2026-04-07 19:51:17,883 - INFO -   [Regularized] Loss=0.2375 L1=0.0000 R2=0.5314
+2026-04-07 19:51:18,355 - INFO - CCC: 0.7164
+2026-04-07 19:51:18,824 - INFO - CCC: 0.5648
+2026-04-07 19:51:18,825 - INFO - Epoch 067/200 | Train Loss 0.2375 R2 0.5314 | Val Loss 4.9991 R2 0.0506 RMSE 1.5318 MAE 1.4143 CCC 0.5648
+2026-04-07 19:51:19,315 - INFO -   [Regularized] Loss=0.2023 L1=0.0000 R2=0.6147
+2026-04-07 19:51:19,797 - INFO - CCC: 0.7368
+2026-04-07 19:51:20,250 - INFO - CCC: 0.5716
+2026-04-07 19:51:20,251 - INFO - Epoch 068/200 | Train Loss 0.2023 R2 0.6147 | Val Loss 4.9681 R2 0.0568 RMSE 1.5268 MAE 1.4113 CCC 0.5716
+2026-04-07 19:51:20,297 - INFO -  ✓ New best model saved (Val R² = 0.0568)
+2026-04-07 19:51:20,778 - INFO -   [Regularized] Loss=0.3427 L1=0.0000 R2=0.3348
+2026-04-07 19:51:21,195 - INFO - CCC: 0.7909
+2026-04-07 19:51:21,609 - INFO - CCC: 0.5919
+2026-04-07 19:51:21,610 - INFO - Epoch 069/200 | Train Loss 0.3427 R2 0.3348 | Val Loss 4.9396 R2 0.1012 RMSE 1.4904 MAE 1.3710 CCC 0.5919
+2026-04-07 19:51:21,654 - INFO -  ✓ New best model saved (Val R² = 0.1012)
+2026-04-07 19:51:22,174 - INFO -   [Regularized] Loss=0.3595 L1=0.0000 R2=0.3364
+2026-04-07 19:51:22,593 - INFO - CCC: 0.8199
+2026-04-07 19:51:22,990 - INFO - CCC: 0.6041
+2026-04-07 19:51:22,992 - INFO - Epoch 070/200 | Train Loss 0.3595 R2 0.3364 | Val Loss 4.9072 R2 0.1249 RMSE 1.4707 MAE 1.3487 CCC 0.6041
+2026-04-07 19:51:23,038 - INFO -  ✓ New best model saved (Val R² = 0.1249)
+2026-04-07 19:51:23,506 - INFO -   [Regularized] Loss=0.1795 L1=0.0000 R2=0.6394
+2026-04-07 19:51:23,922 - INFO - CCC: 0.8372
+2026-04-07 19:51:24,377 - INFO - CCC: 0.6104
+2026-04-07 19:51:24,378 - INFO - Epoch 071/200 | Train Loss 0.1795 R2 0.6394 | Val Loss 4.8732 R2 0.1308 RMSE 1.4657 MAE 1.3452 CCC 0.6104
+2026-04-07 19:51:24,424 - INFO -  ✓ New best model saved (Val R² = 0.1308)
+2026-04-07 19:51:24,938 - INFO -   [Regularized] Loss=0.2696 L1=0.0000 R2=0.4665
+2026-04-07 19:51:25,373 - INFO - CCC: 0.8641
+2026-04-07 19:51:25,780 - INFO - CCC: 0.6300
+2026-04-07 19:51:25,781 - INFO - Epoch 072/200 | Train Loss 0.2696 R2 0.4665 | Val Loss 4.8267 R2 0.1757 RMSE 1.4273 MAE 1.2966 CCC 0.6300
+2026-04-07 19:51:25,825 - INFO -  ✓ New best model saved (Val R² = 0.1757)
+2026-04-07 19:51:26,272 - INFO -   [Regularized] Loss=0.2563 L1=0.0000 R2=0.5131
+2026-04-07 19:51:26,661 - INFO - CCC: 0.8822
+2026-04-07 19:51:27,023 - INFO - CCC: 0.6426
+2026-04-07 19:51:27,023 - INFO - Epoch 073/200 | Train Loss 0.2563 R2 0.5131 | Val Loss 4.7818 R2 0.1992 RMSE 1.4068 MAE 1.2737 CCC 0.6426
+2026-04-07 19:51:27,063 - INFO -  ✓ New best model saved (Val R² = 0.1992)
+2026-04-07 19:51:27,569 - INFO -   [Regularized] Loss=0.3215 L1=0.0000 R2=0.4016
+2026-04-07 19:51:27,968 - INFO - CCC: 0.8552
+2026-04-07 19:51:28,392 - INFO - CCC: 0.6490
+2026-04-07 19:51:28,393 - INFO - Epoch 074/200 | Train Loss 0.3215 R2 0.4016 | Val Loss 4.7457 R2 0.2202 RMSE 1.3882 MAE 1.2385 CCC 0.6490
+2026-04-07 19:51:28,443 - INFO -  ✓ New best model saved (Val R² = 0.2202)
+2026-04-07 19:51:28,906 - INFO -   [Regularized] Loss=0.2723 L1=0.0000 R2=0.4072
+2026-04-07 19:51:29,317 - INFO - CCC: 0.8383
+2026-04-07 19:51:29,750 - INFO - CCC: 0.6556
+2026-04-07 19:51:29,752 - INFO - Epoch 075/200 | Train Loss 0.2723 R2 0.4072 | Val Loss 4.7094 R2 0.2352 RMSE 1.3748 MAE 1.2153 CCC 0.6556
+2026-04-07 19:51:29,797 - INFO -  ✓ New best model saved (Val R² = 0.2352)
+2026-04-07 19:51:30,320 - INFO -   [Regularized] Loss=0.2645 L1=0.0000 R2=0.4375
+2026-04-07 19:51:30,741 - INFO - CCC: 0.8974
+2026-04-07 19:51:31,175 - INFO - CCC: 0.6754
+2026-04-07 19:51:31,176 - INFO - Epoch 076/200 | Train Loss 0.2645 R2 0.4375 | Val Loss 4.6632 R2 0.2650 RMSE 1.3478 MAE 1.2025 CCC 0.6754
+2026-04-07 19:51:31,219 - INFO -  ✓ New best model saved (Val R² = 0.2650)
+2026-04-07 19:51:31,708 - INFO -   [Regularized] Loss=0.1904 L1=0.0000 R2=0.6534
+2026-04-07 19:51:32,129 - INFO - CCC: 0.9153
+2026-04-07 19:51:32,518 - INFO - CCC: 0.6888
+2026-04-07 19:51:32,520 - INFO - Epoch 077/200 | Train Loss 0.1904 R2 0.6534 | Val Loss 4.6371 R2 0.2791 RMSE 1.3348 MAE 1.1972 CCC 0.6888
+2026-04-07 19:51:32,565 - INFO -  ✓ New best model saved (Val R² = 0.2791)
+2026-04-07 19:51:33,009 - INFO -   [Regularized] Loss=0.2085 L1=0.0000 R2=0.5776
+2026-04-07 19:51:33,426 - INFO - CCC: 0.9139
+2026-04-07 19:51:33,830 - INFO - CCC: 0.6907
+2026-04-07 19:51:33,832 - INFO - Epoch 078/200 | Train Loss 0.2085 R2 0.5776 | Val Loss 4.6232 R2 0.2891 RMSE 1.3255 MAE 1.1759 CCC 0.6907
+2026-04-07 19:51:33,876 - INFO -  ✓ New best model saved (Val R² = 0.2891)
+2026-04-07 19:51:34,289 - INFO -   [Regularized] Loss=0.1964 L1=0.0000 R2=0.5991
+2026-04-07 19:51:34,639 - INFO - CCC: 0.9213
+2026-04-07 19:51:35,065 - INFO - CCC: 0.6880
+2026-04-07 19:51:35,066 - INFO - Epoch 079/200 | Train Loss 0.1964 R2 0.5991 | Val Loss 4.6415 R2 0.2817 RMSE 1.3323 MAE 1.1763 CCC 0.6880
+2026-04-07 19:51:35,514 - INFO -   [Regularized] Loss=0.2181 L1=0.0000 R2=0.5808
+2026-04-07 19:51:35,943 - INFO - CCC: 0.8534
+2026-04-07 19:51:36,376 - INFO - CCC: 0.6645
+2026-04-07 19:51:36,377 - INFO - Epoch 080/200 | Train Loss 0.2181 R2 0.5808 | Val Loss 4.6888 R2 0.2467 RMSE 1.3645 MAE 1.1884 CCC 0.6645
+2026-04-07 19:51:36,842 - INFO -   [Regularized] Loss=0.2077 L1=0.0000 R2=0.5919
+2026-04-07 19:51:37,264 - INFO - CCC: 0.8926
+2026-04-07 19:51:37,665 - INFO - CCC: 0.6679
+2026-04-07 19:51:37,665 - INFO - Epoch 081/200 | Train Loss 0.2077 R2 0.5919 | Val Loss 4.6999 R2 0.2487 RMSE 1.3626 MAE 1.1919 CCC 0.6679
+2026-04-07 19:51:38,137 - INFO -   [Regularized] Loss=0.1800 L1=0.0000 R2=0.6582
+2026-04-07 19:51:38,516 - INFO - CCC: 0.9432
+2026-04-07 19:51:38,923 - INFO - CCC: 0.6826
+2026-04-07 19:51:38,924 - INFO - Epoch 082/200 | Train Loss 0.1800 R2 0.6582 | Val Loss 4.7000 R2 0.2519 RMSE 1.3598 MAE 1.2027 CCC 0.6826
+2026-04-07 19:51:39,435 - INFO -   [Regularized] Loss=0.1519 L1=0.0000 R2=0.7300
+2026-04-07 19:51:39,847 - INFO - CCC: 0.9222
+2026-04-07 19:51:40,250 - INFO - CCC: 0.6849
+2026-04-07 19:51:40,252 - INFO - Epoch 083/200 | Train Loss 0.1519 R2 0.7300 | Val Loss 4.6946 R2 0.2478 RMSE 1.3635 MAE 1.2030 CCC 0.6849
+2026-04-07 19:51:40,729 - INFO -   [Regularized] Loss=0.3896 L1=0.0000 R2=0.1597
+2026-04-07 19:51:41,140 - INFO - CCC: 0.9573
+2026-04-07 19:51:41,542 - INFO - CCC: 0.6859
+2026-04-07 19:51:41,543 - INFO - Epoch 084/200 | Train Loss 0.3896 R2 0.1597 | Val Loss 4.6991 R2 0.2633 RMSE 1.3494 MAE 1.1907 CCC 0.6859
+2026-04-07 19:51:42,042 - INFO -   [Regularized] Loss=0.0878 L1=0.0000 R2=0.8231
+2026-04-07 19:51:42,422 - INFO - CCC: 0.8613
+2026-04-07 19:51:42,816 - INFO - CCC: 0.6636
+2026-04-07 19:51:42,817 - INFO - Epoch 085/200 | Train Loss 0.0878 R2 0.8231 | Val Loss 4.7191 R2 0.2436 RMSE 1.3673 MAE 1.1880 CCC 0.6636
+2026-04-07 19:51:43,325 - INFO -   [Regularized] Loss=0.1914 L1=0.0000 R2=0.6511
+2026-04-07 19:51:43,731 - INFO - CCC: 0.8216
+2026-04-07 19:51:44,135 - INFO - CCC: 0.6590
+2026-04-07 19:51:44,136 - INFO - Epoch 086/200 | Train Loss 0.1914 R2 0.6511 | Val Loss 4.7202 R2 0.2388 RMSE 1.3716 MAE 1.1853 CCC 0.6590
+2026-04-07 19:51:44,596 - INFO -   [Regularized] Loss=0.1594 L1=0.0000 R2=0.6440
+2026-04-07 19:51:44,949 - INFO - CCC: 0.8800
+2026-04-07 19:51:45,365 - INFO - CCC: 0.6725
+2026-04-07 19:51:45,367 - INFO - Epoch 087/200 | Train Loss 0.1594 R2 0.6440 | Val Loss 4.7004 R2 0.2603 RMSE 1.3520 MAE 1.1777 CCC 0.6725
+2026-04-07 19:51:45,887 - INFO -   [Regularized] Loss=0.1536 L1=0.0000 R2=0.6943
+2026-04-07 19:51:46,267 - INFO - CCC: 0.9572
+2026-04-07 19:51:46,693 - INFO - CCC: 0.7074
+2026-04-07 19:51:46,694 - INFO - Epoch 088/200 | Train Loss 0.1536 R2 0.6943 | Val Loss 4.6358 R2 0.3069 RMSE 1.3088 MAE 1.1533 CCC 0.7074
+2026-04-07 19:51:46,740 - INFO -  ✓ New best model saved (Val R² = 0.3069)
+2026-04-07 19:51:47,197 - INFO -   [Regularized] Loss=0.5714 L1=0.0000 R2=-0.2056
+2026-04-07 19:51:47,656 - INFO - CCC: 0.9523
+2026-04-07 19:51:48,105 - INFO - CCC: 0.7120
+2026-04-07 19:51:48,106 - INFO - Epoch 089/200 | Train Loss 0.5714 R2 -0.2056 | Val Loss 4.6205 R2 0.3134 RMSE 1.3027 MAE 1.1483 CCC 0.7120
+2026-04-07 19:51:48,150 - INFO -  ✓ New best model saved (Val R² = 0.3134)
+2026-04-07 19:51:48,652 - INFO -   [Regularized] Loss=0.1242 L1=0.0000 R2=0.7927
+2026-04-07 19:51:49,072 - INFO - CCC: 0.9151
+2026-04-07 19:51:49,513 - INFO - CCC: 0.7156
+2026-04-07 19:51:49,515 - INFO - Epoch 090/200 | Train Loss 0.1242 R2 0.7927 | Val Loss 4.6155 R2 0.3015 RMSE 1.3139 MAE 1.1539 CCC 0.7156
+2026-04-07 19:51:50,023 - INFO -   [Regularized] Loss=0.2399 L1=0.0000 R2=0.5911
+2026-04-07 19:51:50,444 - INFO - CCC: 0.9197
+2026-04-07 19:51:51,011 - INFO - CCC: 0.7136
+2026-04-07 19:51:51,012 - INFO - Epoch 091/200 | Train Loss 0.2399 R2 0.5911 | Val Loss 4.6263 R2 0.2949 RMSE 1.3201 MAE 1.1588 CCC 0.7136
+2026-04-07 19:51:51,615 - INFO -   [Regularized] Loss=0.2206 L1=0.0000 R2=0.4877
+2026-04-07 19:51:52,145 - INFO - CCC: 0.9668
+2026-04-07 19:51:52,683 - INFO - CCC: 0.7100
+2026-04-07 19:51:52,685 - INFO - Epoch 092/200 | Train Loss 0.2206 R2 0.4877 | Val Loss 4.6468 R2 0.3004 RMSE 1.3149 MAE 1.1590 CCC 0.7100
+2026-04-07 19:51:53,332 - INFO -   [Regularized] Loss=0.1014 L1=0.0000 R2=0.8322
+2026-04-07 19:51:53,850 - INFO - CCC: 0.9315
+2026-04-07 19:51:54,374 - INFO - CCC: 0.6845
+2026-04-07 19:51:54,376 - INFO - Epoch 093/200 | Train Loss 0.1014 R2 0.8322 | Val Loss 4.6968 R2 0.2735 RMSE 1.3400 MAE 1.1763 CCC 0.6845
+2026-04-07 19:51:54,996 - INFO -   [Regularized] Loss=0.1893 L1=0.0000 R2=0.6208
+2026-04-07 19:51:55,545 - INFO - CCC: 0.8374
+2026-04-07 19:51:56,047 - INFO - CCC: 0.6567
+2026-04-07 19:51:56,048 - INFO - Epoch 094/200 | Train Loss 0.1893 R2 0.6208 | Val Loss 4.7425 R2 0.2322 RMSE 1.3775 MAE 1.1979 CCC 0.6567
+2026-04-07 19:51:56,637 - INFO -   [Regularized] Loss=0.1595 L1=0.0000 R2=0.7064
+2026-04-07 19:51:57,172 - INFO - CCC: 0.8206
+2026-04-07 19:51:57,688 - INFO - CCC: 0.6494
+2026-04-07 19:51:57,689 - INFO - Epoch 095/200 | Train Loss 0.1595 R2 0.7064 | Val Loss 4.7562 R2 0.2203 RMSE 1.3882 MAE 1.2063 CCC 0.6494
+2026-04-07 19:51:58,305 - INFO -   [Regularized] Loss=0.2159 L1=0.0000 R2=0.5640
+2026-04-07 19:51:58,833 - INFO - CCC: 0.8532
+2026-04-07 19:51:59,386 - INFO - CCC: 0.6506
+2026-04-07 19:51:59,387 - INFO - Epoch 096/200 | Train Loss 0.2159 R2 0.5640 | Val Loss 4.7654 R2 0.2195 RMSE 1.3888 MAE 1.2137 CCC 0.6506
+2026-04-07 19:51:59,994 - INFO -   [Regularized] Loss=0.2094 L1=0.0000 R2=0.6386
+2026-04-07 19:52:00,566 - INFO - CCC: 0.9144
+2026-04-07 19:52:01,084 - INFO - CCC: 0.6579
+2026-04-07 19:52:01,086 - INFO - Epoch 097/200 | Train Loss 0.2094 R2 0.6386 | Val Loss 4.7792 R2 0.2228 RMSE 1.3859 MAE 1.2223 CCC 0.6579
+2026-04-07 19:52:01,700 - INFO -   [Regularized] Loss=0.1782 L1=0.0000 R2=0.6718
+2026-04-07 19:52:02,233 - INFO - CCC: 0.9400
+2026-04-07 19:52:02,759 - INFO - CCC: 0.6651
+2026-04-07 19:52:02,760 - INFO - Epoch 098/200 | Train Loss 0.1782 R2 0.6718 | Val Loss 4.7922 R2 0.2133 RMSE 1.3943 MAE 1.2356 CCC 0.6651
+2026-04-07 19:52:03,375 - INFO -   [Regularized] Loss=0.1961 L1=0.0000 R2=0.6432
+2026-04-07 19:52:03,920 - INFO - CCC: 0.9011
+2026-04-07 19:52:04,432 - INFO - CCC: 0.6676
+2026-04-07 19:52:04,433 - INFO - Epoch 099/200 | Train Loss 0.1961 R2 0.6432 | Val Loss 4.7641 R2 0.1987 RMSE 1.4073 MAE 1.2418 CCC 0.6676
+2026-04-07 19:52:05,049 - INFO -   [Regularized] Loss=0.1904 L1=0.0000 R2=0.5365
+2026-04-07 19:52:05,527 - INFO - CCC: 0.8596
+2026-04-07 19:52:06,067 - INFO - CCC: 0.6624
+2026-04-07 19:52:06,069 - INFO - Epoch 100/200 | Train Loss 0.1904 R2 0.5365 | Val Loss 4.7517 R2 0.1843 RMSE 1.4198 MAE 1.2512 CCC 0.6624
+2026-04-07 19:52:06,654 - INFO -   [Regularized] Loss=0.2117 L1=0.0000 R2=0.5497
+2026-04-07 19:52:07,201 - INFO - CCC: 0.8600
+2026-04-07 19:52:07,762 - INFO - CCC: 0.6635
+2026-04-07 19:52:07,766 - INFO - Epoch 101/200 | Train Loss 0.2117 R2 0.5497 | Val Loss 4.7445 R2 0.1873 RMSE 1.4172 MAE 1.2492 CCC 0.6635
+2026-04-07 19:52:08,335 - INFO -   [Regularized] Loss=0.2704 L1=0.0000 R2=0.4505
+2026-04-07 19:52:08,861 - INFO - CCC: 0.8967
+2026-04-07 19:52:09,423 - INFO - CCC: 0.6711
+2026-04-07 19:52:09,425 - INFO - Epoch 102/200 | Train Loss 0.2704 R2 0.4505 | Val Loss 4.7374 R2 0.2061 RMSE 1.4007 MAE 1.2362 CCC 0.6711
+2026-04-07 19:52:10,040 - INFO -   [Regularized] Loss=0.1849 L1=0.0000 R2=0.6274
+2026-04-07 19:52:10,597 - INFO - CCC: 0.9431
+2026-04-07 19:52:11,136 - INFO - CCC: 0.6768
+2026-04-07 19:52:11,138 - INFO - Epoch 103/200 | Train Loss 0.1849 R2 0.6274 | Val Loss 4.7385 R2 0.2271 RMSE 1.3821 MAE 1.2246 CCC 0.6768
+2026-04-07 19:52:11,652 - INFO -   [Regularized] Loss=0.0720 L1=0.0000 R2=0.8719
+2026-04-07 19:52:12,162 - INFO - CCC: 0.9675
+2026-04-07 19:52:12,700 - INFO - CCC: 0.6737
+2026-04-07 19:52:12,700 - INFO - Epoch 104/200 | Train Loss 0.0720 R2 0.8719 | Val Loss 4.7486 R2 0.2383 RMSE 1.3720 MAE 1.2213 CCC 0.6737
+2026-04-07 19:52:13,317 - INFO -   [Regularized] Loss=0.1729 L1=0.0000 R2=0.6711
+2026-04-07 19:52:13,877 - INFO - CCC: 0.9377
+2026-04-07 19:52:14,424 - INFO - CCC: 0.6642
+2026-04-07 19:52:14,426 - INFO - Epoch 105/200 | Train Loss 0.1729 R2 0.6711 | Val Loss 4.7485 R2 0.2379 RMSE 1.3724 MAE 1.2183 CCC 0.6642
+2026-04-07 19:52:15,034 - INFO -   [Regularized] Loss=0.1603 L1=0.0000 R2=0.6836
+2026-04-07 19:52:15,565 - INFO - CCC: 0.8962
+2026-04-07 19:52:16,083 - INFO - CCC: 0.6595
+2026-04-07 19:52:16,084 - INFO - Epoch 106/200 | Train Loss 0.1603 R2 0.6836 | Val Loss 4.7407 R2 0.2358 RMSE 1.3743 MAE 1.2140 CCC 0.6595
+2026-04-07 19:52:16,687 - INFO -   [Regularized] Loss=0.1881 L1=0.0000 R2=0.6571
+2026-04-07 19:52:17,196 - INFO - CCC: 0.8802
+2026-04-07 19:52:17,826 - INFO - CCC: 0.6593
+2026-04-07 19:52:17,827 - INFO - Epoch 107/200 | Train Loss 0.1881 R2 0.6571 | Val Loss 4.7344 R2 0.2371 RMSE 1.3731 MAE 1.2107 CCC 0.6593
+2026-04-07 19:52:18,428 - INFO -   [Regularized] Loss=0.2588 L1=0.0000 R2=0.4919
+2026-04-07 19:52:18,992 - INFO - CCC: 0.8895
+2026-04-07 19:52:19,498 - INFO - CCC: 0.6621
+2026-04-07 19:52:19,500 - INFO - Epoch 108/200 | Train Loss 0.2588 R2 0.4919 | Val Loss 4.7289 R2 0.2415 RMSE 1.3692 MAE 1.2091 CCC 0.6621
+2026-04-07 19:52:20,121 - INFO -   [Regularized] Loss=0.1874 L1=0.0000 R2=0.6693
+2026-04-07 19:52:20,683 - INFO - CCC: 0.9172
+2026-04-07 19:52:21,223 - INFO - CCC: 0.6684
+2026-04-07 19:52:21,225 - INFO - Epoch 109/200 | Train Loss 0.1874 R2 0.6693 | Val Loss 4.7211 R2 0.2500 RMSE 1.3614 MAE 1.2067 CCC 0.6684
+2026-04-07 19:52:21,225 - INFO - Early stopping triggered (no val R2 improvement in 20 epochs).
+2026-04-07 19:52:21,286 - INFO - Loaded checkpoint from best_model_tmp.pt (strict).
+2026-04-07 19:52:21,804 - INFO - CCC: 0.7120
+2026-04-07 19:52:22,265 - INFO - CCC: 0.7469
+2026-04-07 19:53:12,498 - INFO - Signal analysis complete -> results_signal_d4_polyploid/tier2_env_fold4
+2026-04-07 19:53:12,499 - INFO - [tier2_env] CV complete. Metrics (mean +/- std across folds): Val R2 0.3626 +/- 0.2033 | Test R2 0.2683 +/- 0.2448 | Val RMSE 1.3828 +/- 0.3670 | Test RMSE 1.4928 +/- 0.1531 | Val MAE 1.1715 +/- 0.3129 | Test MAE 1.2579 +/- 0.1588 | Val CCC 0.6345 +/- 0.2307 | Test CCC 0.6301 +/- 0.1824
+2026-04-07 19:53:12,501 - INFO - Saved CV fold predictions to tier2_env_cv_fold_predictions.csv
+2026-04-07 19:53:12,516 - INFO - [tier2_env] CV pooled trait ceiling ~= 1 - Var(residual)/Var(y): 0.3616
+2026-04-07 19:53:12,624 - INFO - Saved CV scatter plot to tier2_env_cv_scatter.png
+2026-04-07 19:53:12,736 - INFO - Saved calibration plot to tier2_env_cv_calibration.png
+2026-04-07 19:53:12,757 - INFO - Saved CV embeddings to tier2_env_penultimate_embeddings_cv.csv
+2026-04-07 19:53:12,766 - INFO - Saved CV embeddings (genomic) to tier2_env_penultimate_embeddings_cv_genomic.csv
+2026-04-07 19:53:13,308 - INFO - Saved tier2_env_emb_tsne_cv_genomic_target.png
+2026-04-07 19:53:13,415 - INFO - Saved tier2_env_emb_tsne_cv_genomic_loc.png
+2026-04-07 19:53:13,575 - INFO - Saved tier2_env_emb_tsne_cv_genomic_year.png
+2026-04-07 19:53:13,683 - INFO - Saved tier2_env_emb_tsne_cv_genomic_pop.png
+2026-04-07 19:53:14,396 - INFO - Saved pairwise dist plot to tier2_env_pairwise_dist_vs_target_diff_cv_genomic.png
+2026-04-07 19:53:14,633 - INFO - Saved tier2_env_emb_tsne_cv_genomic_fold1_target.png
+2026-04-07 19:53:14,732 - INFO - Saved tier2_env_emb_tsne_cv_genomic_fold1_loc.png
+2026-04-07 19:53:14,816 - INFO - Saved tier2_env_emb_tsne_cv_genomic_fold1_year.png
+2026-04-07 19:53:14,907 - INFO - Saved tier2_env_emb_tsne_cv_genomic_fold1_pop.png
+2026-04-07 19:53:15,598 - INFO - Saved tier2_env_emb_tsne_cv_genomic_fold2_target.png
+2026-04-07 19:53:15,698 - INFO - Saved tier2_env_emb_tsne_cv_genomic_fold2_loc.png
+2026-04-07 19:53:15,780 - INFO - Saved tier2_env_emb_tsne_cv_genomic_fold2_year.png
+2026-04-07 19:53:15,874 - INFO - Saved tier2_env_emb_tsne_cv_genomic_fold2_pop.png
+2026-04-07 19:53:16,646 - INFO - Saved tier2_env_emb_tsne_cv_genomic_fold3_target.png
+2026-04-07 19:53:16,747 - INFO - Saved tier2_env_emb_tsne_cv_genomic_fold3_loc.png
+2026-04-07 19:53:16,831 - INFO - Saved tier2_env_emb_tsne_cv_genomic_fold3_year.png
+2026-04-07 19:53:16,922 - INFO - Saved tier2_env_emb_tsne_cv_genomic_fold3_pop.png
+2026-04-07 19:53:17,722 - INFO - Saved tier2_env_emb_tsne_cv_genomic_fold4_target.png
+2026-04-07 19:53:17,865 - INFO - Saved tier2_env_emb_tsne_cv_genomic_fold4_loc.png
+2026-04-07 19:53:17,988 - INFO - Saved tier2_env_emb_tsne_cv_genomic_fold4_year.png
+2026-04-07 19:53:18,086 - INFO - Saved tier2_env_emb_tsne_cv_genomic_fold4_pop.png
+2026-04-07 19:53:18,492 - INFO - Saved CV embeddings (loc) to tier2_env_penultimate_embeddings_cv_loc.csv
+2026-04-07 19:53:18,830 - INFO - Saved tier2_env_emb_tsne_cv_loc_target.png
+2026-04-07 19:53:18,912 - INFO - Saved tier2_env_emb_tsne_cv_loc_loc.png
+2026-04-07 19:53:18,994 - INFO - Saved tier2_env_emb_tsne_cv_loc_year.png
+2026-04-07 19:53:19,087 - INFO - Saved tier2_env_emb_tsne_cv_loc_pop.png
+2026-04-07 19:53:19,747 - INFO - Saved pairwise dist plot to tier2_env_pairwise_dist_vs_target_diff_cv_loc.png
+2026-04-07 19:53:19,940 - INFO - Saved tier2_env_emb_tsne_cv_loc_fold1_target.png
+2026-04-07 19:53:20,023 - INFO - Saved tier2_env_emb_tsne_cv_loc_fold1_loc.png
+2026-04-07 19:53:20,107 - INFO - Saved tier2_env_emb_tsne_cv_loc_fold1_year.png
+2026-04-07 19:53:20,201 - INFO - Saved tier2_env_emb_tsne_cv_loc_fold1_pop.png
+2026-04-07 19:53:21,175 - INFO - Saved tier2_env_emb_tsne_cv_loc_fold2_target.png
+2026-04-07 19:53:21,276 - INFO - Saved tier2_env_emb_tsne_cv_loc_fold2_loc.png
+2026-04-07 19:53:21,359 - INFO - Saved tier2_env_emb_tsne_cv_loc_fold2_year.png
+2026-04-07 19:53:21,452 - INFO - Saved tier2_env_emb_tsne_cv_loc_fold2_pop.png
+2026-04-07 19:53:22,161 - INFO - Saved tier2_env_emb_tsne_cv_loc_fold3_target.png
+2026-04-07 19:53:22,250 - INFO - Saved tier2_env_emb_tsne_cv_loc_fold3_loc.png
+2026-04-07 19:53:22,333 - INFO - Saved tier2_env_emb_tsne_cv_loc_fold3_year.png
+2026-04-07 19:53:22,426 - INFO - Saved tier2_env_emb_tsne_cv_loc_fold3_pop.png
+2026-04-07 19:53:23,039 - INFO - Saved tier2_env_emb_tsne_cv_loc_fold4_target.png
+2026-04-07 19:53:23,122 - INFO - Saved tier2_env_emb_tsne_cv_loc_fold4_loc.png
+2026-04-07 19:53:23,204 - INFO - Saved tier2_env_emb_tsne_cv_loc_fold4_year.png
+2026-04-07 19:53:23,298 - INFO - Saved tier2_env_emb_tsne_cv_loc_fold4_pop.png
+2026-04-07 19:53:23,708 - INFO - Saved CV embeddings (pop) to tier2_env_penultimate_embeddings_cv_pop.csv
+2026-04-07 19:53:24,043 - INFO - Saved tier2_env_emb_tsne_cv_pop_target.png
+2026-04-07 19:53:24,154 - INFO - Saved tier2_env_emb_tsne_cv_pop_loc.png
+2026-04-07 19:53:24,296 - INFO - Saved tier2_env_emb_tsne_cv_pop_year.png
+2026-04-07 19:53:24,405 - INFO - Saved tier2_env_emb_tsne_cv_pop_pop.png
+2026-04-07 19:53:25,094 - INFO - Saved pairwise dist plot to tier2_env_pairwise_dist_vs_target_diff_cv_pop.png
+2026-04-07 19:53:25,330 - INFO - Saved tier2_env_emb_tsne_cv_pop_fold1_target.png
+2026-04-07 19:53:25,411 - INFO - Saved tier2_env_emb_tsne_cv_pop_fold1_loc.png
+2026-04-07 19:53:25,494 - INFO - Saved tier2_env_emb_tsne_cv_pop_fold1_year.png
+2026-04-07 19:53:25,587 - INFO - Saved tier2_env_emb_tsne_cv_pop_fold1_pop.png
+2026-04-07 19:53:26,218 - INFO - Saved tier2_env_emb_tsne_cv_pop_fold2_target.png
+2026-04-07 19:53:26,301 - INFO - Saved tier2_env_emb_tsne_cv_pop_fold2_loc.png
+2026-04-07 19:53:26,385 - INFO - Saved tier2_env_emb_tsne_cv_pop_fold2_year.png
+2026-04-07 19:53:26,479 - INFO - Saved tier2_env_emb_tsne_cv_pop_fold2_pop.png
+2026-04-07 19:53:27,090 - INFO - Saved tier2_env_emb_tsne_cv_pop_fold3_target.png
+2026-04-07 19:53:27,171 - INFO - Saved tier2_env_emb_tsne_cv_pop_fold3_loc.png
+2026-04-07 19:53:27,253 - INFO - Saved tier2_env_emb_tsne_cv_pop_fold3_year.png
+2026-04-07 19:53:27,348 - INFO - Saved tier2_env_emb_tsne_cv_pop_fold3_pop.png
+2026-04-07 19:53:27,944 - INFO - Saved tier2_env_emb_tsne_cv_pop_fold4_target.png
+2026-04-07 19:53:28,025 - INFO - Saved tier2_env_emb_tsne_cv_pop_fold4_loc.png
+2026-04-07 19:53:28,107 - INFO - Saved tier2_env_emb_tsne_cv_pop_fold4_year.png
+2026-04-07 19:53:28,200 - INFO - Saved tier2_env_emb_tsne_cv_pop_fold4_pop.png
+2026-04-07 19:53:28,616 - INFO - Saved CV embeddings (year) to tier2_env_penultimate_embeddings_cv_year.csv
+2026-04-07 19:53:29,001 - INFO - Saved tier2_env_emb_tsne_cv_year_target.png
+2026-04-07 19:53:29,128 - INFO - Saved tier2_env_emb_tsne_cv_year_loc.png
+2026-04-07 19:53:29,220 - INFO - Saved tier2_env_emb_tsne_cv_year_year.png
+2026-04-07 19:53:29,321 - INFO - Saved tier2_env_emb_tsne_cv_year_pop.png
+2026-04-07 19:53:29,982 - INFO - Saved pairwise dist plot to tier2_env_pairwise_dist_vs_target_diff_cv_year.png
+2026-04-07 19:53:30,189 - INFO - Saved tier2_env_emb_tsne_cv_year_fold1_target.png
+2026-04-07 19:53:30,273 - INFO - Saved tier2_env_emb_tsne_cv_year_fold1_loc.png
+2026-04-07 19:53:30,356 - INFO - Saved tier2_env_emb_tsne_cv_year_fold1_year.png
+2026-04-07 19:53:30,450 - INFO - Saved tier2_env_emb_tsne_cv_year_fold1_pop.png
+2026-04-07 19:53:31,366 - INFO - Saved tier2_env_emb_tsne_cv_year_fold2_target.png
+2026-04-07 19:53:31,449 - INFO - Saved tier2_env_emb_tsne_cv_year_fold2_loc.png
+2026-04-07 19:53:31,532 - INFO - Saved tier2_env_emb_tsne_cv_year_fold2_year.png
+2026-04-07 19:53:31,625 - INFO - Saved tier2_env_emb_tsne_cv_year_fold2_pop.png
+2026-04-07 19:53:32,240 - INFO - Saved tier2_env_emb_tsne_cv_year_fold3_target.png
+2026-04-07 19:53:32,324 - INFO - Saved tier2_env_emb_tsne_cv_year_fold3_loc.png
+2026-04-07 19:53:32,405 - INFO - Saved tier2_env_emb_tsne_cv_year_fold3_year.png
+2026-04-07 19:53:32,498 - INFO - Saved tier2_env_emb_tsne_cv_year_fold3_pop.png
+2026-04-07 19:53:33,128 - INFO - Saved tier2_env_emb_tsne_cv_year_fold4_target.png
+2026-04-07 19:53:33,209 - INFO - Saved tier2_env_emb_tsne_cv_year_fold4_loc.png
+2026-04-07 19:53:33,291 - INFO - Saved tier2_env_emb_tsne_cv_year_fold4_year.png
+2026-04-07 19:53:33,385 - INFO - Saved tier2_env_emb_tsne_cv_year_fold4_pop.png
+2026-04-07 19:53:33,818 - INFO - Saved best-fold (fold 3) embeddings to tier2_env_penultimate_embeddings_cv_best_fold.csv
+2026-04-07 19:53:34,344 - INFO - Saved latent space summary to results/01_latent_space/latent_space_summary_tier2_env_fold3.png

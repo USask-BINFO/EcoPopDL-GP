@@ -1,0 +1,50 @@
+Signal-capture summary
+======================
+Baseline: R2=0.2617, RMSE=1.6514, MAE=1.4030, CCC=0.3212
+
+Top environmental features (by ΔR² after permutation):
+  - mid_vpd_mean: ΔR²=0.0122, ΔRMSE=0.0136
+  - early_gdd_sum: ΔR²=0.0050, ΔRMSE=0.0056
+  - late_gdd_sum: ΔR²=0.0040, ΔRMSE=0.0045
+  - late_heat_hdd_sum: ΔR²=0.0015, ΔRMSE=0.0016
+  - late_precip_sum: ΔR²=0.0009, ΔRMSE=0.0010
+  - heat_hdd: ΔR²=0.0007, ΔRMSE=0.0008
+  - cum_precip: ΔR²=0.0007, ΔRMSE=0.0008
+  - early_precip_sum: ΔR²=0.0006, ΔRMSE=0.0006
+
+Top temporal windows (by ΔR² after permutation):
+  - window_12: ΔR²=0.0012, ΔRMSE=0.0014
+  - window_15: ΔR²=0.0011, ΔRMSE=0.0012
+  - window_5: ΔR²=0.0009, ΔRMSE=0.0010
+  - window_11: ΔR²=0.0009, ΔRMSE=0.0010
+  - window_1: ΔR²=0.0008, ΔRMSE=0.0009
+  - window_3: ΔR²=0.0008, ΔRMSE=0.0009
+  - window_2: ΔR²=0.0008, ΔRMSE=0.0008
+  - window_7: ΔR²=0.0006, ΔRMSE=0.0007
+
+Top module / metadata sensitivities:
+  - HABE_hotspot_context_zeroed: ΔR²=0.0971, ΔRMSE=0.1053
+  - Population_ids_permuted: ΔR²=0.0765, ΔRMSE=0.0834
+  - BAE_module_disabled: ΔR²=0.0721, ΔRMSE=0.0788
+  - Population_ids_zeroed: ΔR²=0.0646, ΔRMSE=0.0707
+  - BAE_context_zeroed: ΔR²=0.0360, ΔRMSE=0.0398
+  - All_environment_permuted: ΔR²=0.0103, ΔRMSE=0.0115
+  - Homeolog_group_token_module_disabled: ΔR²=0.0067, ΔRMSE=0.0075
+  - Homeolog_group_identity_zeroed: ΔR²=0.0067, ΔRMSE=0.0074
+  - Homeolog_all_channels_zeroed: ΔR²=0.0067, ΔRMSE=0.0074
+  - Threshold_channels_permuted: ΔR²=0.0002, ΔRMSE=0.0002
+
+Homeolog / subgenome sensitivities:
+  - Homeolog_group_token_module_disabled: ΔR²=0.0067, ΔRMSE=0.0075
+  - Homeolog_group_identity_zeroed: ΔR²=0.0067, ΔRMSE=0.0074
+  - Homeolog_all_channels_zeroed: ΔR²=0.0067, ΔRMSE=0.0074
+  - Homeolog_context_module_disabled: ΔR²=-0.0005, ΔRMSE=-0.0006
+  - Homeolog_structural_cues_zeroed: ΔR²=-0.0005, ΔRMSE=-0.0006
+
+Per-population performance (sorted by R²):
+  - pop 0.0: R²=0.3042, RMSE=0.9158, n=6
+  - pop 2.0: R²=-0.3890, RMSE=1.8590, n=6
+  - pop 1.0: R²=-0.5818, RMSE=1.9291, n=7
+
+Interpretation note: HABE/BAE/homeolog rows here are post-hoc sensitivities at inference time.
+For the main manuscript table, report these alongside controlled re-training ablations using USE_HABE / USE_BIOLOGICAL_AWARE_EMBEDDING / USE_POPULATION_EMBEDDING / USE_HOMEOLOG_CONTEXT_MODULE / USE_HOMEOLOG_GROUP_TOKENS.

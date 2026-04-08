@@ -1,0 +1,3 @@
+K,cv_mean,cv_sd,n_runs,elbow_score,is_min_cv,is_elbow
+2,1.29845,0.0,1,0.0,False,False
+3,0.66008,0.0,1,0.0,True,True

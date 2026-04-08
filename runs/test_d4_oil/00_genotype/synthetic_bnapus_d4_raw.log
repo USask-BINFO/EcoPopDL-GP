@@ -1,0 +1,42 @@
+PLINK v1.90b7.4 64-bit (18 Aug 2024)
+Options in effect:
+  --allow-extra-chr
+  --file /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4
+  --make-bed
+  --out /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4_raw
+
+Hostname: nugget
+Working directory: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP
+Start time: Tue Apr  7 19:37:53 2026
+
+Random number seed: 1775612273
+2063976 MB RAM detected; reserving 1031988 MB for main workspace.
+Scanning .ped file... done.
+Performing single-pass .bed write (18 variants, 14 people).
+--file:
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4_raw-temporary.bed
++
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4_raw-temporary.bim
++
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4_raw-temporary.fam
+written.
+18 variants loaded from .bim file.
+14 people (0 males, 0 females, 14 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4_raw.nosex
+.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 14 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.714286.
+18 variants and 14 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4_raw.bed
++
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4_raw.bim
++
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4_raw.fam
+... done.
+
+End time: Tue Apr  7 19:37:53 2026

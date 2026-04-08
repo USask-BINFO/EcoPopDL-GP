@@ -1,0 +1,35 @@
+PLINK v1.90b7.4 64-bit (18 Aug 2024)
+Options in effect:
+  --allow-extra-chr
+  --bfile /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/imp.qc.all.withds.clean
+  --indep-pairwise 50 5 0.2
+  --out /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/01_admixture/admixture_pruned
+
+Hostname: nugget
+Working directory: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP
+Start time: Tue Apr  7 19:37:57 2026
+
+Random number seed: 1775612277
+2063976 MB RAM detected; reserving 1031988 MB for main workspace.
+18 variants loaded from .bim file.
+10 people (0 males, 0 females, 10 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/01_admixture/admixture_pruned.nosex
+.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 10 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is exactly 1.
+18 variants and 10 people pass filters and QC.
+Note: No phenotypes present.
+Pruned 3 variants from chromosome 27, leaving 3.
+Pruned 3 variants from chromosome 28, leaving 3.
+Pruned 3 variants from chromosome 29, leaving 3.
+Pruning complete.  9 of 18 variants removed.
+Marker lists written to
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/01_admixture/admixture_pruned.prune.in
+and
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/01_admixture/admixture_pruned.prune.out
+.
+
+End time: Tue Apr  7 19:37:57 2026

@@ -1,0 +1,14 @@
+BNP_T01	BNP_T01	0	0	0	-9	A	G	T	T	A	C	G	G	A	G	C	T	A	A	T	T	A	G	C	C	C	C	G	T	A	G	T	T	A	C	G	G	A	G	C	T
+BNP_T02	BNP_T02	0	0	0	-9	A	G	C	C	C	C	G	T	A	A	T	T	A	C	G	T	G	G	C	T	A	A	G	T	A	G	C	C	C	C	G	T	A	A	T	T
+BNP_T03	BNP_T03	0	0	0	-9	G	G	C	T	A	C	T	T	A	G	C	C	A	C	G	T	A	A	T	T	A	C	G	G	G	G	C	T	A	C	T	T	A	G	C	C
+BNP_T04	BNP_T04	0	0	0	-9	A	A	C	T	A	C	G	G	G	G	C	T	A	A	T	T	A	G	C	T	C	C	G	T	A	A	C	T	A	C	G	G	G	G	C	T
+BNP_T05	BNP_T05	0	0	0	-9	A	G	C	C	C	C	G	T	A	G	T	T	A	C	G	G	A	G	C	T	A	A	T	T	A	G	C	C	C	C	G	T	A	G	T	T
+BNP_T06	BNP_T06	0	0	0	-9	G	G	C	T	A	A	G	T	A	G	C	C	C	C	G	T	A	A	T	T	A	C	G	T	G	G	C	T	A	A	G	T	A	G	C	C
+BNP_T07	BNP_T07	0	0	0	-9	A	A	T	T	A	C	G	G	G	G	C	T	A	C	T	T	A	G	C	C	A	C	G	T	A	A	T	T	A	C	G	G	G	G	C	T
+BNP_T08	BNP_T08	0	0	0	-9	A	G	C	T	C	C	G	T	A	A	C	T	A	C	G	G	G	G	C	T	A	A	T	T	A	G	C	T	C	C	G	T	A	A	C	T
+BNP_T09	BNP_T09	0	0	0	-9	A	G	C	T	A	A	T	T	A	G	C	C	C	C	G	T	A	G	T	T	A	C	G	G	A	G	C	T	A	A	T	T	A	G	C	C
+BNP_T10	BNP_T10	0	0	0	-9	A	A	T	T	A	C	G	T	G	G	C	T	A	A	G	T	A	G	C	C	C	C	G	T	A	A	T	T	A	C	G	T	G	G	C	T
+probeset_id	probeset_id	0	0	0	-9	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Chr_id	Chr_id	0	0	0	-9	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Start	Start	0	0	0	-9	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+Strand	Strand	0	0	0	-9	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0

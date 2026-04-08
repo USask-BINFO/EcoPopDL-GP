@@ -1,0 +1,38 @@
+##FILTER=<ID=PASS,Description="All filters passed">
+##filedate=20260407
+##INFO=<ID=AF,Number=A,Type=Float,Description="Estimated ALT Allele Frequencies">
+##INFO=<ID=DR2,Number=A,Type=Float,Description="Dosage R-Squared: estimated squared correlation between estimated REF dose [P(RA) + 2*P(RR)] and true REF dose">
+##INFO=<ID=IMP,Number=0,Type=Flag,Description="Imputed marker">
+##INFO=<ID=END,Number=1,Type=Integer,Description="End position of the variant described in this record  (for use with symbolic alleles)">
+##contig=<ID=Ca1>
+##bcftools_viewVersion=1.15-5-g1e7632a+htslib-1.15-7-g8caa1db
+##bcftools_viewCommand=view -i 'TYPE="snp" && (INFO/DR2="." || INFO/DR2>=0.8)' -Oz -o /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/imputation/imp.qc.Ca1.vcf.gz /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/imputation/imp.Ca1.fix.vcf.gz; Date=Tue Apr  7 19:55:34 2026
+##contig=<ID=Ca2>
+##contig=<ID=Ca3>
+##bcftools_concatVersion=1.15-5-g1e7632a+htslib-1.15-7-g8caa1db
+##bcftools_concatCommand=concat -Oz -o /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/imp.qc.all.vcf.gz /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/imputation/imp.qc.Ca1.vcf.gz /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/imputation/imp.qc.Ca2.vcf.gz /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/imputation/imp.qc.Ca3.vcf.gz; Date=Tue Apr  7 19:55:35 2026
+#CHROM	POS	ID	REF	ALT	FILTER	INFO
+Ca1	1050000	SYN_CHK_001	A	G	PASS	.
+Ca1	1100000	SYN_CHK_002	T	C	PASS	.
+Ca1	1150000	SYN_CHK_003	C	A	PASS	.
+Ca1	1200000	SYN_CHK_004	T	G	PASS	.
+Ca1	1250000	SYN_CHK_005	G	A	PASS	.
+Ca1	1300000	SYN_CHK_006	C	T	PASS	.
+Ca1	1350000	SYN_CHK_007	A	C	PASS	.
+Ca1	1400000	SYN_CHK_008	T	G	PASS	.
+Ca2	2050000	SYN_CHK_009	A	G	PASS	.
+Ca2	2100000	SYN_CHK_010	C	T	PASS	.
+Ca2	2150000	SYN_CHK_011	A	C	PASS	.
+Ca2	2200000	SYN_CHK_012	G	T	PASS	.
+Ca2	2250000	SYN_CHK_013	A	G	PASS	.
+Ca2	2300000	SYN_CHK_014	C	T	PASS	.
+Ca2	2350000	SYN_CHK_015	A	C	PASS	.
+Ca2	2400000	SYN_CHK_016	G	T	PASS	.
+Ca3	3050000	SYN_CHK_017	G	A	PASS	.
+Ca3	3100000	SYN_CHK_018	T	C	PASS	.
+Ca3	3150000	SYN_CHK_019	C	A	PASS	.
+Ca3	3200000	SYN_CHK_020	T	G	PASS	.
+Ca3	3250000	SYN_CHK_021	A	G	PASS	.
+Ca3	3300000	SYN_CHK_022	C	T	PASS	.
+Ca3	3350000	SYN_CHK_023	C	A	PASS	.
+Ca3	3400000	SYN_CHK_024	G	T	PASS	.

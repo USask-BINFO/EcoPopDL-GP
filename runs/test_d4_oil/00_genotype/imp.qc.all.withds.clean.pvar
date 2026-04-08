@@ -1,0 +1,32 @@
+##FILTER=<ID=PASS,Description="All filters passed">
+##filedate=20260407
+##INFO=<ID=AF,Number=A,Type=Float,Description="Estimated ALT Allele Frequencies">
+##INFO=<ID=DR2,Number=A,Type=Float,Description="Dosage R-Squared: estimated squared correlation between estimated REF dose [P(RA) + 2*P(RR)] and true REF dose">
+##INFO=<ID=IMP,Number=0,Type=Flag,Description="Imputed marker">
+##INFO=<ID=END,Number=1,Type=Integer,Description="End position of the variant described in this record  (for use with symbolic alleles)">
+##contig=<ID=N1>
+##bcftools_viewVersion=1.15-5-g1e7632a+htslib-1.15-7-g8caa1db
+##bcftools_viewCommand=view -i 'TYPE="snp" && (INFO/DR2="." || INFO/DR2>=0.8)' -Oz -o /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/imputation/imp.qc.N1.vcf.gz /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/imputation/imp.N1.fix.vcf.gz; Date=Tue Apr  7 19:37:54 2026
+##contig=<ID=N2>
+##contig=<ID=N3>
+##bcftools_concatVersion=1.15-5-g1e7632a+htslib-1.15-7-g8caa1db
+##bcftools_concatCommand=concat -Oz -o /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/imp.qc.all.vcf.gz /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/imputation/imp.qc.N1.vcf.gz /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/imputation/imp.qc.N2.vcf.gz /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/imputation/imp.qc.N3.vcf.gz; Date=Tue Apr  7 19:37:55 2026
+#CHROM	POS	ID	REF	ALT	FILTER	INFO
+N1	742000	SYN-BN-N1-01	A	G	PASS	.
+N1	784000	SYN-BN-N1-02	T	C	PASS	.
+N1	826000	SYN-BN-N1-03	C	A	PASS	.
+N1	868000	SYN-BN-N1-04	G	T	PASS	.
+N1	910000	SYN-BN-N1-05	G	A	PASS	.
+N1	952000	SYN-BN-N1-06	C	T	PASS	.
+N2	1442000	SYN-BN-N2-01	A	C	PASS	.
+N2	1484000	SYN-BN-N2-02	T	G	PASS	.
+N2	1526000	SYN-BN-N2-03	A	G	PASS	.
+N2	1568000	SYN-BN-N2-04	C	T	PASS	.
+N2	1610000	SYN-BN-N2-05	C	A	PASS	.
+N2	1652000	SYN-BN-N2-06	G	T	PASS	.
+N3	2142000	SYN-BN-N3-01	A	G	PASS	.
+N3	2184000	SYN-BN-N3-02	T	C	PASS	.
+N3	2226000	SYN-BN-N3-03	C	A	PASS	.
+N3	2268000	SYN-BN-N3-04	G	T	PASS	.
+N3	2310000	SYN-BN-N3-05	G	A	PASS	.
+N3	2352000	SYN-BN-N3-06	C	T	PASS	.

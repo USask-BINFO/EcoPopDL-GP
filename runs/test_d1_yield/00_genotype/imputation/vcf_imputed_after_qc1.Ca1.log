@@ -1,0 +1,29 @@
+PLINK v2.0.0-a.6.16LM 64-bit Intel (9 Jun 2025)
+Options in effect:
+  --allow-extra-chr
+  --bfile /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/qc1
+  --chr Ca1
+  --export vcf bgz ref-first
+  --out /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/imputation/vcf_imputed_after_qc1.Ca1
+
+Hostname: nugget
+Working directory: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP
+Start time: Tue Apr  7 19:55:33 2026
+
+Random number seed: 1775613333
+2063976 MiB RAM detected, ~723008 available; reserving 722944 MiB for main
+workspace.
+Using up to 64 threads (change this with --threads).
+12 samples (0 females, 0 males, 12 ambiguous; 12 founders) loaded from
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/qc1.fam.
+Note: 3 nonstandard chromosome codes present.
+8 out of 24 variants loaded from
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/qc1.bim.
+Note: No phenotype data present.
+Warning: '_' present in original sample IDs; --vcf will not be able to
+reconstruct them. Consider rerunning with a suitable --export id-delim= value.
+--export vcf bgz to
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/imputation/vcf_imputed_after_qc1.Ca1.vcf.gz
+... done.
+
+End time: Tue Apr  7 19:55:33 2026

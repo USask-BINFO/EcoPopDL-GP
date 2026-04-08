@@ -1,0 +1,44 @@
+PLINK v2.0.0-a.6.16LM 64-bit Intel (9 Jun 2025)
+Options in effect:
+  --allow-extra-chr
+  --bfile /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/input_genotype
+  --geno 0.02
+  --maf 0.01
+  --make-bed
+  --mind 0.02
+  --out /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/qc1
+
+Hostname: nugget
+Working directory: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP
+Start time: Tue Apr  7 19:55:33 2026
+
+Random number seed: 1775613333
+2063976 MiB RAM detected, ~723008 available; reserving 722944 MiB for main
+workspace.
+Using up to 64 threads (change this with --threads).
+12 samples (0 females, 0 males, 12 ambiguous; 12 founders) loaded from
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/input_genotype.fam.
+Note: 3 nonstandard chromosome codes present.
+24 variants loaded from
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/input_genotype.bim.
+Note: No phenotype data present.
+Calculating sample missingness rates... done.
+0 samples removed due to missing genotype data (--mind).
+12 samples (0 females, 0 males, 12 ambiguous; 12 founders) remaining after main
+filters.
+Calculating allele frequencies... done.
+--geno: 0 variants removed due to missing genotype data.
+0 variants removed due to allele frequency threshold(s)
+(--maf/--max-maf/--mac/--max-mac).
+24 variants remaining after main filters.
+Writing
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/qc1.fam
+... done.
+Writing
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/qc1.bim
+... done.
+Writing
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/qc1.bed
+... done.
+
+End time: Tue Apr  7 19:55:33 2026

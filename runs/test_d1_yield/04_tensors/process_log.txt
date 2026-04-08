@@ -1,0 +1,58 @@
+2026-04-07 19:55:55,304 - INFO - Loading .map file...
+2026-04-07 19:55:55,308 - INFO - Loaded 24 SNPs from map file.
+2026-04-07 19:55:55,308 - INFO - Loading .ped file in chunks...
+2026-04-07 19:55:55,313 - INFO - Processed chunk 1 with 12 rows.
+2026-04-07 19:55:55,314 - INFO - Concatenating chunks...
+2026-04-07 19:55:55,314 - INFO - Encoding genotypes by per-SNP allele frequency...
+2026-04-07 19:55:55,360 - INFO - Final dataframe saved at merged_genotype_data.csv
+2026-04-07 19:55:55,360 - INFO - Loaded PLINK .ped with 24 SNPs and 12 samples.
+2026-04-07 19:55:55,362 - INFO - Saved allele rank summary (per-SNP frequency ordering) to allele_rank_summary.csv.
+2026-04-07 19:55:55,363 - INFO - [PLINK allele codes] top genotype codes:
+10    110
+00     82
+11     72
+01     24
+Name: count, dtype: int64
+2026-04-07 19:55:55,365 - INFO - [PLINK allele codes] mean per-SNP het rate=0.4653, SNPs with het=1.0000
+2026-04-07 19:55:57,260 - INFO - Wrote SNP TE annotations: snps_with_te_annotation.tsv
+2026-04-07 19:55:58,218 - INFO - Wrote SNP gene annotations: snps_with_gene_annotation.tsv
+2026-04-07 19:56:00,003 - INFO - Tensor-only export enabled: skipping SNP/haplotype tile generation.
+2026-04-07 19:56:00,005 - INFO - [hierarchical_snp_tensor] Added TE-derived channels: te_dist_bp, is_te, te_hotspot_flag
+2026-04-07 19:56:00,005 - INFO - [hierarchical_snp_tensor] Added haplotype-block channels: block_id_norm, block_id_raw, block_len_norm, inblock_ld, is_block_boundary
+2026-04-07 19:56:00,012 - INFO - [CHK_T01] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T01/CHK_T01_tensor.npz
+2026-04-07 19:56:00,013 - INFO - [haplotype_tensor] Added haplotype-block channels: block_id_norm, block_id_raw, block_len_norm, ld_score, pos_enc_0, pos_enc_1, pos_enc_2, pos_enc_3, pos_enc_4, pos_enc_5, pos_enc_6, pos_enc_7, pos_enc_8, pos_enc_9, pos_enc_10, pos_enc_11, pos_enc_12, pos_enc_13, pos_enc_14, pos_enc_15, pos_enc_16, pos_enc_17, pos_enc_18, pos_enc_19, pos_enc_20, pos_enc_21, pos_enc_22, pos_enc_23, pos_enc_24, pos_enc_25, pos_enc_26, pos_enc_27, pos_enc_28, pos_enc_29, pos_enc_30, pos_enc_31, block_hash_0, block_hash_1, block_hash_2, block_hash_3, block_hash_4, block_hash_5, block_hash_6, block_hash_7, block_hash_8, block_hash_9, block_hash_10, block_hash_11, block_hash_12, block_hash_13, block_hash_14, block_hash_15, block_hash_16, block_hash_17, block_hash_18, block_hash_19, block_hash_20, block_hash_21, block_hash_22, block_hash_23, block_hash_24, block_hash_25, block_hash_26, block_hash_27, block_hash_28, block_hash_29, block_hash_30, block_hash_31
+2026-04-07 19:56:00,018 - INFO - [CHK_T01] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T01/CHK_T01_haplo_tensor.npz
+2026-04-07 19:56:00,018 - INFO - [DONE] CHK_T01: tensor export complete.
+2026-04-07 19:56:00,027 - INFO - [CHK_T02] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T02/CHK_T02_tensor.npz
+2026-04-07 19:56:00,033 - INFO - [CHK_T02] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T02/CHK_T02_haplo_tensor.npz
+2026-04-07 19:56:00,033 - INFO - [DONE] CHK_T02: tensor export complete.
+2026-04-07 19:56:00,042 - INFO - [CHK_T03] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T03/CHK_T03_tensor.npz
+2026-04-07 19:56:00,049 - INFO - [CHK_T03] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T03/CHK_T03_haplo_tensor.npz
+2026-04-07 19:56:00,050 - INFO - [DONE] CHK_T03: tensor export complete.
+2026-04-07 19:56:00,070 - INFO - [CHK_T04] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T04/CHK_T04_tensor.npz
+2026-04-07 19:56:00,079 - INFO - [CHK_T04] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T04/CHK_T04_haplo_tensor.npz
+2026-04-07 19:56:00,079 - INFO - [DONE] CHK_T04: tensor export complete.
+2026-04-07 19:56:00,092 - INFO - [CHK_T05] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T05/CHK_T05_tensor.npz
+2026-04-07 19:56:00,102 - INFO - [CHK_T05] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T05/CHK_T05_haplo_tensor.npz
+2026-04-07 19:56:00,102 - INFO - [DONE] CHK_T05: tensor export complete.
+2026-04-07 19:56:00,114 - INFO - [CHK_T06] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T06/CHK_T06_tensor.npz
+2026-04-07 19:56:00,122 - INFO - [CHK_T06] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T06/CHK_T06_haplo_tensor.npz
+2026-04-07 19:56:00,122 - INFO - [DONE] CHK_T06: tensor export complete.
+2026-04-07 19:56:00,134 - INFO - [CHK_T07] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T07/CHK_T07_tensor.npz
+2026-04-07 19:56:00,142 - INFO - [CHK_T07] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T07/CHK_T07_haplo_tensor.npz
+2026-04-07 19:56:00,142 - INFO - [DONE] CHK_T07: tensor export complete.
+2026-04-07 19:56:00,153 - INFO - [CHK_T08] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T08/CHK_T08_tensor.npz
+2026-04-07 19:56:00,162 - INFO - [CHK_T08] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T08/CHK_T08_haplo_tensor.npz
+2026-04-07 19:56:00,162 - INFO - [DONE] CHK_T08: tensor export complete.
+2026-04-07 19:56:00,176 - INFO - [CHK_T09] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T09/CHK_T09_tensor.npz
+2026-04-07 19:56:00,186 - INFO - [CHK_T09] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T09/CHK_T09_haplo_tensor.npz
+2026-04-07 19:56:00,186 - INFO - [DONE] CHK_T09: tensor export complete.
+2026-04-07 19:56:00,200 - INFO - [CHK_T10] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T10/CHK_T10_tensor.npz
+2026-04-07 19:56:00,211 - INFO - [CHK_T10] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T10/CHK_T10_haplo_tensor.npz
+2026-04-07 19:56:00,211 - INFO - [DONE] CHK_T10: tensor export complete.
+2026-04-07 19:56:00,224 - INFO - [CHK_T11] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T11/CHK_T11_tensor.npz
+2026-04-07 19:56:00,233 - INFO - [CHK_T11] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T11/CHK_T11_haplo_tensor.npz
+2026-04-07 19:56:00,234 - INFO - [DONE] CHK_T11: tensor export complete.
+2026-04-07 19:56:00,247 - INFO - [CHK_T12] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T12/CHK_T12_tensor.npz
+2026-04-07 19:56:00,257 - INFO - [CHK_T12] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/04_tensors/tensors/CHK_T12/CHK_T12_haplo_tensor.npz
+2026-04-07 19:56:00,257 - INFO - [DONE] CHK_T12: tensor export complete.

@@ -1,0 +1,26 @@
+PLINK v2.0.0-a.6.16LM 64-bit Intel (9 Jun 2025)
+Options in effect:
+  --allow-extra-chr
+  --bfile /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/qc1
+  --export vcf bgz id-paste=fid
+  --out /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/qc1
+
+Hostname: nugget
+Working directory: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP
+Start time: Tue Apr  7 19:37:53 2026
+
+Random number seed: 1775612273
+2063976 MiB RAM detected, ~726417 available; reserving 726353 MiB for main
+workspace.
+Using up to 64 threads (change this with --threads).
+10 samples (0 females, 0 males, 10 ambiguous; 10 founders) loaded from
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/qc1.fam.
+Note: 3 nonstandard chromosome codes present.
+18 variants loaded from
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/qc1.bim.
+Note: No phenotype data present.
+--export vcf bgz to
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/qc1.vcf.gz
+... done.
+
+End time: Tue Apr  7 19:37:53 2026

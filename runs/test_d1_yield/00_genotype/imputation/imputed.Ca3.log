@@ -1,0 +1,47 @@
+beagle.06Aug24.a91.jar (version 5.4)
+Copyright (C) 2014-2022 Brian L. Browning
+Enter "java -jar beagle.06Aug24.a91.jar" to list command line argument
+Start time: 07:55 PM CST on 07 Apr 2026
+
+Command line: java -Xmx16384m -jar beagle.06Aug24.a91.jar
+  gt=/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/imputation/vcf_imputed_after_qc1.Ca3.vcf.gz
+  out=/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d1_yield/00_genotype/imputation/imputed.Ca3
+  nthreads=8
+
+No genetic map is specified: using 1 cM = 1 Mb
+
+Reference samples:                    0
+Study     samples:                   12
+
+Window 1 [Ca3:3050000-3400000]
+Study     markers:                    8
+
+Burnin  iteration 1:           0 seconds
+Burnin  iteration 2:           0 seconds
+Burnin  iteration 3:           0 seconds
+
+Estimated ne:                  822
+Estimated err:                 8.2e-02
+
+Phasing iteration 1:           0 seconds
+Phasing iteration 2:           0 seconds
+Phasing iteration 3:           0 seconds
+Phasing iteration 4:           0 seconds
+Phasing iteration 5:           0 seconds
+Phasing iteration 6:           0 seconds
+Phasing iteration 7:           0 seconds
+Phasing iteration 8:           0 seconds
+Phasing iteration 9:           0 seconds
+Phasing iteration 10:          0 seconds
+Phasing iteration 11:          0 seconds
+Phasing iteration 12:          0 seconds
+
+Cumulative Statistics:
+
+Study     markers:                    8
+
+Haplotype phasing time:        0 seconds
+Total time:                    0 seconds
+
+End time: 07:55 PM CST on 07 Apr 2026
+beagle.06Aug24.a91.jar finished

@@ -1,0 +1,36 @@
+PLINK v2.0.0-a.6.16LM 64-bit Intel (9 Jun 2025)
+Options in effect:
+  --bfile /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4_raw
+  --keep-allele-order
+  --make-bed
+  --out /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4_raw_refA2
+  --ref-allele /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4.alleles_refalt.txt 1 2
+
+Hostname: nugget
+Working directory: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP
+Start time: Tue Apr  7 19:37:53 2026
+
+Note: --keep-allele-order no longer has any effect.
+Random number seed: 1775612273
+2063976 MiB RAM detected, ~726405 available; reserving 726341 MiB for main
+workspace.
+Using up to 64 threads (change this with --threads).
+14 samples (0 females, 0 males, 14 ambiguous; 14 founders) loaded from
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4_raw.fam.
+Note: 3 nonstandard chromosome codes present.
+18 variants loaded from
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4_raw.bim.
+Note: No phenotype data present.
+--ref-allele: No variants changed.
+Warning: 19 variant IDs in --ref-allele file missing from main dataset.
+Writing
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4_raw_refA2.fam
+... done.
+Writing
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4_raw_refA2.bim
+... done.
+Writing
+/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/00_genotype/synthetic_bnapus_d4_raw_refA2.bed
+... done.
+
+End time: Tue Apr  7 19:37:53 2026

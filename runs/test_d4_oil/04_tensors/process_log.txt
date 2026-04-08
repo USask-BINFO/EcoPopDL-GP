@@ -1,0 +1,232 @@
+2026-04-07 16:25:42,542 - INFO - Loading .map file...
+2026-04-07 16:25:42,548 - INFO - Loaded 18 SNPs from map file.
+2026-04-07 16:25:42,548 - INFO - Loading .ped file in chunks...
+2026-04-07 16:25:42,551 - INFO - Processed chunk 1 with 10 rows.
+2026-04-07 16:25:42,551 - INFO - Concatenating chunks...
+2026-04-07 16:25:42,552 - INFO - Encoding genotypes by per-SNP allele frequency...
+2026-04-07 16:25:42,581 - INFO - Final dataframe saved at merged_genotype_data.csv
+2026-04-07 16:25:42,582 - INFO - Loaded PLINK .ped with 18 SNPs and 10 samples.
+2026-04-07 16:25:42,583 - INFO - Saved allele rank summary (per-SNP frequency ordering) to allele_rank_summary.csv.
+2026-04-07 16:25:42,584 - INFO - [PLINK allele codes] top genotype codes:
+10    86
+00    52
+11    38
+01     4
+Name: count, dtype: int64
+2026-04-07 16:25:42,586 - INFO - [PLINK allele codes] mean per-SNP het rate=0.5000, SNPs with het=1.0000
+2026-04-07 16:28:47,937 - INFO - Loading .map file...
+2026-04-07 16:28:47,942 - INFO - Loaded 18 SNPs from map file.
+2026-04-07 16:28:47,942 - INFO - Loading .ped file in chunks...
+2026-04-07 16:28:47,946 - INFO - Processed chunk 1 with 10 rows.
+2026-04-07 16:28:47,946 - INFO - Concatenating chunks...
+2026-04-07 16:28:47,946 - INFO - Encoding genotypes by per-SNP allele frequency...
+2026-04-07 16:28:47,973 - INFO - Final dataframe saved at merged_genotype_data.csv
+2026-04-07 16:28:47,973 - INFO - Loaded PLINK .ped with 18 SNPs and 10 samples.
+2026-04-07 16:28:47,975 - INFO - Saved allele rank summary (per-SNP frequency ordering) to allele_rank_summary.csv.
+2026-04-07 16:28:47,976 - INFO - [PLINK allele codes] top genotype codes:
+10    86
+00    52
+11    38
+01     4
+Name: count, dtype: int64
+2026-04-07 16:28:47,978 - INFO - [PLINK allele codes] mean per-SNP het rate=0.5000, SNPs with het=1.0000
+2026-04-07 16:31:49,610 - INFO - Loading .map file...
+2026-04-07 16:31:49,616 - INFO - Loaded 18 SNPs from map file.
+2026-04-07 16:31:49,616 - INFO - Loading .ped file in chunks...
+2026-04-07 16:31:49,619 - INFO - Processed chunk 1 with 10 rows.
+2026-04-07 16:31:49,619 - INFO - Concatenating chunks...
+2026-04-07 16:31:49,620 - INFO - Encoding genotypes by per-SNP allele frequency...
+2026-04-07 16:31:49,647 - INFO - Final dataframe saved at merged_genotype_data.csv
+2026-04-07 16:31:49,648 - INFO - Loaded PLINK .ped with 18 SNPs and 10 samples.
+2026-04-07 16:31:49,649 - INFO - Saved allele rank summary (per-SNP frequency ordering) to allele_rank_summary.csv.
+2026-04-07 16:31:49,651 - INFO - [PLINK allele codes] top genotype codes:
+10    86
+00    52
+11    38
+01     4
+Name: count, dtype: int64
+2026-04-07 16:31:49,652 - INFO - [PLINK allele codes] mean per-SNP het rate=0.5000, SNPs with het=1.0000
+2026-04-07 16:31:59,472 - INFO - Wrote SNP TE annotations: snps_with_te_annotation.tsv
+2026-04-07 16:31:59,496 - INFO - [TE] SNPs with TE tag: 1.0000
+2026-04-07 16:32:04,027 - INFO - Wrote SNP gene annotations: snps_with_gene_annotation.tsv
+2026-04-07 16:32:04,028 - INFO - [GENE] SNPs genic=0.5000 promoter=0.3333
+2026-04-07 16:32:04,455 - INFO - [HOMOLOGY] genes in pair file: 59904 | matched to GFF: 59904 (100.00%)
+2026-04-07 16:32:05,155 - INFO - [HOMOLOGY] homology spans: rows=112150 pairs=56075 skipped_pairs=0
+2026-04-07 16:32:05,228 - INFO - [HOMOLOGY] hom_has mean=0.5556
+2026-04-07 16:32:05,229 - INFO - [HOMOLOGY] group size: min=2 med=4.5 max=6
+2026-04-07 16:32:05,229 - INFO - [HOMOLOGY] hash bit means: min=0.111 max=0.444
+2026-04-07 16:32:05,229 - INFO - [HOMOLOGY] hash signatures: unique=10 groups=10 collision_rate=0.0000
+2026-04-07 16:32:05,229 - INFO - [HOMOLOGY] anchor density: mean=0.8602 max=1.0000
+2026-04-07 16:32:15,763 - INFO - Tensor-only export enabled: skipping SNP/haplotype tile generation.
+2026-04-07 16:32:15,765 - INFO - [hierarchical_snp_tensor] Added TE-derived channels: te_dist_bp, is_te, te_hotspot_flag
+2026-04-07 16:32:15,765 - INFO - [hierarchical_snp_tensor] Added homology-derived channels: hom_has, hom_group_size_norm, hom_gid_raw, homeolog_anchor_density, hom_gid_hash_0, hom_gid_hash_1, hom_gid_hash_2, hom_gid_hash_3, hom_gid_hash_4, hom_gid_hash_5, hom_gid_hash_6, hom_gid_hash_7, hom_gid_hash_8, hom_gid_hash_9, hom_gid_hash_10, hom_gid_hash_11, hom_gid_hash_12, hom_gid_hash_13, hom_gid_hash_14, hom_gid_hash_15, hom_gid_hash_16, hom_gid_hash_17, hom_gid_hash_18, hom_gid_hash_19, hom_gid_hash_20, hom_gid_hash_21, hom_gid_hash_22, hom_gid_hash_23, hom_gid_hash_24, hom_gid_hash_25, hom_gid_hash_26, hom_gid_hash_27, hom_gid_hash_28, hom_gid_hash_29, hom_gid_hash_30, hom_gid_hash_31
+2026-04-07 16:32:15,765 - INFO - [hierarchical_snp_tensor] Added haplotype-block channels: block_id_norm, block_id_raw, block_len_norm, inblock_ld, is_block_boundary
+2026-04-07 16:32:15,773 - INFO - [BNP_T01_BNP_T01] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T01_BNP_T01/BNP_T01_BNP_T01_tensor.npz
+2026-04-07 16:32:15,773 - INFO - [haplotype_tensor] Added haplotype-block channels: block_id_norm, block_id_raw, block_len_norm, ld_score, pos_enc_0, pos_enc_1, pos_enc_2, pos_enc_3, pos_enc_4, pos_enc_5, pos_enc_6, pos_enc_7, pos_enc_8, pos_enc_9, pos_enc_10, pos_enc_11, pos_enc_12, pos_enc_13, pos_enc_14, pos_enc_15, pos_enc_16, pos_enc_17, pos_enc_18, pos_enc_19, pos_enc_20, pos_enc_21, pos_enc_22, pos_enc_23, pos_enc_24, pos_enc_25, pos_enc_26, pos_enc_27, pos_enc_28, pos_enc_29, pos_enc_30, pos_enc_31, block_hash_0, block_hash_1, block_hash_2, block_hash_3, block_hash_4, block_hash_5, block_hash_6, block_hash_7, block_hash_8, block_hash_9, block_hash_10, block_hash_11, block_hash_12, block_hash_13, block_hash_14, block_hash_15, block_hash_16, block_hash_17, block_hash_18, block_hash_19, block_hash_20, block_hash_21, block_hash_22, block_hash_23, block_hash_24, block_hash_25, block_hash_26, block_hash_27, block_hash_28, block_hash_29, block_hash_30, block_hash_31
+2026-04-07 16:32:15,780 - INFO - [BNP_T01_BNP_T01] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T01_BNP_T01/BNP_T01_BNP_T01_haplo_tensor.npz
+2026-04-07 16:32:15,780 - INFO - [DONE] BNP_T01_BNP_T01: tensor export complete.
+2026-04-07 16:32:15,788 - INFO - [BNP_T02_BNP_T02] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T02_BNP_T02/BNP_T02_BNP_T02_tensor.npz
+2026-04-07 16:32:15,795 - INFO - [BNP_T02_BNP_T02] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T02_BNP_T02/BNP_T02_BNP_T02_haplo_tensor.npz
+2026-04-07 16:32:15,796 - INFO - [DONE] BNP_T02_BNP_T02: tensor export complete.
+2026-04-07 16:32:15,807 - INFO - [BNP_T03_BNP_T03] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T03_BNP_T03/BNP_T03_BNP_T03_tensor.npz
+2026-04-07 16:32:15,817 - INFO - [BNP_T03_BNP_T03] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T03_BNP_T03/BNP_T03_BNP_T03_haplo_tensor.npz
+2026-04-07 16:32:15,817 - INFO - [DONE] BNP_T03_BNP_T03: tensor export complete.
+2026-04-07 16:32:15,830 - INFO - [BNP_T04_BNP_T04] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T04_BNP_T04/BNP_T04_BNP_T04_tensor.npz
+2026-04-07 16:32:15,842 - INFO - [BNP_T04_BNP_T04] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T04_BNP_T04/BNP_T04_BNP_T04_haplo_tensor.npz
+2026-04-07 16:32:15,842 - INFO - [DONE] BNP_T04_BNP_T04: tensor export complete.
+2026-04-07 16:32:15,857 - INFO - [BNP_T05_BNP_T05] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T05_BNP_T05/BNP_T05_BNP_T05_tensor.npz
+2026-04-07 16:32:15,869 - INFO - [BNP_T05_BNP_T05] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T05_BNP_T05/BNP_T05_BNP_T05_haplo_tensor.npz
+2026-04-07 16:32:15,869 - INFO - [DONE] BNP_T05_BNP_T05: tensor export complete.
+2026-04-07 16:32:15,886 - INFO - [BNP_T06_BNP_T06] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T06_BNP_T06/BNP_T06_BNP_T06_tensor.npz
+2026-04-07 16:32:15,899 - INFO - [BNP_T06_BNP_T06] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T06_BNP_T06/BNP_T06_BNP_T06_haplo_tensor.npz
+2026-04-07 16:32:15,900 - INFO - [DONE] BNP_T06_BNP_T06: tensor export complete.
+2026-04-07 16:32:15,917 - INFO - [BNP_T07_BNP_T07] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T07_BNP_T07/BNP_T07_BNP_T07_tensor.npz
+2026-04-07 16:32:15,929 - INFO - [BNP_T07_BNP_T07] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T07_BNP_T07/BNP_T07_BNP_T07_haplo_tensor.npz
+2026-04-07 16:32:15,929 - INFO - [DONE] BNP_T07_BNP_T07: tensor export complete.
+2026-04-07 16:32:15,945 - INFO - [BNP_T08_BNP_T08] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T08_BNP_T08/BNP_T08_BNP_T08_tensor.npz
+2026-04-07 16:32:15,957 - INFO - [BNP_T08_BNP_T08] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T08_BNP_T08/BNP_T08_BNP_T08_haplo_tensor.npz
+2026-04-07 16:32:15,958 - INFO - [DONE] BNP_T08_BNP_T08: tensor export complete.
+2026-04-07 16:32:15,974 - INFO - [BNP_T09_BNP_T09] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T09_BNP_T09/BNP_T09_BNP_T09_tensor.npz
+2026-04-07 16:32:15,987 - INFO - [BNP_T09_BNP_T09] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T09_BNP_T09/BNP_T09_BNP_T09_haplo_tensor.npz
+2026-04-07 16:32:15,987 - INFO - [DONE] BNP_T09_BNP_T09: tensor export complete.
+2026-04-07 16:32:16,002 - INFO - [BNP_T10_BNP_T10] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T10_BNP_T10/BNP_T10_BNP_T10_tensor.npz
+2026-04-07 16:32:16,014 - INFO - [BNP_T10_BNP_T10] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T10_BNP_T10/BNP_T10_BNP_T10_haplo_tensor.npz
+2026-04-07 16:32:16,014 - INFO - [DONE] BNP_T10_BNP_T10: tensor export complete.
+2026-04-07 16:33:59,761 - INFO - Loading .map file...
+2026-04-07 16:33:59,767 - INFO - Loaded 18 SNPs from map file.
+2026-04-07 16:33:59,767 - INFO - Loading .ped file in chunks...
+2026-04-07 16:33:59,771 - INFO - Processed chunk 1 with 10 rows.
+2026-04-07 16:33:59,771 - INFO - Concatenating chunks...
+2026-04-07 16:33:59,771 - INFO - Encoding genotypes by per-SNP allele frequency...
+2026-04-07 16:33:59,799 - INFO - Final dataframe saved at merged_genotype_data.csv
+2026-04-07 16:33:59,799 - INFO - Loaded PLINK .ped with 18 SNPs and 10 samples.
+2026-04-07 16:33:59,800 - INFO - Saved allele rank summary (per-SNP frequency ordering) to allele_rank_summary.csv.
+2026-04-07 16:33:59,802 - INFO - [PLINK allele codes] top genotype codes:
+10    86
+00    52
+11    38
+01     4
+Name: count, dtype: int64
+2026-04-07 16:33:59,803 - INFO - [PLINK allele codes] mean per-SNP het rate=0.5000, SNPs with het=1.0000
+2026-04-07 16:34:09,459 - INFO - Wrote SNP TE annotations: snps_with_te_annotation.tsv
+2026-04-07 16:34:09,483 - INFO - [TE] SNPs with TE tag: 1.0000
+2026-04-07 16:34:13,974 - INFO - Wrote SNP gene annotations: snps_with_gene_annotation.tsv
+2026-04-07 16:34:13,975 - INFO - [GENE] SNPs genic=0.5000 promoter=0.3333
+2026-04-07 16:34:14,399 - INFO - [HOMOLOGY] genes in pair file: 59904 | matched to GFF: 59904 (100.00%)
+2026-04-07 16:34:15,011 - INFO - [HOMOLOGY] homology spans: rows=112150 pairs=56075 skipped_pairs=0
+2026-04-07 16:34:15,086 - INFO - [HOMOLOGY] hom_has mean=0.5556
+2026-04-07 16:34:15,086 - INFO - [HOMOLOGY] group size: min=2 med=4.5 max=6
+2026-04-07 16:34:15,086 - INFO - [HOMOLOGY] hash bit means: min=0.111 max=0.444
+2026-04-07 16:34:15,086 - INFO - [HOMOLOGY] hash signatures: unique=10 groups=10 collision_rate=0.0000
+2026-04-07 16:34:15,087 - INFO - [HOMOLOGY] anchor density: mean=0.8602 max=1.0000
+2026-04-07 16:34:23,793 - INFO - Tensor-only export enabled: skipping SNP/haplotype tile generation.
+2026-04-07 16:34:23,794 - INFO - [SKIP] BNP_T01_BNP_T01: tensors already exist.
+2026-04-07 16:34:23,795 - INFO - [SKIP] BNP_T02_BNP_T02: tensors already exist.
+2026-04-07 16:34:23,796 - INFO - [SKIP] BNP_T03_BNP_T03: tensors already exist.
+2026-04-07 16:34:23,796 - INFO - [SKIP] BNP_T04_BNP_T04: tensors already exist.
+2026-04-07 16:34:23,797 - INFO - [SKIP] BNP_T05_BNP_T05: tensors already exist.
+2026-04-07 16:34:23,798 - INFO - [SKIP] BNP_T06_BNP_T06: tensors already exist.
+2026-04-07 16:34:23,798 - INFO - [SKIP] BNP_T07_BNP_T07: tensors already exist.
+2026-04-07 16:34:23,799 - INFO - [SKIP] BNP_T08_BNP_T08: tensors already exist.
+2026-04-07 16:34:23,800 - INFO - [SKIP] BNP_T09_BNP_T09: tensors already exist.
+2026-04-07 16:34:23,800 - INFO - [SKIP] BNP_T10_BNP_T10: tensors already exist.
+2026-04-07 16:41:47,051 - INFO - Loading .map file...
+2026-04-07 16:41:47,057 - INFO - Loaded 18 SNPs from map file.
+2026-04-07 16:41:47,057 - INFO - Loading .ped file in chunks...
+2026-04-07 16:41:47,061 - INFO - Processed chunk 1 with 10 rows.
+2026-04-07 16:41:47,061 - INFO - Concatenating chunks...
+2026-04-07 16:41:47,062 - INFO - Encoding genotypes by per-SNP allele frequency...
+2026-04-07 16:41:47,091 - INFO - Final dataframe saved at merged_genotype_data.csv
+2026-04-07 16:41:47,091 - INFO - Loaded PLINK .ped with 18 SNPs and 10 samples.
+2026-04-07 16:41:47,093 - INFO - Saved allele rank summary (per-SNP frequency ordering) to allele_rank_summary.csv.
+2026-04-07 16:41:47,094 - INFO - [PLINK allele codes] top genotype codes:
+10    86
+00    52
+11    38
+01     4
+Name: count, dtype: int64
+2026-04-07 16:41:47,096 - INFO - [PLINK allele codes] mean per-SNP het rate=0.5000, SNPs with het=1.0000
+2026-04-07 16:41:56,790 - INFO - Wrote SNP TE annotations: snps_with_te_annotation.tsv
+2026-04-07 16:41:56,813 - INFO - [TE] SNPs with TE tag: 1.0000
+2026-04-07 16:42:01,234 - INFO - Wrote SNP gene annotations: snps_with_gene_annotation.tsv
+2026-04-07 16:42:01,235 - INFO - [GENE] SNPs genic=0.5000 promoter=0.3333
+2026-04-07 16:42:01,572 - INFO - [HOMOLOGY] genes in pair file: 59904 | matched to GFF: 59904 (100.00%)
+2026-04-07 16:42:02,039 - INFO - [HOMOLOGY] homology spans: rows=112150 pairs=56075 skipped_pairs=0
+2026-04-07 16:42:02,098 - INFO - [HOMOLOGY] hom_has mean=0.5556
+2026-04-07 16:42:02,099 - INFO - [HOMOLOGY] group size: min=2 med=4.5 max=6
+2026-04-07 16:42:02,099 - INFO - [HOMOLOGY] hash bit means: min=0.111 max=0.444
+2026-04-07 16:42:02,099 - INFO - [HOMOLOGY] hash signatures: unique=10 groups=10 collision_rate=0.0000
+2026-04-07 16:42:02,099 - INFO - [HOMOLOGY] anchor density: mean=0.8602 max=1.0000
+2026-04-07 16:42:09,985 - INFO - Tensor-only export enabled: skipping SNP/haplotype tile generation.
+2026-04-07 16:42:09,987 - INFO - [hierarchical_snp_tensor] Added TE-derived channels: te_dist_bp, is_te, te_hotspot_flag
+2026-04-07 16:42:09,987 - INFO - [hierarchical_snp_tensor] Added homology-derived channels: hom_has, hom_group_size_norm, hom_gid_raw, homeolog_anchor_density, hom_gid_hash_0, hom_gid_hash_1, hom_gid_hash_2, hom_gid_hash_3, hom_gid_hash_4, hom_gid_hash_5, hom_gid_hash_6, hom_gid_hash_7, hom_gid_hash_8, hom_gid_hash_9, hom_gid_hash_10, hom_gid_hash_11, hom_gid_hash_12, hom_gid_hash_13, hom_gid_hash_14, hom_gid_hash_15, hom_gid_hash_16, hom_gid_hash_17, hom_gid_hash_18, hom_gid_hash_19, hom_gid_hash_20, hom_gid_hash_21, hom_gid_hash_22, hom_gid_hash_23, hom_gid_hash_24, hom_gid_hash_25, hom_gid_hash_26, hom_gid_hash_27, hom_gid_hash_28, hom_gid_hash_29, hom_gid_hash_30, hom_gid_hash_31
+2026-04-07 16:42:09,987 - INFO - [hierarchical_snp_tensor] Added haplotype-block channels: block_id_norm, block_id_raw, block_len_norm, inblock_ld, is_block_boundary
+2026-04-07 16:42:09,995 - INFO - [BNP_T01] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T01/BNP_T01_tensor.npz
+2026-04-07 16:42:09,995 - INFO - [haplotype_tensor] Added haplotype-block channels: block_id_norm, block_id_raw, block_len_norm, ld_score, pos_enc_0, pos_enc_1, pos_enc_2, pos_enc_3, pos_enc_4, pos_enc_5, pos_enc_6, pos_enc_7, pos_enc_8, pos_enc_9, pos_enc_10, pos_enc_11, pos_enc_12, pos_enc_13, pos_enc_14, pos_enc_15, pos_enc_16, pos_enc_17, pos_enc_18, pos_enc_19, pos_enc_20, pos_enc_21, pos_enc_22, pos_enc_23, pos_enc_24, pos_enc_25, pos_enc_26, pos_enc_27, pos_enc_28, pos_enc_29, pos_enc_30, pos_enc_31, block_hash_0, block_hash_1, block_hash_2, block_hash_3, block_hash_4, block_hash_5, block_hash_6, block_hash_7, block_hash_8, block_hash_9, block_hash_10, block_hash_11, block_hash_12, block_hash_13, block_hash_14, block_hash_15, block_hash_16, block_hash_17, block_hash_18, block_hash_19, block_hash_20, block_hash_21, block_hash_22, block_hash_23, block_hash_24, block_hash_25, block_hash_26, block_hash_27, block_hash_28, block_hash_29, block_hash_30, block_hash_31
+2026-04-07 16:42:10,000 - INFO - [BNP_T01] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T01/BNP_T01_haplo_tensor.npz
+2026-04-07 16:42:10,000 - INFO - [DONE] BNP_T01: tensor export complete.
+2026-04-07 16:42:10,007 - INFO - [BNP_T02] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T02/BNP_T02_tensor.npz
+2026-04-07 16:42:10,011 - INFO - [BNP_T02] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T02/BNP_T02_haplo_tensor.npz
+2026-04-07 16:42:10,012 - INFO - [DONE] BNP_T02: tensor export complete.
+2026-04-07 16:42:10,020 - INFO - [BNP_T03] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T03/BNP_T03_tensor.npz
+2026-04-07 16:42:10,026 - INFO - [BNP_T03] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T03/BNP_T03_haplo_tensor.npz
+2026-04-07 16:42:10,027 - INFO - [DONE] BNP_T03: tensor export complete.
+2026-04-07 16:42:10,038 - INFO - [BNP_T04] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T04/BNP_T04_tensor.npz
+2026-04-07 16:42:10,048 - INFO - [BNP_T04] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T04/BNP_T04_haplo_tensor.npz
+2026-04-07 16:42:10,048 - INFO - [DONE] BNP_T04: tensor export complete.
+2026-04-07 16:42:10,061 - INFO - [BNP_T05] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T05/BNP_T05_tensor.npz
+2026-04-07 16:42:10,072 - INFO - [BNP_T05] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T05/BNP_T05_haplo_tensor.npz
+2026-04-07 16:42:10,072 - INFO - [DONE] BNP_T05: tensor export complete.
+2026-04-07 16:42:10,087 - INFO - [BNP_T06] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T06/BNP_T06_tensor.npz
+2026-04-07 16:42:10,097 - INFO - [BNP_T06] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T06/BNP_T06_haplo_tensor.npz
+2026-04-07 16:42:10,097 - INFO - [DONE] BNP_T06: tensor export complete.
+2026-04-07 16:42:10,110 - INFO - [BNP_T07] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T07/BNP_T07_tensor.npz
+2026-04-07 16:42:10,121 - INFO - [BNP_T07] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T07/BNP_T07_haplo_tensor.npz
+2026-04-07 16:42:10,122 - INFO - [DONE] BNP_T07: tensor export complete.
+2026-04-07 16:42:10,136 - INFO - [BNP_T08] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T08/BNP_T08_tensor.npz
+2026-04-07 16:42:10,148 - INFO - [BNP_T08] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T08/BNP_T08_haplo_tensor.npz
+2026-04-07 16:42:10,148 - INFO - [DONE] BNP_T08: tensor export complete.
+2026-04-07 16:42:10,163 - INFO - [BNP_T09] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T09/BNP_T09_tensor.npz
+2026-04-07 16:42:10,173 - INFO - [BNP_T09] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T09/BNP_T09_haplo_tensor.npz
+2026-04-07 16:42:10,173 - INFO - [DONE] BNP_T09: tensor export complete.
+2026-04-07 16:42:10,189 - INFO - [BNP_T10] wrote hierarchical tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T10/BNP_T10_tensor.npz
+2026-04-07 16:42:10,199 - INFO - [BNP_T10] wrote haplotype tensor: /birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Github/EcoPopDL-GP/runs/test_d4_oil/04_tensors/tensors/BNP_T10/BNP_T10_haplo_tensor.npz
+2026-04-07 16:42:10,200 - INFO - [DONE] BNP_T10: tensor export complete.
+2026-04-07 19:38:22,058 - INFO - Loading .map file...
+2026-04-07 19:38:22,063 - INFO - Loaded 18 SNPs from map file.
+2026-04-07 19:38:22,063 - INFO - Loading .ped file in chunks...
+2026-04-07 19:38:22,067 - INFO - Processed chunk 1 with 10 rows.
+2026-04-07 19:38:22,067 - INFO - Concatenating chunks...
+2026-04-07 19:38:22,067 - INFO - Encoding genotypes by per-SNP allele frequency...
+2026-04-07 19:38:22,096 - INFO - Final dataframe saved at merged_genotype_data.csv
+2026-04-07 19:38:22,096 - INFO - Loaded PLINK .ped with 18 SNPs and 10 samples.
+2026-04-07 19:38:22,098 - INFO - Saved allele rank summary (per-SNP frequency ordering) to allele_rank_summary.csv.
+2026-04-07 19:38:22,099 - INFO - [PLINK allele codes] top genotype codes:
+10    86
+00    52
+11    38
+01     4
+Name: count, dtype: int64
+2026-04-07 19:38:22,100 - INFO - [PLINK allele codes] mean per-SNP het rate=0.5000, SNPs with het=1.0000
+2026-04-07 19:38:31,982 - INFO - Wrote SNP TE annotations: snps_with_te_annotation.tsv
+2026-04-07 19:38:32,004 - INFO - [TE] SNPs with TE tag: 1.0000
+2026-04-07 19:38:35,492 - INFO - Wrote SNP gene annotations: snps_with_gene_annotation.tsv
+2026-04-07 19:38:35,493 - INFO - [GENE] SNPs genic=0.5000 promoter=0.3333
+2026-04-07 19:38:35,832 - INFO - [HOMOLOGY] genes in pair file: 59904 | matched to GFF: 59904 (100.00%)
+2026-04-07 19:38:36,300 - INFO - [HOMOLOGY] homology spans: rows=112150 pairs=56075 skipped_pairs=0
+2026-04-07 19:38:36,359 - INFO - [HOMOLOGY] hom_has mean=0.5556
+2026-04-07 19:38:36,359 - INFO - [HOMOLOGY] group size: min=2 med=4.5 max=6
+2026-04-07 19:38:36,359 - INFO - [HOMOLOGY] hash bit means: min=0.111 max=0.444
+2026-04-07 19:38:36,359 - INFO - [HOMOLOGY] hash signatures: unique=10 groups=10 collision_rate=0.0000
+2026-04-07 19:38:36,359 - INFO - [HOMOLOGY] anchor density: mean=0.8602 max=1.0000
+2026-04-07 19:38:44,182 - INFO - Tensor-only export enabled: skipping SNP/haplotype tile generation.
+2026-04-07 19:38:44,183 - INFO - [SKIP] BNP_T01: tensors already exist.
+2026-04-07 19:38:44,184 - INFO - [SKIP] BNP_T02: tensors already exist.
+2026-04-07 19:38:44,185 - INFO - [SKIP] BNP_T03: tensors already exist.
+2026-04-07 19:38:44,186 - INFO - [SKIP] BNP_T04: tensors already exist.
+2026-04-07 19:38:44,187 - INFO - [SKIP] BNP_T05: tensors already exist.
+2026-04-07 19:38:44,187 - INFO - [SKIP] BNP_T06: tensors already exist.
+2026-04-07 19:38:44,188 - INFO - [SKIP] BNP_T07: tensors already exist.
+2026-04-07 19:38:44,189 - INFO - [SKIP] BNP_T08: tensors already exist.
+2026-04-07 19:38:44,190 - INFO - [SKIP] BNP_T09: tensors already exist.
+2026-04-07 19:38:44,191 - INFO - [SKIP] BNP_T10: tensors already exist.

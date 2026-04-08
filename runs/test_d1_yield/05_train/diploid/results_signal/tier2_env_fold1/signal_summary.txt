@@ -1,0 +1,40 @@
+Signal-capture summary
+======================
+Baseline: R2=0.8364, RMSE=5.4201, MAE=4.0477, CCC=0.9615
+
+Top environmental features (by ΔR² after permutation):
+  - late_precip_sum: ΔR²=0.0035, ΔRMSE=0.0569
+  - late_gdd_sum: ΔR²=0.0028, ΔRMSE=0.0463
+  - drought_vpd: ΔR²=0.0019, ΔRMSE=0.0316
+  - mid_precip_sum: ΔR²=0.0014, ΔRMSE=0.0236
+  - late_vpd_mean: ΔR²=0.0014, ΔRMSE=0.0228
+  - late_heat_hdd_sum: ΔR²=0.0005, ΔRMSE=0.0089
+  - mid_vpd_mean: ΔR²=0.0004, ΔRMSE=0.0059
+  - early_precip_sum: ΔR²=0.0003, ΔRMSE=0.0058
+
+Top temporal windows (by ΔR² after permutation):
+  - window_27: ΔR²=0.0007, ΔRMSE=0.0110
+  - window_10: ΔR²=0.0006, ΔRMSE=0.0099
+  - window_28: ΔR²=0.0006, ΔRMSE=0.0094
+  - window_14: ΔR²=0.0006, ΔRMSE=0.0094
+  - window_9: ΔR²=0.0005, ΔRMSE=0.0087
+  - window_17: ΔR²=0.0005, ΔRMSE=0.0084
+  - window_8: ΔR²=0.0005, ΔRMSE=0.0077
+  - window_24: ΔR²=0.0005, ΔRMSE=0.0075
+
+Top module / metadata sensitivities:
+  - BAE_context_zeroed: ΔR²=0.6547, ΔRMSE=6.7019
+  - HABE_hotspot_context_zeroed: ΔR²=0.2122, ΔRMSE=2.7941
+  - All_environment_permuted: ΔR²=0.0121, ΔRMSE=0.1961
+  - Population_ids_permuted: ΔR²=0.0059, ΔRMSE=0.0961
+  - Population_ids_zeroed: ΔR²=0.0044, ΔRMSE=0.0731
+  - Threshold_channels_permuted: ΔR²=0.0005, ΔRMSE=0.0090
+  - HABE_block_context_zeroed: ΔR²=0.0000, ΔRMSE=0.0000
+
+Per-population performance (sorted by R²):
+  - pop 0.0: R²=0.9537, RMSE=2.1530, n=8
+  - pop 2.0: R²=0.6638, RMSE=5.7982, n=8
+  - pop 1.0: R²=0.6452, RMSE=7.5308, n=6
+
+Interpretation note: HABE/BAE rows here are post-hoc sensitivities using the channels they consume.
+For the main manuscript table, report these alongside full retraining ablations using USE_HABE / USE_BIOLOGICAL_AWARE_EMBEDDING / USE_POPULATION_EMBEDDING.

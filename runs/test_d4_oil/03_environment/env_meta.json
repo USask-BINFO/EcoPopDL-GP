@@ -1,0 +1,19 @@
+{
+  "L": 20,
+  "vars_per_window": 11,
+  "var_cols": [
+    "tmax_C",
+    "tmin_C",
+    "precip_mm",
+    "par_allsky",
+    "srad_allsky",
+    "wind_m_s",
+    "vpd_kPa",
+    "gdd",
+    "cloud_pct",
+    "kt",
+    "daylength_h"
+  ],
+  "order": "time-major",
+  "prefix": "E"
+}
