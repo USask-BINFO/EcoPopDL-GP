@@ -50,11 +50,11 @@ Recommended usage:
 Examples of what `--genotype-source` can point to:
 
 - raw Axiom table: `/path/to/axiom_export.tsv`
-- PLINK prefix: `/path/to/chickpea_axiom_raw`
-- PLINK member file: `/path/to/chickpea_axiom_raw.bed`
-- PFILE prefix: `/path/to/final_genotype`
-- PFILE member file: `/path/to/final_genotype.pgen`
-- VCF: `/path/to/final_genotype.vcf.gz`
+- PLINK prefix: `/path/to/plink_prefix`
+- PLINK member file: `/path/to/plink_prefix.bed`
+- PFILE prefix: `/path/to/plink_prefix`
+- PFILE member file: `/path/to/plink_prefix.pgen`
+- VCF: `/path/to/plink_prefi.vcf.gz`
 
 Legacy flags are still supported:
 
