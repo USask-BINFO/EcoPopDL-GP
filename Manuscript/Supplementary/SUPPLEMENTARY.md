@@ -177,25 +177,7 @@ Wall-clock time is reported in minutes. Higher R² and CCC indicate better perfo
 | LMET | 280 | 0.42 | 2.51 | 3.33 | 0.59 |
 | DGxE | 90 | 0.29 | 2.85 | 3.86 | 0.58 |
 
-### Table S5. Comparison of the two cross-validation settings.
-
-Primary results in the main text are reported under within-genotype environment-holdout cross-validation. Genotype-grouped cross-validation is shown as a robustness check.
-
-| Dataset | Trait | EcoPop geno-CV | EcoPop env-CV | Best baseline geno-CV | Best baseline env-CV |
-|---|---|---:|---:|---:|---:|
-| D1 | Yield | 0.58 | 0.62 | 0.43 | 0.47 |
-| D1 | DTF | 0.51 | 0.59 | 0.50 | 0.54 |
-| D1 | SW | 0.52 | 0.59 | 0.51 | 0.53 |
-| D2 | FT | 0.48 | 0.50 | 0.44 | 0.47 |
-| D3 | Yield | 0.43 | 0.45 | 0.33 | 0.34 |
-| D3 | DTF | 0.68 | 0.71 | 0.64 | 0.66 |
-| D3 | SW | 0.60 | 0.62 | 0.45 | 0.47 |
-| D4 | Oil | 0.56 | 0.56 | 0.46 | 0.48 |
-| D4 | DTF | 0.51 | 0.52 | 0.43 | 0.46 |
-
-*Note.* **geno-CV** = genotype-grouped cross-validation; **env-CV** = within-genotype environment-holdout cross-validation.
-
-### Table S6. Qualitative summary of mixed post-hoc perturbation sensitivity analyses.
+### Table S5. Qualitative summary of mixed post-hoc perturbation sensitivity analyses.
 
 Entries summarize the dominant patterns observed after sample-wise permutation of environmental or metadata signals, channel occlusion of structured genomic inputs, and, for selected D4 components, temporary module disablement.
 
