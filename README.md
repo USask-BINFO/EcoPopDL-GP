@@ -1,6 +1,6 @@
 # EcoPopDL-GP
 
-EcoPopDL-GP is a deep-learning pipeline for population-aware and environment-aware genomic prediction. This repository combines genotype preprocessing, phenotype preparation, ADMIXTURE-based population structure, environmental matrix construction, ChromoMap tensor generation, and diploid/polyploid model training.
+EcoPopDL-GP is a deep-learning pipeline for population-aware and environment-aware genomic prediction. This repository combines genotype preprocessing, phenotype preparation, ADMIXTURE-based population structure, environmental matrix construction, ChromoTensor generation, and diploid/polyploid model training.
 
 The repository now includes a single entry script, `run.sh`, so the workflow can start from different genotype entry points and run through the later stages in one command.
 
@@ -8,7 +8,7 @@ The repository now includes a single entry script, `run.sh`, so the workflow can
 
 ![EcoPopDL-GP pipeline overview](Images/EcopoDLGP-Pipeline.png)
 
-*End-to-end view of preprocessing, population-structure analysis, haplotype-block construction, ChromoMap tensor generation, and prediction.*
+*End-to-end view of preprocessing, population-structure analysis, haplotype-block construction, ChromoTensor generation, and prediction.*
 
 ## Supplementary material
 
@@ -24,7 +24,7 @@ The launcher can run these stages:
 2. phenotype preprocessing
 3. ADMIXTURE population clustering
 4. environment matrix generation
-5. ChromoMap tensor generation
+5. ChromoTensor generation
 6. model training
 
 You can run one stage or the full pipeline with `--stages`.
