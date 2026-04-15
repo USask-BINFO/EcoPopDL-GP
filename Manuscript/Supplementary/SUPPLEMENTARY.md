@@ -37,6 +37,8 @@ Figure numbering and titles follow the manuscript order exactly for **Figures S2
 
 *Caption.* Each panel shows mean held-out R² within inferred population groups for one dataset-trait task under within-genotype environment-holdout cross-validation. Error bars indicate variability across folds. This figure reports subgroup performance summaries rather than perturbation-based importance. Panels are ordered consistently across tasks to facilitate comparison of subgroup performance across datasets and traits. Missing panels indicate analyses that were still running when the figure was generated and can be updated later without changing the layout.
 
+\noindent\textit{Note:} Population labels denote inferred population-cluster IDs and are ordered within each panel by mean held-out $R^2$, not by cluster number. In panels (b) and (c), at least one cluster had too few held-out observations within a fold ($n<2$), so fold-level $R^2$ was undefined. In plots generated without filtering undefined values, that cluster label may therefore appear on the y-axis without a visible bar.
+
 ### Figure S6. Homoeolog-related perturbation sensitivity in the polyploid D4 dataset.
 
 <p align="center">
