@@ -242,7 +242,7 @@ Wall-clock time is reported in minutes. Higher R² and CCC indicate better perfo
 | BRR | 180 | 0.31 | 0.643 | 0.936 | 0.48 |
 | RF | 600 | 0.32 | 0.638 | 0.929 | 0.49 |
 | XGB | 825 | 0.33 | 0.633 | 0.922 | 0.50 |
-| LMET | 2400† | 0.28 | 0.656 | 0.956 | 0.45 |
+| LMET | — | — | — | — | — |
 | DGxE | 4320 | -0.07 | 0.800 | 1.165 | 0.10 |
 
 ### D3 DTF
@@ -254,7 +254,7 @@ Wall-clock time is reported in minutes. Higher R² and CCC indicate better perfo
 | BRR | 210 | 0.57 | 0.489 | 0.644 | 0.69 |
 | RF | 720 | 0.63 | 0.454 | 0.597 | 0.75 |
 | XGB | 910 | 0.64 | 0.448 | 0.589 | 0.76 |
-| LMET | 2550† | 0.56 | 0.495 | 0.651 | 0.68 |
+| LMET | — | — | — | — | — |
 | DGxE | 4566 | 0.28 | 0.633 | 0.833 | 0.40 |
 
 ### D3 SW
@@ -266,7 +266,7 @@ Wall-clock time is reported in minutes. Higher R² and CCC indicate better perfo
 | BRR | 255 | 0.40 | 0.545 | 0.789 | 0.53 |
 | RF | 865 | 0.44 | 0.526 | 0.762 | 0.57 |
 | XGB | 1080 | 0.45 | 0.522 | 0.755 | 0.58 |
-| LMET | 2850† | 0.37 | 0.558 | 0.808 | 0.50 |
+| LMET | — | — | — | — | — |
 | DGxE | 4900 | 0.31 | 0.584 | 0.846 | 0.44 |
 
 ### D4 Oil content
