@@ -1,7 +1,7 @@
 # Supplementary Figures and Tables for EcoPopDL-GP
 
 This page hosts the supplementary material that will be linked from the manuscript.
-Figure numbering and titles follow the manuscript order exactly for **Figures S2-S6** and **Tables S2-S4**.
+Figure numbering and titles follow the manuscript order exactly for **Figures S2-S6** and **Tables S2-S5**.
 
 ## Supplementary Figures
 
