@@ -49,7 +49,25 @@ _Note:_ Population labels denote inferred population-cluster IDs and are ordered
 
 ## Supplementary Results Tables
 
-### Table S4. Complete predictive performance across all datasets under within-genotype environment-holdout cross-validation.
+### Table S3. Full ChromoMap channel inventory.
+
+| Channel group | Description | Dataset-specific use |
+|---|---|---|
+| SNP genotype state | Normalized allele dosage and encoded dosage state used by BAE | All datasets |
+| Positional channels | Chromosome identity, within-chromosome order, and padding mask | All datasets |
+| Haplotype / LD context | Block ID, normalized block properties, LD-derived context summaries | All datasets |
+| Gene annotation | Gene overlap / proximity features | All datasets |
+| Promoter annotation | Promoter overlap indicators / proximity features | When promoter annotation available |
+| TE annotation | TE overlap / proximity features | All datasets |
+| Hotspot mask | Binary flag used by HABE to retain loci as individual tokens; set from SNP-level annotation (transposable element, gene body, promoter) and block-level summaries (high gene count, SNP density, or mean minor allele frequency) | Annotation-dependent |
+| Population metadata | Population-cluster assignments inferred by ADMIXTURE | All datasets |
+| Subgenome label | Subgenome identity for polyploid chromosomes | Polyploid only |
+| Homoeolog presence | Indicator that a locus belongs to an annotated homoeolog group | Polyploid only |
+| Homoeolog group size | Normalized homoeolog-group size | Polyploid only |
+| Homoeolog group identity | Raw or hash-encoded group identifier | Polyploid only |
+| Homoeolog anchor density | Local density of annotated homoeolog anchors | Polyploid only |
+
+### Table S4. Complete predictive performance across all datasets under within-genotype environment-holdout cross-validation (env-CV).
 
 Wall-clock time is reported in minutes. Higher R² and CCC indicate better performance; lower MAE and RMSE indicate better performance. Abbreviations: **EcoPop** = EcoPopDL-GP; **LMET** = LearnMET; **DGxE** = DeepG×E; **SW** = seed weight; **DTF** = days to flowering; **FT** = flowering time. Entries marked **—** indicate values not generated because of memory constraints.
 
@@ -161,7 +179,7 @@ Wall-clock time is reported in minutes. Higher R² and CCC indicate better perfo
 | LMET | 280 | 0.42 | 0.573 | 0.760 | 0.59 |
 | DGxE | 90 | 0.29 | 0.650 | 0.881 | 0.58 |
 
-### Table S5. Qualitative summary of mixed post-hoc perturbation sensitivity analyses.
+### Table S6. Qualitative summary of mixed post-hoc perturbation sensitivity analyses.
 
 Entries summarize the dominant patterns observed after sample-wise permutation of environmental or metadata signals, channel occlusion of structured genomic inputs, and, for selected D4 components, temporary module disablement.
 
