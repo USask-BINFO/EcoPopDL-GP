@@ -179,6 +179,120 @@ Wall-clock time is reported in minutes. Higher R² and CCC indicate better perfo
 | LMET | 280 | 0.42 | 0.573 | 0.760 | 0.59 |
 | DGxE | 90 | 0.29 | 0.650 | 0.881 | 0.58 |
 
+
+### Table S5. Complete predictive performance across all datasets under genotype-grouped cross-validation (geno-CV).
+
+Wall-clock time is reported in minutes. Higher R² and CCC indicate better performance; lower MAE and RMSE indicate better performance. Abbreviations: **EcoPop** = EcoPopDL-GP; **LMET** = LearnMET; **DGxE** = DeepG×E; **SW** = seed weight; **DTF** = days to flowering; **FT** = flowering time. Entries marked **—** indicate values not generated because of memory constraints.
+
+### D1 Yield
+
+| Model | Time | R² | MAE | RMSE | CCC |
+|---|---:|---:|---:|---:|---:|
+| **EcoPop** | 60 | **0.58** | **0.573** | **0.724** | **0.73** |
+| GBLUP | 3 | 0.41 | 0.639 | 0.797 | 0.56 |
+| BRR | 10 | 0.36 | 0.665 | 0.830 | 0.51 |
+| RF | 20 | 0.43 | 0.628 | 0.784 | 0.58 |
+| XGB | 20 | 0.42 | 0.633 | 0.791 | 0.57 |
+| LMET | 30 | 0.39 | 0.649 | 0.811 | 0.54 |
+| DGxE | 75 | 0.31 | 0.691 | 0.862 | 0.46 |
+
+### D1 DTF
+
+| Model | Time | R² | MAE | RMSE | CCC |
+|---|---:|---:|---:|---:|---:|
+| **EcoPop** | 45 | **0.51** | **0.514** | **0.696** | **0.66** |
+| GBLUP | 1 | 0.49 | 0.587 | 0.777 | 0.64 |
+| BRR | 7 | 0.35 | 0.663 | 0.877 | 0.50 |
+| RF | 15 | 0.49 | 0.587 | 0.777 | 0.64 |
+| XGB | 15 | 0.45 | 0.610 | 0.806 | 0.60 |
+| LMET | 20 | 0.40 | 0.637 | 0.842 | 0.55 |
+| DGxE | 50 | 0.50 | 0.581 | 0.769 | 0.65 |
+
+### D1 SW
+
+| Model | Time | R² | MAE | RMSE | CCC |
+|---|---:|---:|---:|---:|---:|
+| **EcoPop** | 50 | **0.52** | **0.559** | **0.731** | **0.66** |
+| GBLUP | 3 | 0.47 | 0.574 | 0.771 | 0.61 |
+| BRR | 9 | 0.46 | 0.579 | 0.778 | 0.60 |
+| RF | 17 | 0.50 | 0.571 | 0.749 | 0.64 |
+| XGB | 17 | 0.51 | 0.568 | 0.741 | 0.65 |
+| LMET | 30 | 0.40 | 0.610 | 0.820 | 0.54 |
+| DGxE | 60 | 0.45 | 0.584 | 0.785 | 0.59 |
+
+### D2 FT
+
+| Model | Time | R² | MAE | RMSE | CCC |
+|---|---:|---:|---:|---:|---:|
+| **EcoPop** | 62 | **0.48** | **0.432** | **0.782** | **0.63** |
+| GBLUP | 3 | 0.34 | 0.531 | 0.925 | 0.49 |
+| BRR | 12 | 0.33 | 0.535 | 0.932 | 0.48 |
+| RF | 20 | 0.42 | 0.498 | 0.867 | 0.57 |
+| XGB | 20 | 0.37 | 0.519 | 0.904 | 0.52 |
+| LMET | 35 | 0.36 | 0.523 | 0.911 | 0.51 |
+| DGxE | 65 | 0.44 | 0.490 | 0.852 | 0.59 |
+
+
+### D3 Yield
+
+| Model | Time | R² | MAE | RMSE | CCC |
+|---|---:|---:|---:|---:|---:|
+| **EcoPop** | 3180 | **0.43** | **0.589** | **0.862** | **0.60** |
+| GBLUP | 150 | 0.31 | 0.643 | 0.936 | 0.48 |
+| BRR | 180 | 0.31 | 0.643 | 0.936 | 0.48 |
+| RF | 600 | 0.32 | 0.638 | 0.929 | 0.49 |
+| XGB | 825 | 0.33 | 0.633 | 0.922 | 0.50 |
+| LMET | 2400† | 0.28 | 0.656 | 0.956 | 0.45 |
+| DGxE | 4320 | -0.07 | 0.800 | 1.165 | 0.10 |
+
+### D3 DTF
+
+| Model | Time | R² | MAE | RMSE | CCC |
+|---|---:|---:|---:|---:|---:|
+| **EcoPop** | 3300 | **0.68** | **0.425** | **0.568** | **0.80** |
+| GBLUP | 165 | 0.58 | 0.484 | 0.636 | 0.70 |
+| BRR | 210 | 0.57 | 0.489 | 0.644 | 0.69 |
+| RF | 720 | 0.63 | 0.454 | 0.597 | 0.75 |
+| XGB | 910 | 0.64 | 0.448 | 0.589 | 0.76 |
+| LMET | 2550† | 0.56 | 0.495 | 0.651 | 0.68 |
+| DGxE | 4566 | 0.28 | 0.633 | 0.833 | 0.40 |
+
+### D3 SW
+
+| Model | Time | R² | MAE | RMSE | CCC |
+|---|---:|---:|---:|---:|---:|
+| **EcoPop** | 3720 | **0.60** | **0.422** | **0.632** | **0.73** |
+| GBLUP | 210 | 0.41 | 0.540 | 0.782 | 0.54 |
+| BRR | 255 | 0.40 | 0.545 | 0.789 | 0.53 |
+| RF | 865 | 0.44 | 0.526 | 0.762 | 0.57 |
+| XGB | 1080 | 0.45 | 0.522 | 0.755 | 0.58 |
+| LMET | 2850† | 0.37 | 0.558 | 0.808 | 0.50 |
+| DGxE | 4900 | 0.31 | 0.584 | 0.846 | 0.44 |
+
+### D4 Oil content
+
+| Model | Time | R² | MAE | RMSE | CCC |
+|---|---:|---:|---:|---:|---:|
+| **EcoPop** | 45 | **0.56** | **0.509** | **0.638** | **0.71** |
+| GBLUP | 7 | 0.46 | 0.562 | 0.719 | 0.61 |
+| BRR | 5 | 0.44 | 0.573 | 0.732 | 0.59 |
+| RF | 20 | 0.42 | 0.583 | 0.745 | 0.57 |
+| XGB | 22 | 0.45 | 0.567 | 0.725 | 0.60 |
+| LMET | 305 | 0.37 | 0.607 | 0.776 | 0.52 |
+| DGxE | 110 | 0.31 | 0.636 | 0.813 | 0.46 |
+
+### D4 DTF
+
+| Model | Time | R² | MAE | RMSE | CCC |
+|---|---:|---:|---:|---:|---:|
+| **EcoPop** | 32 | **0.51** | **0.426** | **0.556** | **0.69** |
+| GBLUP | 6 | 0.42 | 0.548 | 0.735 | 0.60 |
+| BRR | 5 | 0.39 | 0.562 | 0.753 | 0.57 |
+| RF | 18 | 0.43 | 0.544 | 0.728 | 0.61 |
+| XGB | 19 | 0.41 | 0.553 | 0.741 | 0.59 |
+| LMET | 280 | 0.38 | 0.567 | 0.760 | 0.56 |
+| DGxE | 90 | 0.26 | 0.619 | 0.830 | 0.44 |
+
 ### Table S6. Qualitative summary of mixed post-hoc perturbation sensitivity analyses.
 
 Entries summarize the dominant patterns observed after sample-wise permutation of environmental or metadata signals, channel occlusion of structured genomic inputs, and, for selected D4 components, temporary module disablement.
