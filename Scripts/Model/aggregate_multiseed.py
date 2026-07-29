@@ -1,19 +1,6 @@
 """
 Aggregate multi-seed / multi-fold results into mean +/- std and bootstrap CIs,
 and test whether EcoPopDL-GP's margin over the best baseline is stable.
-
-Directly supports the reviewer requests for (a) variance across repeated splits
-on small datasets, and (b) interpretation of small geno-CV margins (are they real?).
-
-Dependency-light: numpy + pandas only (no scipy).
-
-Expected input: one long-format CSV with (at least) these columns:
-    dataset, trait, scheme, model, seed, fold, r2, rmse, mae, ccc
-where `scheme` is e.g. env_cv / geno_cv / loc_out / year_out / locyear_out,
-and `model` includes "EcoPopDL-GP" plus each baseline.
-
-If your training script writes per-fold metrics in a different shape, write a
-small adapter to this schema; that is the only glue needed.
 """
 
 import argparse
