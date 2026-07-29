@@ -299,12 +299,11 @@ Notes:
 
 ## Running the best (automated) model
 
-`run.sh` runs the base model. To run the **automated configuration reported in the paper**, use the
-wrapper `run_best_model.sh`. It accepts every `run.sh` option and adds the automated-model settings
-on top:
+By default `run.sh` trains the base model. Add `--best-model` to run the **automated configuration
+reported in the paper**:
 
 ```bash
-./run_best_model.sh \
+./run.sh --best-model \
   --mode diploid \
   --workdir out/d1_yield \
   --genotype-source /data/D1/geno \
@@ -313,19 +312,19 @@ on top:
   --trial-file /data/D1/trials.csv
 ```
 
-The learnable gate is enabled by default and needs no extra files. The two optional components
-switch on only when you supply their inputs:
+`--best-model` enables the learnable gate, which needs no extra files. The two optional components
+switch on only when you supply their inputs (and imply `--best-model`):
 
 ```bash
-./run_best_model.sh \
+./run.sh \
   --aux-pheno /data/D1/aux_traits.csv --aux-targets Flowering,SW \
   --genic-ids /data/D1/genic_snps.txt \
   ... # plus the usual run.sh options
 ```
 
-| Wrapper flag | Effect |
+| Flag | Effect |
 |---|---|
-| *(default)* | **Learnable dual-branch gate**: the additive/deep mixing weight `w` is learned instead of fixed |
+| `--best-model` | **Learnable dual-branch gate**: the additive/deep mixing weight `w` is learned instead of fixed |
 | `--aux-pheno` + `--aux-targets` | **Multi-trait auxiliary heads**: extra traits supervise a shared representation |
 | `--aux-weight FLOAT` | Loss weight for the auxiliary heads (default `0.2`) |
 | `--genic-ids FILE` | **Genic-restricted additive branch**: keep only the listed SNP IDs in the additive branch |

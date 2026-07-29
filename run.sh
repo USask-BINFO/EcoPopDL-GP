@@ -27,6 +27,17 @@ Core options:
   --config FILE                      Shell-style config file (KEY=VALUE per line).
   --force                            Re-run stages even when outputs already exist.
 
+Best (automated) model:
+  --best-model                       Enable the automated configuration reported in the paper.
+                                     Turns on the learnable dual-branch gate; the optional
+                                     components below switch on when you supply their inputs.
+  --aux-pheno FILE                   Phenotype table holding auxiliary traits (multi-trait heads).
+  --aux-targets LIST                 Comma-separated auxiliary trait columns (needs --aux-pheno).
+  --aux-weight FLOAT                 Loss weight for the auxiliary heads (default: 0.2).
+  --genic-ids FILE                   SNP-ID list restricting the additive branch to genic SNPs.
+  --no-gate                          Use the fixed mixing weight instead of the learnable gate.
+  --seed INT                         Random seed for training.
+
 Genotype entry (recommended):
   --genotype-source PATH             Single genotype input path or prefix.
   --genotype-source-type TYPE        auto|axiom|plink|pfile|vcf (default: auto)
@@ -764,6 +775,24 @@ run_training_stage() {
     return 0
   fi
 
+  # ---- best (automated) model settings, passed to the engine as ECOPOP_* ----
+  if [[ "$BEST_MODEL" -eq 1 ]]; then
+    if [[ -n "$AUX_PHENO" && -z "$AUX_TARGETS" ]] || [[ -z "$AUX_PHENO" && -n "$AUX_TARGETS" ]]; then
+      die "--aux-pheno and --aux-targets must be given together."
+    fi
+    [[ -n "$AUX_PHENO" ]] && require_file "$AUX_PHENO"
+    [[ -n "$GENIC_IDS" ]] && require_file "$GENIC_IDS"
+
+    export ECOPOP_DOSAGE_WEIGHT="$BEST_GATE"
+    [[ -n "$AUX_PHENO" ]]   && export ECOPOP_AUX_PHENO="$AUX_PHENO"
+    [[ -n "$AUX_TARGETS" ]] && export ECOPOP_AUX_TARGETS="$AUX_TARGETS" \
+                            && export ECOPOP_AUX_WEIGHT="$AUX_WEIGHT"
+    [[ -n "$GENIC_IDS" ]]   && export ECOPOP_ADDITIVE_GENIC_IDS="$GENIC_IDS"
+
+    log "Best model: gate=${BEST_GATE}, aux=${AUX_TARGETS:-off}, genic=${GENIC_IDS:-off}"
+  fi
+  [[ -n "$TRAIN_SEED" ]] && export ECOPOP_SEED="$TRAIN_SEED"
+
   log "Training $MODE model"
   (
     cd "$TRAIN_DIR"
@@ -1338,6 +1367,15 @@ CONFIG_FILE=""
 FORCE=0
 RUN_ADMIXTURE=1
 
+# Best (automated) model settings; empty means "leave the engine default alone".
+BEST_MODEL=0
+BEST_GATE="learn"
+AUX_PHENO=""
+AUX_TARGETS=""
+AUX_WEIGHT="0.2"
+GENIC_IDS=""
+TRAIN_SEED=""
+
 GENOTYPE_SOURCE=""
 GENOTYPE_SOURCE_TYPE="auto"
 AXIOM_FILE=""
@@ -1442,6 +1480,14 @@ while [[ $# -gt 0 ]]; do
     --workdir) WORKDIR="$2"; shift 2 ;;
     --stages) STAGES="$2"; shift 2 ;;
     --force) FORCE=1; shift ;;
+
+    --best-model) BEST_MODEL=1; shift ;;
+    --aux-pheno) AUX_PHENO="$2"; BEST_MODEL=1; shift 2 ;;
+    --aux-targets) AUX_TARGETS="$2"; BEST_MODEL=1; shift 2 ;;
+    --aux-weight) AUX_WEIGHT="$2"; shift 2 ;;
+    --genic-ids) GENIC_IDS="$2"; BEST_MODEL=1; shift 2 ;;
+    --no-gate) BEST_GATE="fixed"; shift ;;
+    --seed) TRAIN_SEED="$2"; shift 2 ;;
 
     --genotype-source) GENOTYPE_SOURCE="$2"; shift 2 ;;
     --genotype-source-type) GENOTYPE_SOURCE_TYPE="$2"; shift 2 ;;
