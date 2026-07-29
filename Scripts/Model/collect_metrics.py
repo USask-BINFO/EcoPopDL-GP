@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
 """
-Post-run collector for the EcoPopDL-GP revision.
-
-Walks the experiment output tree, reads every `*cv_fold_predictions.csv`
-(schema: SampleID,pred,true,fold), and recomputes R2 / RMSE / MAE / CCC
-(CCC uses the FIXED ddof=0 covariance) per fold and pooled. Emits tidy CSVs
-and prints the tables you need for the rebuttal.
-
-This doubles as the CCC-recompute for existing paper predictions: point --extra
-at any old cv_fold_predictions.csv with a label.
-
-Dependency-light: numpy + pandas only.
 
 Usage:
   python collect_metrics.py --runs-dir runs --out-prefix metrics
