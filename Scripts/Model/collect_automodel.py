@@ -1,14 +1,6 @@
 #!/usr/bin/env python
 """
-collect_automodel.py -- gather run2_automodel/<D>/<trait>/ results into one table.
-
-Headline automated-model number per trait = the VALID reg-ensemble: average of the
-reg_low/reg_mid/reg_high test predictions (they share the CV partition, verified by
-matching (SampleID,fold) keys), which gave a real +0.01 over any single reg on D1 yield.
-Falls back to the single 'full' run when the reg runs are absent.
-
-Also reports: full, geno-CV, per-seed spread + seed note, and ablation deltas vs headline.
-Robust to missing experiments (reports what exists).
+collect_automodel.py 
 """
 import os, sys, glob, re
 import numpy as np, pandas as pd
