@@ -2,14 +2,6 @@
 """
 emit_best_reg.py -- pick the automated model's regularization by VALIDATION, per trait.
 
-Reads each reg-level log in a run2_automodel trait dir, parses each fold's BEST
-validation R2 (never test), averages over folds, and prints the winning level's
-reg env-var string on stdout so Stage B can inject it:
-
-    ECOPOP_GXE_DROPOUT=<d> ECOPOP_WEIGHT_DECAY=<w>
-
-All diagnostics go to stderr so stdout stays clean for $(...) capture.
-Selection is on validation only -> leakage-free (same principle as pick_best_reg.py).
 """
 import os, re, sys, argparse
 
