@@ -2,8 +2,6 @@
 GxE TRANSFORMER WITH TEMPORAL ENVIRONMENTAL ENCODING
 ====================================================
 
-This is the IMPROVED model architecture for beating RÃƒâ€šÃ‚Â²=0.52 baseline.
-
 Key improvements:
 1. Temporal LSTM encoder for time-series environmental data (20 weeks ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â 6 features)
 2. Location and year embeddings (categorical variables)
@@ -11,9 +9,6 @@ Key improvements:
 4. Explicit GxE interaction modeling (bilinear)
 5. Cross-attention between genomic and environmental modalities
 
-Expected RÃƒâ€šÃ‚Â²: 0.52-0.66 (beating EcoPopDL-GP's 0.52)
-
-Author: Modified for rice flowering time prediction
 Date: 2025
 """
 
