@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 """
-ensemble.py  --  seed-averaged prediction ensemble (the honest R2 booster).
+ensemble.py  --  seed-averaged prediction ensemble
 
 Averages the PER-SAMPLE predictions across the seed runs of a task
 (full=seed20, seed21..seed24), then computes R2 on the averaged prediction.
-Averaging predictions (not averaging per-seed R2) reduces variance and the
-val->test optimism, and typically gains +0.02..0.05 R2 for free.
+
 
 Usage:  python ensemble.py d1_yield [d3_yield ...]     (default: all tasks)
 Reads:  runs/<task>_{full,seed21,seed22,seed23,seed24}/tier2_env_cv_fold_predictions.csv
