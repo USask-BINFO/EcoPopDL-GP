@@ -1,16 +1,6 @@
 """
 Environment-blocked (leave-one-environment-out) cross-validation splitters.
 
-Addresses the reviewer request for a STRICTER test of generalization to truly
-unseen environments than the within-genotype environment-holdout (env-CV) used
-in the submitted version. Here a whole LOCATION, a whole YEAR, or a whole
-LOCATION x YEAR is held out for testing, so that environment is entirely absent
-from training.
-
-Returns the same (train_keys, val_keys, test_keys) triplet format as
-run_genotype_cv / run_within_genotype_env_holdout_cv, so it plugs directly into
-the existing fold loop.
-
 Note on validation: the test fold is a clean, fully held-out environment. The
 validation split is carved as a random fraction of the remaining (training)
 observations and is used only for early stopping / model selection. This mirrors
