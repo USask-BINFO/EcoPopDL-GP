@@ -38,268 +38,18 @@ from gxe_transformer_temporal import (
     WideEnvMLPEncoder,
     LowRankBilinear,
 )
-# ---------------------------
-# CONFIG
-# ---------------------------
-METADATA_FILE = "/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Demo/input_files/Genotype/Axiom_genotype/D3/Phenotype/Phenotype_files/flowering.txt"                           # phenotype/metadata with SampleID and target col
-ENVIRONMENT_FILE = "/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Demo/input_files/Environment/D3/d3_env_matrix_dtf.csv"                    # environment matrix; first col must be SampleID or will be renamed
-# For additive branch
-GENO_SOURCE = "plink"  # "plink" or "vcf"
-SIMPLE_GENO_PCA = True
-SIMPLE_GENO_N_PCS = 200
-SIMPLE_GENO_STANDARDIZE = True
-PLINK_PREFIX = "/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Demo/input_files/Genotype/Axiom_genotype/D3/Genotype_files/Genotype/imp.qc.all.clean"
-VCF_PATH = "/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Demo/input_files/Genotype/Axiom_genotype/D3/Genotype_files/Genotype/imp.qc.all.clean.vcf"
-
-TARGET_COL = "DTF"                                  # target column in METADATA_FILE                           # target column in METADATA_FILE
-
-# Combined hierarchical tensors (Chromomap 2D layout; single NPZ per sample)
-USE_GENOMIC_TENSORS = True
-TENSOR_DIR = "/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Demo/Chromomap/images_AF_combined_d3_allele_comb_xyz_te_new_snp_rep_/tensors"
-if not USE_GENOMIC_TENSORS:
-    raise RuntimeError("Tile/PNG loaders have been removed. Set USE_GENOMIC_TENSORS=True and provide tensor NPZs.")
-
-# Optional structured channel dropout for tensor inputs.
-USE_CHANNEL_DROPOUT = False
-CHANNEL_GROUP_DROP_P = 0.0
-CHANNEL_DROP_P = 0.0
-
-# Optional genomic self-supervised pretraining. Disabled by default.
-PRETRAIN_GENOMIC_SIMCLR = False
-SIMCLR_EPOCHS = 10
-SIMCLR_LR = 1e-3
-SIMCLR_TEMP = 0.1
-SIMCLR_TOKEN_DROP = 0.1
-SIMCLR_FEATURE_NOISE = 0.01
-SIMCLR_USE_VICREG = False
-
-# Optional CutMix-style chromosome block masking. Disabled by default.
-USE_BLOCK_MASKING = False
-BLOCK_MASK_P_APPLY = 0.0
-BLOCK_MASK_FRAC_RANGE = (0.05, 0.15)
-BLOCK_MASK_NUM_BLOCKS = 1
-BLOCK_MASK_CHR_MODE = "proportional"
-BLOCK_MASK_MIN_TOKENS = 8
-BLOCK_MASK_KEEP_FIRST = True
-BLOCK_MASK_MIN_KEEP_TOTAL = None
-
-# Backward-compatible defaults for optional training toggles still referenced below.
-USE_DUAL_BRANCH_MODEL = False
-ADDITIVE_BRANCH_HIDDEN = 128
-DUAL_GATE_HIDDEN = 32
-DUAL_GATE_DROPOUT = 0.1
-USE_ENV_MATRIX_AS_MLP = False
-USE_ENV_PCA = False
-ENV_PCA_COMPONENTS = 32
-USE_ENV_ADVERSARY = False
-ENV_ADVERSARY_WEIGHT = 0.0
-ENV_ADVERSARY_MAX_ALPHA = 1.0
-ENV_ADVERSARY_WARMUP_EPOCHS = 10
-USE_TOKEN_DROPOUT = False
-TOKEN_DROPOUT_P = 0.10
-TOKEN_DROPOUT_KEEP_FIRST = True
-ENV_MOD_DROPOUT_P = 0.0
-RESIDUAL_GATE_INIT = 0.01
-USE_META_FILM = True
-META_FILM_SCALE = 0.1
-USE_RESIDUAL_FOCUS_ARCH = False
-USE_ENV_RESIDUAL_TRAINING = False
-USE_TE_SUBTYPE_FEATURES = False
-BOXPLOT_TRIM = False
-TRAIT_MODE = "complex"
-DOSAGE_SOURCE = GENO_SOURCE
-USE_DOSAGE_PCA = False
-
-# Training hyperparameters
-BATCH_SIZE = 16
-NUM_EPOCHS = 200
-LEARNING_RATE = 5e-4
-
-# Residual-focus two-stage training (main effects -> GxE residuals)
-MAIN_HEAD_DROPOUT = 0.15
-INTERACTION_HEAD_DROPOUT = 0.35
-DISTANCE_LOG1P = True  # set False if te_dist/gene_dist already log-scaled
-USE_ENV_ANOMALIES = True  # use env deltas from mean in GxE interaction path
-STAGE2_LEARNING_RATE = 5e-5
-MAIN_WEIGHT_DECAY = 0.01
-GXE_WEIGHT_DECAY = 0.1    # Stage 2: stronger regularization for GxE residuals
-
-GXE_DROPOUT = 0.4
-
-SEED = 20
-STANDARDIZE_TARGET = True     # standardize target using train-set mean/std for stability
-USE_ENV_ZSCORE = True         # per-environment z-score (Location x Year) for targets
-LR_WARMUP_EPOCHS = 5          # epochs used to linearly warm up the LR
-LR_MIN_LR_FACTOR = 0.1         # cosine decay will anneal towards base_lr * LR_MIN_LR_FACTOR
-USE_SNAPSHOT_ENSEMBLE = True  # snapshot ensembling with cyclical LR
-SNAPSHOT_CYCLES = 3
-SNAPSHOT_DIR = "snapshots"
-LOSS_FUNCTION = "huber"       # choose between "mse", "huber", "quantile"
-HUBER_DELTA = 1.0
-QUANTILE_ALPHA = 0.5
-SNAPSHOT_CYCLE_LENGTH = 0  # disable snapshot ensembling; keep only the best model
-
-MIXUP_ALPHA = 0.0              # alpha hyperparameter for genomic+env mixup augmentation (0=off)
-USE_CHR_POOLING = True        # optional per-chromosome window pooling for tensor inputs (preserves chromosome axis)
-CHR_POOL_WINDOW = 1000          # window size (tokens) when USE_CHR_POOLING is enabled
-
-# Optional additional downsampling inside ChromoAwareTransformer for very long sequences (tensor model)
-CHR_DOWNSAMPLE_STRIDE = 2
-CHR_DOWNSAMPLE_KERNEL = None
-
-# USE_DUAL_BRANCH_MODEL = False   # enable additive+interaction fusion wrapper (helps across simple/complex traits)
-# ADDITIVE_BRANCH_HIDDEN = 128
-# DUAL_GATE_HIDDEN = 32
-# DUAL_GATE_DROPOUT = 0.1
-USE_DOSAGE_BRANCH = True       # add a raw-dosage branch with a learned gate to blend with complex path
-DOSAGE_BRANCH_HIDDEN = 200
-DOSAGE_GATE_HIDDEN = 32
-DOSAGE_GATE_DROPOUT = 0.1
-DOSAGE_PCA_COMPONENTS_PATH = None  # npy path with PCA components [n_components, n_snps] (optional)
-DOSAGE_PCA_MEAN_PATH = None       # npy path with per-SNP mean used for PCA/standardization
-DOSAGE_PCA_STD_PATH = None        # npy path with per-SNP std
-DOSAGE_PCA_CENTER = True
-DOSAGE_PCA_SCALE = True
-DOSAGE_BLEND_PRIOR = 0.8        # initial bias toward dosage path for learnable gate
-DOSAGE_FIXED_WEIGHT =  None    # lock dosage/complex blend (set None to let gate learn)
-# Aliases for quick copy/paste (matches doc names)
-DOSAGEPCACOMPONENTSPATH = DOSAGE_PCA_COMPONENTS_PATH
-DOSAGEPCAMEANPATH = DOSAGE_PCA_MEAN_PATH
-DOSAGEPCASTDPATH = DOSAGE_PCA_STD_PATH
-DOSAGEFIXEDWEIGHT = DOSAGE_FIXED_WEIGHT
-
-# Sequence sizes
-# Transformer sizes
-EMBED_DIM = 128
-NUM_HEADS = 4
-NUM_TRANSFORMER_LAYERS = 2
-FF_DIM = 512
-
-# Dataloader
-NUM_WORKERS = 8
-EARLY_STOP_PATIENCE = 20
-EARLY_STOP_MIN_DELTA = 1e-3
-USE_CV = True         # if True, run K-fold CV instead of single train/val/test
-# CV mode selection (use at most one of the two specialized modes)
-USE_GENOTYPE_CV = True  # group CV by genotype (SampleID) = untested genotypes across folds
-EVAL_TIER_MODE = "within_genotype_env_holdout"  # "geno_cv" | "within_genotype_env_holdout" | "both"
-WITHIN_GENO_TEST_FRAC = 0.2
-WITHIN_GENO_VAL_FRAC = 0.2
-WITHIN_GENO_MIN_TEST = 1
-WITHIN_GENO_MIN_TRAIN = 1
-WITHIN_GENO_SEED_OFFSET = 1000
-CV_FOLDS = 4
-SAVE_FOLD_PREDICTIONS = True  # save per-fold GEBVs when running CV
-EXPORT_EMBEDDINGS = True     # if True, export penultimate embeddings on test set
-RUN_EMBED_PLOTS = True      # if True, run t-SNE plots on exported embeddings
-EMBEDDING_VIEWS = ("fused", "genomic", "pop", "loc", "year")  # which embeddings to plot
-TSNE_EMBEDDING_VIEWS = ("genomic", "pop", "loc", "year")  # which embeddings to t-SNE
-BOXPLOT_WHISKER_K = 1.0     # whisker multiplier (1.5=default Tukey)
-BOXPLOT_SAVE_PATH = "trait_boxplot.png"    # set to a path (e.g., "trait_boxplot.png") to save boxplot
 
 
-
-# Temporal environmental encoding
-USE_TEMPORAL_ENV_ENCODING = True
-N_MONTHS = 32  # 20 weeks (time steps)
-ENV_ENGINEERED_FEATURES = True
-ENV_STAGE_SUMMARIES = True
-ENV_HIDDEN_DIM = 32
-ENV_LSTM_LAYERS = 2
-ENV_ENCODER_TYPE = "lstm"  # "lstm", "tcn", or "pyramid"
-ENV_CONV_CHANNELS = 64
-ENV_CONV_LAYERS = 2
-ENV_CONV_KERNEL = 3
-ENV_PYRAMID_SCALES = [1, 2, 4]
-ENV_PYRAMID_LAYERS = 2
-ENV_PERTURB_SIGMA = 0.01  # Gaussian noise scale (fraction of per-feature std) applied during training
-# Cache preprocessed temporal env tensors to skip recomputation on every run
-USE_ENV_CACHE = False
-ENV_CACHE_FILE = "env_temporal_cache.npz"
-# When True, fail fast if any sample is missing temporal weather data instead of silently
-# feeding zeros (which makes the model ignore environment signals).
-ENV_LOOKUP_FAIL_ON_MISSING = True
-
-# Multi-environment flag (True = multiple rows per SampleID; False = single env row per SampleID)
-MULTI_ENV = True
-# Location and year
-N_LOCATIONS = 5
-N_YEARS = 2
-LOCATION_EMBED_DIM = 6
-YEAR_EMBED_DIM = 3
-
-# Population structure
-N_POPULATIONS = 10
-POP_EMBED_DIM = 11
-POP_EMBED_WEIGHT_DECAY = 1.0
-METADATA_WEIGHT_DECAY = 1.0  # stronger L2 for loc/year + metadata FiLM modules
-INTERACTION_REG_LAMBDA = 0.05
-LRBI_RANK = 16  # low-rank bilinear interaction rank (0 disables LRBI)
-USE_GXE_MOE = True  # population-specific mixture of experts for GxE interaction head
-GXE_MOE_NUM_EXPERTS = 3
-GXE_MOE_HIDDEN_DIM = 32
-GXE_MOE_TEMPERATURE = 1.0
-USE_ENV_FILM = True  # FiLM-style env modulation inside the hierarchical genomic encoder
-USE_ENV_POOL_BIAS = True  # Env-conditioned attention bias during pooling for gxetensor
-
-USE_BIOLOGICAL_AWARE_EMBEDDING = True  # enable Biological-Aware Embedding when channels are available
-USE_HABE = True  # set False for the controlled -HABE ablation
-USE_POPULATION_EMBEDDING = True  # set False for the controlled -Population ablation
-RUN_SIGNAL_ANALYSIS = True  # write permutation/sensitivity outputs for Results figures and tables
-SIGNAL_ANALYSIS_OUTDIR = "results_signal"
-SIGNAL_ANALYSIS_MAX_BATCHES = None  # set to an int for a faster dry-run
-MAX_SPARSE_TOKENS = 256 # cap HABE sparse SNP tokens to avoid quadratic attention blowups
-# Reweight loss toward under-represented environments/populations
-USE_ENV_WEIGHTED_LOSS = True
-POP_LOSS_BOOST = 0.0
-# Number of distinct (location, year) pairs; set after env data is loaded.
-NUM_ENVIRONMENTS = 9
-ENV_PAIR_TO_ID: Dict[Tuple[int, int], int] = {}
-ENV_PAIR_LUT: Optional[np.ndarray] = None
-
-
-# Critical features
-CRITICAL_ENV_FEATURES = ['daylength_h', 'tmax_C', 'tmin_C', 'precip_mm', 'gdd', 'vpd_kPa', 'srad_allsky']
-ENV_DERIVED_FEATURES = [
-    "photo_temp",
-    "cum_gdd",
-    "cum_ptu",
-    "heat_hdd",
-    "cold_cdd",
-    "drought_vpd",
-]
-ENV_STAGE_METRICS = [
-    "gdd_sum",
-    "heat_hdd_sum",
-    "vpd_mean",
-]
-N_ENV_FEATURES_PER_MONTH = (
-    len(CRITICAL_ENV_FEATURES)
-    + (len(ENV_DERIVED_FEATURES) if ENV_ENGINEERED_FEATURES else 0)
-    + (len(ENV_STAGE_METRICS) * 3 if (ENV_ENGINEERED_FEATURES and ENV_STAGE_SUMMARIES) else 0)
-)
-
-
-# ---------------------------
-# Logging
-# ---------------------------
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[logging.StreamHandler(), logging.FileHandler("train_chromomap.log")]
-)
-
-def set_seed(seed: int = 42):
-    import random
-    random.seed(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
-
-set_seed(SEED)
+def _build_env_lookup(meta: pd.DataFrame, metadata_key_col: str) -> pd.DataFrame:
+    """
+    Build a deduplicated mapping from metadata keys to location/year codes.
+    """
+    try:
+        env_map = meta.set_index(metadata_key_col)[["Location_Code", "Year_Code"]]
+        env_map = env_map.groupby(level=0, sort=False).first()
+    except Exception:
+        env_map = pd.DataFrame(columns=["Location_Code", "Year_Code"])
+    return env_map
 
 
 def _build_env_index_map(
@@ -397,6 +147,34 @@ def _to_int_scalar(x, default=0):
         return int(x)
     except Exception:
         return int(default)
+
+
+def _canonicalize_location_name(value: Any) -> str:
+    """
+    Normalize known spelling variants so metadata/env join keys stay aligned.
+    """
+    alias_map = {
+        "pathancheru": "Pathancheru",
+        "patancheru": "Pathancheru",
+        "patancheruvu": "Pathancheru",
+    }
+    text = str(value).strip()
+    key = "".join(ch for ch in text.lower() if ch.isalnum())
+    return alias_map.get(key, text)
+
+
+def _normalize_location_column(df: pd.DataFrame, frame_name: str) -> None:
+    """
+    Apply canonical location naming in-place and log replacement counts.
+    """
+    if "Location" not in df.columns:
+        return
+    before = df["Location"].astype(str).str.strip()
+    after = before.map(_canonicalize_location_name)
+    replaced = int((before != after).sum())
+    if replaced > 0:
+        logging.info("Normalized %d location aliases in %s.", replaced, frame_name)
+    df["Location"] = after
 
 
 def _safe_param_count(model: nn.Module) -> int:
@@ -595,25 +373,25 @@ def diagnose_cv_leakage(meta, metadata_key_col, sample_key_to_sid, all_ids, CV_F
         print(f"  Test:  {len(te_ids)} samples, {len(te_genos)} unique genotypes")
         if leaked_genos:
             total_leakage += len(leaked_genos)
-            print(f"  LEAKAGE: {len(leaked_genos)} genotypes ({leakage_pct:.1f}%) appear in both train and test")
+            print(f"  Ã¢Å¡ Ã¯Â¸Â  LEAKAGE: {len(leaked_genos)} genotypes ({leakage_pct:.1f}%) appear in both train and test")
             print(f"      Example leaked genotypes: {list(leaked_genos)[:3]}")
         if leaked_samples:
-            print(f"  SAMPLE OVERLAP: {len(leaked_samples)} samples appear in both train and test")
+            print(f"  Ã¢Å¡ Ã¯Â¸Â  SAMPLE OVERLAP: {len(leaked_samples)} samples appear in both train and test")
             print(f"      Example overlapping samples: {list(leaked_samples)[:3]}")
         if not leaked_genos and not leaked_samples:
-            print("  NO LEAKAGE (test uses unseen genotypes)")
+            print(" âœ“ NO LEAKAGE (test uses unseen genotypes)")
         print()
 
     print("=" * 80)
     if total_leakage > 0:
-        print(f"PROBLEM FOUND: {total_leakage} total genotype leakages across folds")
+        print(f"Ã¢ÂÅ’ PROBLEM FOUND: {total_leakage} total genotype leakages across folds")
         print(
-            "  Validation few points may overstate generalization because genotypes reoccur."
+            "  Ã¢â‚¬Â¢ Validation few points may overstate generalization because genotypes reoccur."
             "   Use genotype-based CV with strict grouping."
         )
         return True
     else:
-        print("No genotype leakage detected. CV split looks clean.")
+        print("âœ“â€œ No genotype leakage detected. CV split looks clean.")
         print("If validation >> test performance, inspect environment/test distribution mismatch.")
         return False
 
@@ -677,7 +455,7 @@ def diagnose_and_fix_cv_split(
         val_ids_list.append(val_ids)
         print(f"  Fold {fold_num}: {len(tr_ids)} train / {len(val_ids)} val / {len(te_ids)} test (all genotypes disjoint)")
 
-    print("\nGenotype-based CV ready (no leakage). Validation R2 will drop but match test R2.")
+    print("\nâœ“â€œ Genotype-based CV ready (no leakage). Validation RÂ² will drop but match test RÂ².")
     return train_ids_list, val_ids_list, corrected_splits
 
 
@@ -870,8 +648,321 @@ def check_cv_fold_overlap(
             )
         seen_test.update(te_set)
         seen_val.update(val_set)
+# ---------------------------
+# CONFIG
+# ---------------------------
+METADATA_FILE = os.environ.get("ECOPOP_METADATA_FILE", "/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Demo/input_files/Genotype/Axiom_genotype/D3/Phenotype/Phenotype_files/seed_weight_mean.txt")
+ENVIRONMENT_FILE = os.environ.get("ECOPOP_ENVIRONMENT_FILE", "/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Demo/input_files/Environment/D3/d3_env_matrix_SW.csv")
 
-        
+TARGET_COL = os.environ.get("ECOPOP_TARGET_COL", "SW")
+
+# ---- Opt-in multi-trait auxiliary learning (hard parameter sharing) ----
+# When ECOPOP_AUX_TARGETS is unset, AUX_TARGETS == [] and USE_AUX is False, so the
+# engine is byte-identical to single-trait training: no aux heads are built, the
+# aux-loss guard in train_epoch_regularized is skipped, and n_aux_targets=0 is passed
+# to every model. Only TARGET_COL is ever evaluated/reported; aux traits are an extra
+# training signal and are NEVER fed as model input.
+AUX_TARGETS = [c.strip() for c in os.environ.get("ECOPOP_AUX_TARGETS", "").split(",") if c.strip()]
+AUX_PHENO_PATH = os.environ.get("ECOPOP_AUX_PHENO", METADATA_FILE)
+AUX_LOSS_WEIGHT = float(os.environ.get("ECOPOP_AUX_WEIGHT", "0.2"))
+USE_AUX = len(AUX_TARGETS) > 0
+
+# Training hyperparameters
+BATCH_SIZE = 16
+NUM_EPOCHS = 200
+LEARNING_RATE = 5e-4
+PRETRAIN_GENOMIC_SIMCLR = False   # self-supervised genomic contrastive pretrain before supervision
+SIMCLR_EPOCHS = 15
+SIMCLR_LR = 3e-4
+SIMCLR_TEMP = 0.1
+SIMCLR_TOKEN_DROP = 0.2
+SIMCLR_FEATURE_NOISE = 0.01
+SIMCLR_USE_VICREG = False  # use VICReg loss (better for small batches); if False, use SimCLR
+
+# Residual-focus two-stage training (main effects -> GxE residuals)
+USE_RESIDUAL_FOCUS_ARCH = False
+RESIDUAL_GATE_INIT = 0.01
+MAIN_HEAD_DROPOUT = 0.15
+INTERACTION_HEAD_DROPOUT = 0.35
+DISTANCE_LOG1P = True  # set False if te_dist/gene_dist already log-scaled
+USE_ENV_ANOMALIES = True  # use env deltas from mean in GxE interaction path
+STAGE2_LEARNING_RATE = 5e-5
+MAIN_WEIGHT_DECAY = float(os.environ.get("ECOPOP_WEIGHT_DECAY", "0.02"))  # [EXP] lower to fix underfit on small/structured data
+GXE_WEIGHT_DECAY = 0.1    # Stage 2: stronger regularization for GxE residuals
+
+GXE_DROPOUT = float(os.environ.get("ECOPOP_GXE_DROPOUT", "0.4"))  # [EXP] lower to fix underfit on small/structured data
+
+SEED = int(os.environ.get("ECOPOP_SEED", "20"))
+USE_HABE = os.environ.get("ECOPOP_USE_HABE", "1") == "1"  # [EXP] -HABE ablation
+USE_POPULATION_EMBEDDING = os.environ.get("ECOPOP_USE_POP", "1") == "1"  # [EXP] -Population ablation
+ABLATE_WEATHER = os.environ.get("ECOPOP_ABLATE_WEATHER", "0") == "1"  # [EXP] -Weather ablation
+ENV_WINDOW_FRACTION = float(os.environ.get("ECOPOP_ENV_WINDOW_FRAC", "1.0"))  # [EXP] early-selection partial season
+ENV_BLOCKED_MODES = [m.strip() for m in os.environ.get("ECOPOP_ENV_BLOCKED_MODES", "year,location,loc_year").split(",") if m.strip()]
+def _ecopop_env_hook(_e):
+    """[EXP] apply weather ablation / partial-season truncation to an env time-series tensor."""
+    try:
+        if ABLATE_WEATHER:
+            return torch.zeros_like(_e)
+        if ENV_WINDOW_FRACTION < 1.0 and hasattr(_e, "dim") and _e.dim() >= 1 and _e.shape[0] > 1:
+            _k = max(1, int(round(ENV_WINDOW_FRACTION * _e.shape[0])))
+            if _k < _e.shape[0]:
+                _e = _e.clone(); _e[_k:] = 0.0
+    except Exception:
+        pass
+    return _e
+STANDARDIZE_TARGET = True     # standardize target using train-set mean/std for stability
+USE_ENV_ZSCORE = os.environ.get("ECOPOP_USE_ENV_ZSCORE", "0") == "1"
+LR_WARMUP_EPOCHS = 5          # epochs used to linearly warm up the LR
+LR_MIN_LR_FACTOR = 0.1         # cosine decay will anneal towards base_lr * LR_MIN_LR_FACTOR
+USE_SNAPSHOT_ENSEMBLE = False  # snapshot ensembling with cyclical LR
+SNAPSHOT_CYCLES = 3
+SNAPSHOT_DIR = "snapshots"
+LOSS_FUNCTION = "huber"       # choose between "mse", "huber", "quantile"
+HUBER_DELTA = 1.0
+QUANTILE_ALPHA = 0.5
+SNAPSHOT_CYCLE_LENGTH = 0  # disable snapshot ensembling; keep only the best model
+
+MIXUP_ALPHA = 0.0              # alpha hyperparameter for genomic+env mixup augmentation (0=off)
+USE_CHR_POOLING = True        # optional per-chromosome window pooling for tensor inputs (preserves chromosome axis)
+CHR_POOL_WINDOW = 1000          # window size (tokens) when USE_CHR_POOLING is enabled
+USE_TOKEN_DROPOUT = False     # set True to apply token-dropout augmentation on genomic tensors during training
+TOKEN_DROPOUT_P = 0.10
+TOKEN_DROPOUT_KEEP_FIRST = False
+USE_CHANNEL_DROPOUT = False     # set True to apply structured feature/channel dropout during training
+CHANNEL_GROUP_DROP_P = 0.20
+CHANNEL_DROP_P = 0.0
+ENV_MOD_DROPOUT_P = 0.0         # probability to drop env modulation (zero env_ts) during training
+USE_BLOCK_MASKING = False       # set True to apply CutMix-style contiguous masking per chromosome
+BLOCK_MASK_P_APPLY = 0.8
+BLOCK_MASK_FRAC_RANGE = (0.05, 0.15)
+BLOCK_MASK_NUM_BLOCKS = 1
+BLOCK_MASK_MIN_TOKENS = 16
+BLOCK_MASK_MIN_KEEP_TOTAL = None  # None -> defaults to max(64, 2% of C*T)
+BLOCK_MASK_KEEP_FIRST = False
+BLOCK_MASK_CHR_MODE = "proportional"  # "proportional" or "uniform"
+# Optional additional downsampling inside ChromoAwareTransformer for very long sequences (tensor model)
+CHR_DOWNSAMPLE_STRIDE = 2
+CHR_DOWNSAMPLE_KERNEL = None
+USE_DUAL_BRANCH_MODEL = True   # enable additive+interaction fusion wrapper (helps across simple/complex traits)
+ADDITIVE_BRANCH_HIDDEN = 128
+DUAL_GATE_HIDDEN = 32
+DUAL_GATE_DROPOUT = 0.1
+USE_DOSAGE_BRANCH = os.environ.get("ECOPOP_USE_ADDITIVE", "1") == "1"
+DOSAGE_SOURCE = "plink"       # "tensor" (from Chromomap channel) or "plink" (from PLINK SNP matrix)
+USE_DOSAGE_PCA = False        # False => use flattened dosage (all SNP positions) without PCA projection in dosage branch
+DOSAGE_BRANCH_HIDDEN = 128
+DOSAGE_GATE_HIDDEN = 32
+DOSAGE_GATE_DROPOUT = 0.3
+DOSAGE_PCA_COMPONENTS_PATH = None  # npy path with PCA components [n_components, n_snps] (optional; used when USE_DOSAGE_PCA=True)
+DOSAGE_PCA_MEAN_PATH = None       # npy path with per-SNP mean used for PCA/standardization
+DOSAGE_PCA_STD_PATH = None        # npy path with per-SNP std
+DOSAGE_PCA_CENTER = True
+DOSAGE_PCA_SCALE = True
+DOSAGE_BLEND_PRIOR = 0.8        # initial bias toward dosage path for learnable gate
+_ECOPOP_DW = str(os.environ.get("ECOPOP_DOSAGE_WEIGHT", "0.8")).strip().lower()
+# [EXP] fixed numeric weight on the dosage/additive path, OR one of
+# "learn"/"val"/"cv"/"auto"/"gate"/"none"/"" to let the model's learnable dual-branch gate
+# choose the additive-vs-DL combination end-to-end (self-adjusting, no hand-picking).
+#
+# NOTE: a post-hoc "select the blend weight on each fold's VALIDATION split" probe was RETIRED.
+# In env-CV the environment is held out but genotypes overlap train/val/test, so the additive
+# branch looks excellent on validation (same genotypes) and then collapses on the held-out
+# environment. Discrete val-selection therefore lands on the degenerate pure-additive endpoint
+# (w->1.0), which extrapolates catastrophically on TEST (observed R2 ~ -2.4). The jointly-trained
+# gate blends smoothly and never makes that discrete jump, so it is the robust automated blend.
+USE_VAL_BLEND = False                     # retired; kept False so the dormant probe path is never taken
+DOSAGE_FIXED_WEIGHT = None if _ECOPOP_DW in ("learn", "val", "valblend", "val_blend", "cv", "none", "auto", "gate", "") else float(_ECOPOP_DW)
+# Aliases for quick copy/paste (matches doc names)
+DOSAGEPCACOMPONENTSPATH = DOSAGE_PCA_COMPONENTS_PATH
+DOSAGEPCAMEANPATH = DOSAGE_PCA_MEAN_PATH
+DOSAGEPCASTDPATH = DOSAGE_PCA_STD_PATH
+DOSAGEFIXEDWEIGHT = DOSAGE_FIXED_WEIGHT
+
+# Sequence sizes
+# Transformer sizes
+EMBED_DIM = 128
+NUM_HEADS = 4
+NUM_TRANSFORMER_LAYERS = 2
+FF_DIM = 512
+
+# Dataloader
+NUM_WORKERS = 8
+EARLY_STOP_PATIENCE = 20
+EARLY_STOP_MIN_DELTA = 1e-3
+USE_CV = True         # if True, run K-fold CV instead of single train/val/test
+# CV mode selection (use at most one of the two specialized modes)
+USE_GENOTYPE_CV = True  # group CV by genotype (SampleID) = untested genotypes across folds
+EVAL_TIER_MODE = os.environ.get("ECOPOP_EVAL_MODE", "within_genotype_env_holdout")
+WITHIN_GENO_TEST_FRAC = 0.3
+WITHIN_GENO_VAL_FRAC = 0.3
+WITHIN_GENO_MIN_TEST = 1
+WITHIN_GENO_MIN_TRAIN = 1
+WITHIN_GENO_SEED_OFFSET = 100
+CV_FOLDS = int(os.environ.get("ECOPOP_CV_FOLDS", "4"))
+SAVE_FOLD_PREDICTIONS = True  # save per-fold GEBVs when running CV
+EXPORT_EMBEDDINGS = True     # if True, export penultimate embeddings on test set
+RUN_EMBED_PLOTS = True      # if True, run t-SNE plots on exported embeddings
+EMBEDDING_VIEWS = ("fused", "genomic", "pop", "loc", "year")  # which embeddings to plot
+TSNE_EMBEDDING_VIEWS = ("genomic", "pop", "loc", "year")  # which embeddings to t-SNE
+BOXPLOT_TRIM = False        # if True, trim trait values outside boxplot whiskers
+BOXPLOT_WHISKER_K = 5.0     # whisker multiplier (1.5=default Tukey)
+BOXPLOT_SAVE_PATH = "trait_boxplot.png"    # set to a path (e.g., "trait_boxplot.png") to save boxplot
+# Environment feature engineering
+USE_ENV_PCA = False
+ENV_PCA_COMPONENTS = 10
+USE_ENV_MATRIX_AS_MLP = False  # use baseline wide env matrix via MLP instead of temporal encoder
+TRAIT_MODE = "complex"  # "complex" = ChromoMap tensors, "simple" = raw genotype vectors
+GENO_SOURCE = "plink"  # "plink" or "vcf"
+PLINK_PREFIX = os.environ.get("ECOPOP_PLINK_PREFIX", "/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Demo/input_files/Genotype/Axiom_genotype/D3/Genotype_files/Genotype/imp.qc.all.clean")
+VCF_PATH = "/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Demo/input_files/Genotype/Axiom_genotype/D3/Genotype_files/Genotype/imp.qc.all.clean.vcf"
+SIMPLE_GENO_PCA = True
+SIMPLE_GENO_N_PCS = 300
+SIMPLE_GENO_STANDARDIZE = True
+
+# Temporal environmental encoding
+USE_TEMPORAL_ENV_ENCODING = True
+USE_ENV_RESIDUAL_TRAINING = False  # train gxetensor on env-only residuals (y - y_env)
+N_MONTHS = int(os.environ.get("ECOPOP_N_MONTHS", "32"))
+ENV_ENGINEERED_FEATURES = True
+ENV_STAGE_SUMMARIES = True
+ENV_HIDDEN_DIM = 32
+ENV_LSTM_LAYERS = 2
+ENV_ENCODER_TYPE = "lstm"  # "lstm", "tcn", or "pyramid"
+ENV_CONV_CHANNELS = 64
+ENV_CONV_LAYERS = 2
+ENV_CONV_KERNEL = 3
+ENV_PYRAMID_SCALES = [1, 2, 4]
+ENV_PYRAMID_LAYERS = 2
+ENV_PERTURB_SIGMA = 0.01  # Gaussian noise scale (fraction of per-feature std) applied during training
+# Cache preprocessed temporal env tensors to skip recomputation on every run
+USE_ENV_CACHE = False
+ENV_CACHE_FILE = "env_temporal_cache.npz"
+# When True, fail fast if any sample is missing temporal weather data instead of silently
+# feeding zeros (which makes the model ignore environment signals).
+ENV_LOOKUP_FAIL_ON_MISSING = os.environ.get("ECOPOP_ENV_FAIL_MISSING", "0") == "1"
+
+# Location and year
+N_LOCATIONS = 6
+N_YEARS = 2
+LOCATION_EMBED_DIM = 7
+YEAR_EMBED_DIM = 3
+
+# Population structure
+N_POPULATIONS = 10
+POP_EMBED_DIM = 11
+POP_EMBED_WEIGHT_DECAY = 1.0
+METADATA_WEIGHT_DECAY = 1.0 # stronger L2 for loc/year + metadata FiLM modules
+INTERACTION_REG_LAMBDA = 0.05
+LRBI_RANK = 16  # low-rank bilinear interaction rank (0 disables LRBI)
+USE_GXE_MOE = False  # population-specific mixture of experts for GxE interaction head
+GXE_MOE_NUM_EXPERTS = 3
+GXE_MOE_HIDDEN_DIM = 32
+GXE_MOE_TEMPERATURE = 1.0
+USE_ENV_FILM = True  # FiLM-style env modulation inside the hierarchical genomic encoder
+USE_ENV_POOL_BIAS = True  # Env-conditioned attention bias during pooling for gxetensor
+USE_META_FILM = False  # FiLM-style metadata modulation (loc/year/pop) on genomic tokens for gxetensor
+META_FILM_SCALE = 0.1  # keep metadata FiLM subtle to avoid overfitting sparse groups
+USE_BIOLOGICAL_AWARE_EMBEDDING = os.environ.get("ECOPOP_USE_BAE", "1") == "1"
+USE_DOSAGE_ANNOT_CHANNELS = False # derive dosage*annotation channels at load time
+# Opt-in functional-SNP prioritization for the ADDITIVE/dosage branch: restrict the PLINK
+# dosage to genic (functional) SNPs. This drops non-functional (intergenic/TE) SNPs that add
+# noise, helping gene-concentrated traits (e.g. seed weight); neutral for diffuse traits.
+# The ChromoTensor (structural + annotation channels, incl. BAE) is UNAFFECTED. This replaces
+# redundant annotation *weighting* with annotation-based *selection*. Unset -> no filter.
+_ECOPOP_GENIC = os.environ.get("ECOPOP_ADDITIVE_GENIC_IDS", "").strip()
+_GENIC_SNP_IDS: Set[str] = set()
+if _ECOPOP_GENIC:
+    try:
+        _GENIC_SNP_IDS = {ln.strip() for ln in open(_ECOPOP_GENIC) if ln.strip()}
+        print(f"[GENIC] additive-branch functional-SNP prioritization: {len(_GENIC_SNP_IDS)} genic SNP IDs loaded.", flush=True)
+    except Exception as _e:
+        print(f"[GENIC] failed to load ECOPOP_ADDITIVE_GENIC_IDS={_ECOPOP_GENIC} ({_e}); no filter applied.", flush=True)
+MAX_SPARSE_TOKENS = 256  # cap HABE sparse SNP tokens to avoid quadratic attention blowups
+# Reweight loss toward under-represented environments/populations
+USE_ENV_WEIGHTED_LOSS = False
+POP_LOSS_BOOST = 0.0
+# Number of distinct (location, year) pairs; set after env data is loaded.
+NUM_ENVIRONMENTS = 11
+ENV_PAIR_TO_ID: Dict[Tuple[int, int], int] = {}
+ENV_PAIR_LUT: Optional[np.ndarray] = None
+# Runtime cache for optional PLINK-driven dosage branch override in tensor/complex mode.
+DOSAGE_OVERRIDE_ENABLED = False
+DOSAGE_OVERRIDE_MAP: Dict[str, np.ndarray] = {}
+DOSAGE_OVERRIDE_DIM = 0
+DOSAGE_OVERRIDE_SAMPLE_TO_SID: Dict[str, str] = {}
+_DOSAGE_OVERRIDE_MISSING_WARNED = False
+# Adversarial environment invariance (GRL on genomic branch)
+USE_ENV_ADVERSARY = False
+ENV_ADVERSARY_WEIGHT = 0.05
+ENV_ADVERSARY_WARMUP_EPOCHS = 40
+ENV_ADVERSARY_MAX_ALPHA = 1.0
+
+# Critical features
+CRITICAL_ENV_FEATURES = ['daylength_h', 'tmax_C', 'tmin_C', 'precip_mm', 'gdd', 'vpd_kPa', 'srad_allsky']
+# [ENV-ENRICH] optional extra per-window environmental variables (soil moisture,
+# evapotranspiration, water balance) supplied by an enriched environment matrix.
+# These are NOT derivable from the SNP array, so they are not subject to the SNP
+# information ceiling. Off by default; enable with e.g.
+#   ECOPOP_ENV_EXTRA_FEATURES=gwetroot,gwettop,et_mm,wbal_mm
+# together with ECOPOP_ENVIRONMENT_FILE pointing at the enriched matrix.
+_ECOPOP_ENV_EXTRA = os.environ.get("ECOPOP_ENV_EXTRA_FEATURES", "").strip()
+if _ECOPOP_ENV_EXTRA:
+    _extra = [f.strip() for f in _ECOPOP_ENV_EXTRA.split(",") if f.strip()]
+    _extra = [f for f in _extra if f not in CRITICAL_ENV_FEATURES]
+    CRITICAL_ENV_FEATURES = CRITICAL_ENV_FEATURES + _extra
+    print(f"[ENV-ENRICH] added {len(_extra)} extra env features: {_extra}", flush=True)
+ENV_DERIVED_FEATURES = [
+    "photo_temp",
+    "cum_gdd",
+    "cum_ptu",
+    "heat_hdd",
+    "cold_cdd",
+    "drought_vpd",
+]
+ENV_STAGE_METRICS = [
+    "gdd_sum",
+    "heat_hdd_sum",
+    "vpd_mean",
+]
+N_ENV_FEATURES_PER_MONTH = (
+    len(CRITICAL_ENV_FEATURES)
+    + (len(ENV_DERIVED_FEATURES) if ENV_ENGINEERED_FEATURES else 0)
+    + (len(ENV_STAGE_METRICS) * 3 if (ENV_ENGINEERED_FEATURES and ENV_STAGE_SUMMARIES) else 0)
+)
+
+# Model (gxetensor only)
+
+# Combined hierarchical tensors (Chromomap 2D layout; single NPZ per sample)
+USE_GENOMIC_TENSORS = True
+TENSOR_DIR = os.environ.get("ECOPOP_TENSOR_DIR", "/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Demo/Chromomap/images_AF_combined_d3_allele_comb_xyz_te_new_snp_rep_/tensors")
+if not USE_GENOMIC_TENSORS:
+    raise RuntimeError("Tile/PNG loaders have been removed. Set USE_GENOMIC_TENSORS=True and provide tensor NPZs.")
+
+# Optional TE sub-type channels (e.g., te_gypsy, te_copia) if present in NPZ
+USE_TE_SUBTYPE_FEATURES = False
+# Multi-environment flag (True = multiple rows per SampleID; False = single env row per SampleID)
+MULTI_ENV = True
+# ---------------------------
+# Logging
+# ---------------------------
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[logging.StreamHandler(), logging.FileHandler("train_chromomap.log")]
+)
+
+def set_seed(seed: int = 42):
+    import random
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
+set_seed(SEED)
+
 class WarmupCosineScheduler:
     """Linear warmup followed by cosine decay (epoch-based)."""
 
@@ -1142,7 +1233,7 @@ def concordance_correlation_coefficient(y_true: np.ndarray, y_pred: np.ndarray) 
     mean_pred = float(np.mean(y_pred))
     var_true = float(np.var(y_true))
     var_pred = float(np.var(y_pred))
-    cov = float(np.cov(y_true, y_pred)[0, 1])
+    cov = float(np.cov(y_true, y_pred, ddof=0)[0, 1])  # ddof=0 to match np.var (population) — CCC denominator consistency
     denom = var_true + var_pred + (mean_true - mean_pred) ** 2
     if denom <= 0:
         return float("nan")
@@ -1160,6 +1251,25 @@ def _r2_from_lists(y_true_list: List[float], y_pred_list: List[float]) -> Option
     return r2_score(y_true, y_pred)
 
 
+def residual_variance_ceiling(y_true: np.ndarray, y_pred: np.ndarray) -> float:
+    """
+    Approximate trait ceiling from predictions:
+      ceiling ~= 1 - Var(residual) / Var(y_true)
+    where residual = y_true - y_pred.
+    """
+    y_true = np.asarray(y_true, dtype=float)
+    y_pred = np.asarray(y_pred, dtype=float)
+    y_true, y_pred = _filter_finite_pairs(y_true, y_pred)
+    if y_true.size < 2:
+        return float("nan")
+    var_y = float(np.var(y_true))
+    if var_y <= 1e-12:
+        return float("nan")
+    residual = y_true - y_pred
+    var_res = float(np.var(residual))
+    return float(1.0 - (var_res / var_y))
+
+
 def _compute_target_scaler(meta_df: pd.DataFrame, sample_keys: List[str], key_col: str) -> Tuple[float, float]:
     """
     Compute mean/std of target column over the provided sample keys (train split).
@@ -1174,6 +1284,56 @@ def _compute_target_scaler(meta_df: pd.DataFrame, sample_keys: List[str], key_co
     std = float(series.std(ddof=0))
     std = std if std > 1e-8 else 1.0
     return mean, std
+
+
+def _build_aux_target_lookup(
+    aux_source: Optional[pd.DataFrame],
+    train_keys: List[str],
+    all_keys: List[str],
+    key_col: str,
+    aux_cols: List[str],
+) -> Dict[str, List[float]]:
+    """
+    Build {sample_key -> [K standardized aux-trait values]} for opt-in multi-trait MTL.
+    Per-trait mean/std are computed on TRAIN keys ONLY (per fold / per split), mirroring
+    _compute_target_scaler (ddof=0, std floor 1e-8), so no aux-trait test info leaks.
+    Missing trait values are stored as NaN and masked out of the aux loss.
+    """
+    if aux_source is None or not aux_cols:
+        return {}
+    src = aux_source.drop_duplicates(subset=[key_col], keep="first")
+    key_str = src[key_col].astype(str)
+    col_maps: Dict[str, Dict[str, float]] = {}
+    for col in aux_cols:
+        if col in src.columns:
+            vals = pd.to_numeric(src[col], errors="coerce")
+        else:
+            vals = pd.Series([np.nan] * len(src), index=src.index)
+        col_maps[col] = dict(zip(key_str, vals))
+    train_set = {str(k) for k in train_keys}
+    stats: List[Tuple[float, float]] = []
+    for col in aux_cols:
+        cmap = col_maps[col]
+        tvals = [float(v) for k, v in cmap.items() if k in train_set and pd.notna(v)]
+        if not tvals:
+            stats.append((0.0, 1.0))
+        else:
+            arr = np.asarray(tvals, dtype=float)
+            mean = float(arr.mean())
+            std = float(arr.std(ddof=0))
+            stats.append((mean, std if std > 1e-8 else 1.0))
+    lookup: Dict[str, List[float]] = {}
+    for key in dict.fromkeys(str(k) for k in all_keys):
+        vec: List[float] = []
+        for j, col in enumerate(aux_cols):
+            raw = col_maps[col].get(key, np.nan)
+            if raw is None or pd.isna(raw):
+                vec.append(float("nan"))
+            else:
+                mean, std = stats[j]
+                vec.append((float(raw) - mean) / std)
+        lookup[key] = vec
+    return lookup
 
 
 def _build_env_target_stats(
@@ -1373,7 +1533,7 @@ def fit_env_main_effects(
         idx = key_to_idx.get(str(k))
         if idx is None or idx >= len(temporal):
             continue
-        x = temporal[idx].reshape(-1)  # flatten months x features
+        x = temporal[idx].reshape(-1)  # flatten months Ãƒâ€” features
         y_val = pd.to_numeric(meta_df.loc[meta_df[key_col].astype(str) == str(k), TARGET_COL], errors="coerce")
         if y_val.empty:
             continue
@@ -1418,7 +1578,7 @@ def log_population_r2(predictions: List[Dict[str, float]], sample_to_pop: Dict[s
             continue
         entries.append(f"pop_{pop}: R2={r2_score(rec['true'], rec['pred']):.4f} (n={len(rec['pred'])})")
     if entries:
-        logging.info(f"{context}Cross-population R2 -> " + " | ".join(entries))
+        logging.info(f"{context}Cross-population RÂ² -> " + " | ".join(entries))
 
 
 class GxE_FusionHead(nn.Module):
@@ -1708,6 +1868,12 @@ def load_genotypes_plink(prefix: str) -> Tuple[np.ndarray, List[str]]:
     bim, fam, bed = read_plink(prefix, verbose=False)
     X = bed.compute().T  # [samples, snps]
     ids = fam["iid"].astype(str).tolist()
+    if _GENIC_SNP_IDS:  # functional-SNP prioritization (additive/dosage branch only)
+        snp_ids = bim["snp"].astype(str).tolist()
+        keep = [j for j, s in enumerate(snp_ids) if s in _GENIC_SNP_IDS]
+        if 0 < len(keep) < X.shape[1]:
+            X = X[:, keep]
+            print(f"[GENIC] additive branch restricted to {len(keep)}/{len(snp_ids)} genic SNPs.", flush=True)
     return X.astype(float), ids
 
 
@@ -2034,8 +2200,7 @@ class ChromomapTensorDataset(Dataset):
         if isinstance(meta_row, pd.DataFrame):
             meta_row = meta_row.iloc[0]
         pop_val = meta_row.get("PopID", meta_row.get("Pop_Code", 0))
-        pop_code = 0 if not USE_POPULATION_EMBEDDING else _to_int_scalar(pop_val, default=0)
-        pop_tensor = torch.tensor(pop_code, dtype=torch.long)
+        pop_tensor = torch.tensor(_to_int_scalar(pop_val, default=0) if USE_POPULATION_EMBEDDING else 0, dtype=torch.long)
 
         # Target
         target_val = meta_row.get(self.target_col, np.nan)
@@ -2066,7 +2231,7 @@ class ChromomapTensorDataset(Dataset):
             genomic_tensor,
             mask_tensor,
             row_label_tensor,
-            env_ts_tensor,
+            _ecopop_env_hook(env_ts_tensor),
             loc_tensor,
             year_tensor,
             pop_tensor,
@@ -2159,8 +2324,7 @@ class RawGenoEnvDataset(Dataset):
         if isinstance(meta_row, pd.DataFrame):
             meta_row = meta_row.iloc[0]
         pop_val = meta_row.get("PopID", meta_row.get("Pop_Code", 0))
-        pop_code = 0 if not USE_POPULATION_EMBEDDING else _to_int_scalar(pop_val, default=0)
-        pop_tensor = torch.tensor(pop_code, dtype=torch.long)
+        pop_tensor = torch.tensor(_to_int_scalar(pop_val, default=0) if USE_POPULATION_EMBEDDING else 0, dtype=torch.long)
 
         target_val = meta_row.get(self.target_col, np.nan)
         if isinstance(target_val, pd.Series):
@@ -2182,7 +2346,7 @@ class RawGenoEnvDataset(Dataset):
 
         return (
             geno_tensor,
-            env_ts_tensor,
+            _ecopop_env_hook(env_ts_tensor),
             loc_tensor,
             year_tensor,
             pop_tensor,
@@ -2536,6 +2700,41 @@ def _forward_maybe_row_labels(model, args, kwargs, row_labels):
         return model(*args, **kwargs)
 
 
+def _build_dosage_override_batch(sample_keys, device: torch.device) -> Optional[torch.Tensor]:
+    """
+    Build [B, P] PLINK dosage vectors for a tensor batch when DOSAGE_SOURCE='plink'.
+    Returns None when override is disabled/unavailable.
+    """
+    global _DOSAGE_OVERRIDE_MISSING_WARNED
+    if not DOSAGE_OVERRIDE_ENABLED or not DOSAGE_OVERRIDE_MAP:
+        return None
+    if sample_keys is None:
+        return None
+    rows: List[np.ndarray] = []
+    missing: List[str] = []
+    for key in sample_keys:
+        key_str = str(key)
+        sid = str(DOSAGE_OVERRIDE_SAMPLE_TO_SID.get(key_str, key_str))
+        vec = DOSAGE_OVERRIDE_MAP.get(sid)
+        if vec is None:
+            missing.append(sid)
+            if DOSAGE_OVERRIDE_DIM <= 0:
+                return None
+            vec = np.zeros((DOSAGE_OVERRIDE_DIM,), dtype=np.float32)
+        rows.append(np.asarray(vec, dtype=np.float32))
+    if not rows:
+        return None
+    if missing and not _DOSAGE_OVERRIDE_MISSING_WARNED:
+        logging.warning(
+            "Missing PLINK dosage vectors for %d samples (examples=%s); filling with zeros.",
+            len(missing),
+            missing[:3]
+        )
+        _DOSAGE_OVERRIDE_MISSING_WARNED = True
+    arr = np.stack(rows, axis=0).astype(np.float32, copy=False)
+    return torch.from_numpy(arr).to(device=device)
+
+
 def _pool_tokens_windowed(seq: torch.Tensor, mask: torch.Tensor, window_size: int):
     """
     Pool a single chromosome strip [B, T, F] into windows, returning pooled tokens and mask.
@@ -2802,7 +3001,7 @@ def train_epoch(
         sample_weights: Optional[torch.Tensor] = None
         if len(batch) != 9:
             raise RuntimeError(f"Unexpected batch length {len(batch)} in train_epoch")
-        genomic, masks, row_labels, env_ts, loc_ids, year_ids, pop_ids, targets, _ = batch
+        genomic, masks, row_labels, env_ts, loc_ids, year_ids, pop_ids, targets, sample_keys = batch
         genomic = genomic.to(device)
         masks = masks.to(device)
         row_labels = row_labels.to(device)
@@ -2865,6 +3064,9 @@ def train_epoch(
         if USE_ENV_ADVERSARY and hasattr(model, "environment_adversary"):
             adv_kwargs = {"adv_alpha": adv_alpha, "return_env_logits": True}
         adv_kwargs.update(_stage_kwargs(model, gxe_stage, return_components=residual_mode))
+        dosage_override = _build_dosage_override_batch(sample_keys, device)
+        if dosage_override is not None:
+            adv_kwargs["dosage_override"] = dosage_override
         out_raw = _forward_maybe_row_labels(
             model,
             (genomic, masks, env_ts, loc_ids, year_ids, pop_ids),
@@ -2932,7 +3134,9 @@ def train_epoch_regularized(
     gxe_stage: int = 0,
     residual_mode: bool = False,
     aux_dosage_w: float = 0.0,
-    aux_complex_w: float = 0.0
+    aux_complex_w: float = 0.0,
+    aux_target_lookup: Optional[Dict[str, List[float]]] = None,
+    aux_loss_weight: float = 0.0
 ):
     """
     Training loop with optional mixup augmentation and L1 regularization to discourage overfitting.
@@ -2953,7 +3157,7 @@ def train_epoch_regularized(
         sample_weights: Optional[torch.Tensor] = None
         env_ids: Optional[torch.Tensor] = None
         if len(batch) == 9:
-            genomic, masks, row_labels, env_ts, loc_ids, year_ids, pop_ids, targets, _ = batch
+            genomic, masks, row_labels, env_ts, loc_ids, year_ids, pop_ids, targets, sample_keys = batch
             genomic = genomic.to(device)
             masks = masks.to(device)
             row_labels = row_labels.to(device)
@@ -3016,7 +3220,10 @@ def train_epoch_regularized(
             adv_kwargs = {}
             if USE_ENV_ADVERSARY and hasattr(model, "environment_adversary"):
                 adv_kwargs = {"adv_alpha": adv_alpha, "return_env_logits": True}
-            adv_kwargs.update(_stage_kwargs(model, gxe_stage, return_components=residual_mode))
+            adv_kwargs.update(_stage_kwargs(model, gxe_stage, return_components=(residual_mode or USE_AUX)))
+            dosage_override = _build_dosage_override_batch(sample_keys, device)
+            if dosage_override is not None:
+                adv_kwargs["dosage_override"] = dosage_override
             out_raw = _forward_maybe_row_labels(
                 model,
                 (genomic, masks, env_ts, loc_ids, year_ids, pop_ids),
@@ -3024,7 +3231,7 @@ def train_epoch_regularized(
                 row_labels
             )
         elif len(batch) == 7:
-            geno_vec, env_ts, loc_ids, year_ids, pop_ids, targets, _ = batch
+            geno_vec, env_ts, loc_ids, year_ids, pop_ids, targets, sample_keys = batch
             geno_vec = geno_vec.to(device)
             env_ts = env_ts.to(device)
             loc_ids = loc_ids.to(device)
@@ -3034,7 +3241,7 @@ def train_epoch_regularized(
             env_ids = _compute_env_ids(loc_ids, year_ids)
             sample_weights = _compute_sample_weights(env_ids, pop_ids)
             optimizer.zero_grad()
-            adv_kwargs = _stage_kwargs(model, gxe_stage, return_components=residual_mode)
+            adv_kwargs = _stage_kwargs(model, gxe_stage, return_components=(residual_mode or USE_AUX))
             out_raw = model(geno_vec, env_ts, loc_ids, year_ids, pop_ids, **adv_kwargs)
         else:
             raise RuntimeError(f"Unexpected batch length {len(batch)} in train_epoch_regularized")
@@ -3073,6 +3280,40 @@ def train_epoch_regularized(
                 loss_d = _reduce_loss(criterion(dos, targets), sample_weights)
                 loss_c = _reduce_loss(criterion(cx, targets), sample_weights)
                 main_loss = main_loss + aux_dosage_w * loss_d + aux_complex_w * loss_c
+        # Opt-in multi-trait auxiliary loss (hard parameter sharing). Fully no-op unless
+        # ECOPOP_AUX_TARGETS is set (USE_AUX) AND an aux map + positive weight were threaded
+        # in AND the model emitted 'aux_preds'. Aux targets are looked up by sample_keys
+        # (the metadata keys already carried in the batch) and are NEVER model input.
+        if (
+            USE_AUX
+            and aux_loss_weight > 0.0
+            and aux_target_lookup is not None
+            and not residual_mode
+            and meta_info
+            and "aux_preds" in meta_info
+        ):
+            aux_preds = meta_info["aux_preds"]
+            n_traits = aux_preds.shape[1]
+            aux_tgt = torch.full(
+                (aux_preds.shape[0], n_traits),
+                float("nan"),
+                device=aux_preds.device,
+                dtype=aux_preds.dtype,
+            )
+            for i, sk in enumerate(sample_keys):
+                vec = aux_target_lookup.get(str(sk))
+                if vec is not None:
+                    aux_tgt[i] = torch.as_tensor(vec, device=aux_preds.device, dtype=aux_preds.dtype)
+            aux_mask = torch.isfinite(aux_tgt)
+            if bool(aux_mask.any()):
+                sq_err = (aux_preds - torch.nan_to_num(aux_tgt, nan=0.0)) ** 2
+                sq_err = sq_err * aux_mask.to(sq_err.dtype)
+                per_trait_count = aux_mask.to(sq_err.dtype).sum(dim=0)
+                valid = per_trait_count > 0
+                if bool(valid.any()):
+                    per_trait_mse = sq_err.sum(dim=0)[valid] / per_trait_count[valid]
+                    aux_loss = per_trait_mse.mean()
+                    main_loss = main_loss + aux_loss_weight * aux_loss
         l1_loss = torch.tensor(0.0, device=device)
         if l1_weight > 0:
             for p in params_list:
@@ -3149,6 +3390,9 @@ def evaluate(
                 if use_chr_pool:
                     genomic, masks = pool_within_chromosomes(genomic, masks, window_size=CHR_POOL_WINDOW)
                 stage_kwargs = _stage_kwargs(model, gxe_stage, return_components=residual_mode)
+                dosage_override = _build_dosage_override_batch(sids, device)
+                if dosage_override is not None:
+                    stage_kwargs["dosage_override"] = dosage_override
                 out_raw = _forward_maybe_row_labels(
                     model,
                     (genomic, masks, env_ts, loc_ids, year_ids, pop_ids),
@@ -3288,6 +3532,7 @@ def _aggregate_snapshot_metrics(
 
 def train_and_eval_once(
     model,
+    train_eval_loader,
     train_loader,
     val_loader,
     test_loader,
@@ -3304,7 +3549,9 @@ def train_and_eval_once(
     snapshot_prefix: str = "snapshot",
     monitor_test: bool = False,
     gxe_stage: int = 0,
-    residual_mode: bool = False
+    residual_mode: bool = False,
+    aux_target_lookup: Optional[Dict[str, List[float]]] = None,
+    aux_loss_weight: float = 0.0
 ):
     """
     Runs a train/val loop with early stopping, returns dict of val/test metrics.
@@ -3335,9 +3582,18 @@ def train_and_eval_once(
             l1_weight=0.0,
             mixup_alpha=MIXUP_ALPHA,
             adv_alpha=adv_alpha,
-            gxe_stage=gxe_stage,
-            residual_mode=residual_mode
+            aux_dosage_w=0.05,
+            aux_complex_w=0.05,
+            aux_target_lookup=aux_target_lookup,
+            aux_loss_weight=aux_loss_weight,
         )
+
+        tr_eval_loss, tr_eval_r2, tr_eval_rmse, tr_eval_mae, tr_eval_ccc = evaluate(
+            model, train_eval_loader, criterion, device,
+            baseline_lookup=baseline_lookup if not USE_CV else None,
+            env_target_stats=env_target_stats if (env_target_stats is not None and not USE_CV) else None
+        )
+
         va_loss, va_r2, va_rmse, va_mae, va_ccc = evaluate(
             model,
             val_loader,
@@ -3361,14 +3617,15 @@ def train_and_eval_once(
                 residual_mode=residual_mode
             )
             logging.info(
-                f"Epoch {epoch:03d}/{max_epochs} | Train Loss {tr_loss:.4f} R2 {tr_r2:.4f} "
-                f"| Val Loss {va_loss:.4f} R2 {va_r2:.4f} RMSE {va_rmse:.4f} MAE {va_mae:.4f} CCC {va_ccc:.4f} "
+                f"Epoch {epoch:03d}/{max_epochs} | Train Loss {tr_loss:.4f} R2 {tr_r2:.4f} | "
+                f"TrainEval R2 {tr_eval_r2:.4f} RMSE {tr_eval_rmse:.4f} MAE {tr_eval_mae:.4f} CCC {tr_eval_ccc:.4f}"
+                f"| Val Loss {va_loss:.4f} R2 {va_r2:.4f} RMSE {va_rmse:.4f} MAE {va_mae:.4f} CCC {va_ccc:.4f}"
                 f"| Test R2 {te_r2:.4f} RMSE {te_rmse:.4f} MAE {te_mae:.4f} CCC {te_ccc:.4f}"
             )
             if va_r2 > best_val_r2 + early_stop_min_delta:
                 best_val_r2 = va_r2
                 torch.save(model.state_dict(), "best_model_tmp.pt")
-                logging.info(f"  Best model saved (Val R2 = {va_r2:.4f})")
+                logging.info(f" ✓ Best model saved (Val R² = {va_r2:.4f})")
                 epochs_since_improve = 0
             else:
                 epochs_since_improve += 1
@@ -3380,7 +3637,7 @@ def train_and_eval_once(
             if va_r2 > best_val_r2 + early_stop_min_delta:
                 best_val_r2 = va_r2
                 torch.save(model.state_dict(), "best_model_tmp.pt")
-                logging.info(f"  New best model saved (Val R2 = {va_r2:.4f})")
+                logging.info(f" ✓ New best model saved (Val R² = {va_r2:.4f})")
                 epochs_since_improve = 0
             else:
                 epochs_since_improve += 1
@@ -3454,6 +3711,7 @@ def train_and_eval_once(
 
 def train_and_eval_two_stage(
     model,
+    train_eval_loader,
     train_loader,
     val_loader,
     test_loader,
@@ -3463,7 +3721,9 @@ def train_and_eval_two_stage(
     env_target_stats: Optional[Dict[int, Tuple[float, float]]] = None,
     snapshot_cycle_length: int = 0,
     snapshot_prefix: str = "stage",
-    monitor_test: bool = False
+    monitor_test: bool = False,
+    aux_target_lookup: Optional[Dict[str, List[float]]] = None,
+    aux_loss_weight: float = 0.0
 ):
     """
     Two-stage training:
@@ -3486,6 +3746,7 @@ def train_and_eval_two_stage(
     scheduler = build_scheduler(optimizer, max_epochs=NUM_EPOCHS)
     stage1_metrics = train_and_eval_once(
         model,
+        train_eval_loader,
         train_loader,
         val_loader,
         test_loader,
@@ -3502,7 +3763,9 @@ def train_and_eval_two_stage(
         snapshot_prefix=f"{snapshot_prefix}_stage1",
         monitor_test=monitor_test,
         gxe_stage=1,
-        residual_mode=False
+        residual_mode=False,
+        aux_target_lookup=aux_target_lookup,
+        aux_loss_weight=aux_loss_weight
     )
     torch.save(model.state_dict(), "best_model_stage1.pt")
 
@@ -3519,6 +3782,7 @@ def train_and_eval_two_stage(
     scheduler = build_scheduler(optimizer, max_epochs=NUM_EPOCHS)
     stage2_metrics = train_and_eval_once(
         model,
+        train_eval_loader,
         train_loader,
         val_loader,
         test_loader,
@@ -3604,10 +3868,14 @@ def predict_with_ids(
                 pop_ids = pop_ids.to(device)
                 if use_chr_pool:
                     genomic, masks = pool_within_chromosomes(genomic, masks, window_size=CHR_POOL_WINDOW)
+                forward_kwargs: Dict[str, Any] = {}
+                dosage_override = _build_dosage_override_batch(sids, device)
+                if dosage_override is not None:
+                    forward_kwargs["dosage_override"] = dosage_override
                 out_raw = _forward_maybe_row_labels(
                     model,
                     (genomic, masks, env_ts, loc_ids, year_ids, pop_ids),
-                    {},
+                    forward_kwargs,
                     row_labels
                 )
                 out = out_raw[0] if isinstance(out_raw, (tuple, list)) else out_raw
@@ -3647,9 +3915,95 @@ def predict_with_ids(
         return out_rows
 
 
+def _probe_dosage_complex(
+    model,
+    loader,
+    device,
+    baseline_lookup: Optional[Dict[str, float]] = None,
+    env_target_stats: Optional[Dict[int, Tuple[float, float]]] = None,
+):
+    """
+    Recover per-sample additive (dosage) and deep (complex) predictions on the SAME
+    destandardized / env-unscaled / baseline scale that predict_with_ids returns, by probing
+    the model's eval-time blend weight at the two endpoints w=1 and w=0.
+
+    The model blends final = w*dosage_pred + (1-w)*complex_pred in standardized space, and
+    predict_with_ids applies destandardize_targets, _apply_env_unscale and the additive baseline
+    -- all affine with weights summing to 1, so destd(w*dos+(1-w)*cx) == w*destd(dos)+(1-w)*destd(cx).
+    Probing at w=1 yields destd(dosage) and w=0 yields destd(complex). Returns
+    (ids, dosage[N], complex[N], true[N]) or None to signal a fixed-weight fallback.
+    """
+    if getattr(model, "base", None) is not None:      # DualBranchGxE wrapper -> its softmax gate breaks the 2-endpoint identity
+        return None
+    if not isinstance(model, GxE_Transformer_Tensor):
+        return None
+    if not getattr(model, "use_dosage_branch", False):
+        return None
+    saved_eval = getattr(model, "dosage_fixed_weight_eval", None)
+    saved_fixed = getattr(model, "dosage_fixed_weight", None)
+    try:
+        model.dosage_fixed_weight_eval = 1.0
+        model.dosage_fixed_weight = 1.0
+        rows_dos = predict_with_ids(model, loader, device, baseline_lookup, env_target_stats)
+        model.dosage_fixed_weight_eval = 0.0
+        model.dosage_fixed_weight = 0.0
+        rows_cx = predict_with_ids(model, loader, device, baseline_lookup, env_target_stats)
+    finally:
+        model.dosage_fixed_weight_eval = saved_eval
+        model.dosage_fixed_weight = saved_fixed
+    if not rows_dos or len(rows_dos) != len(rows_cx):
+        return None
+    ids = [r["SampleID"] for r in rows_dos]
+    if [r["SampleID"] for r in rows_cx] != ids:       # same shuffle=False loader -> identical order; verify defensively
+        return None
+    dosage = np.asarray([r["pred"] for r in rows_dos], dtype=float)
+    complex_ = np.asarray([r["pred"] for r in rows_cx], dtype=float)
+    true = np.asarray([r["true"] for r in rows_dos], dtype=float)
+    return ids, dosage, complex_, true
+
+
+def _select_val_blend_weight(
+    model,
+    val_loader,
+    device,
+    baseline_lookup: Optional[Dict[str, float]] = None,
+    env_target_stats: Optional[Dict[int, Tuple[float, float]]] = None,
+    grid: Optional[List[float]] = None,
+):
+    """
+    Grid-search w in {0.0,0.1,...,1.0} on the VALIDATION split, minimizing validation RMSE of
+    w*dosage + (1-w)*complex. Returns the chosen w (float) or None. w is chosen ONLY on
+    validation -> no test leakage.
+    """
+    if grid is None:
+        grid = [round(0.1 * i, 1) for i in range(11)]
+    try:
+        comp = _probe_dosage_complex(model, val_loader, device, baseline_lookup, env_target_stats)
+    except Exception as exc:
+        logging.warning("[val-blend] validation component probe failed (%s); using native output.", exc)
+        return None
+    if comp is None:
+        return None
+    _ids, dosage, complex_, true = comp
+    finite = np.isfinite(dosage) & np.isfinite(complex_) & np.isfinite(true)
+    if int(finite.sum()) < 3:
+        return None
+    dosage, complex_, true = dosage[finite], complex_[finite], true[finite]
+    best_w, best_err = None, float("inf")
+    for w in grid:
+        blended = w * dosage + (1.0 - w) * complex_
+        err = float(np.sqrt(np.mean((blended - true) ** 2)))
+        if err < best_err:
+            best_err, best_w = err, float(w)
+    if best_w is None:
+        return None
+    logging.info("[val-blend] selected w=%.1f on validation (val RMSE=%.4f, grid 0.0..1.0 step 0.1).", best_w, best_err)
+    return best_w
+
+
 def analyze_env_performance(preds, meta_df, key_col):
     """
-    Break down R2 by environment (Location_Code x Year_Code) for a set of predictions.
+    Break down RÂ² by environment (Location_Code Ãƒâ€” Year_Code) for a set of predictions.
     """
     results: Dict[str, Dict[str, List[float]]] = defaultdict(lambda: {"true": [], "pred": []})
     if not preds:
@@ -3667,11 +4021,11 @@ def analyze_env_performance(preds, meta_df, key_col):
 
     if not results:
         return
-    print("\nEnvironment-wise R2:")
+    print("\nEnvironment-wise RÂ²:")
     for env, data in sorted(results.items()):
         if len(data["true"]) >= 5:
             r2 = r2_score(data["true"], data["pred"])
-            print(f"  {env}: R2={r2:.4f} (n={len(data['true'])})")
+            print(f"  {env}: RÂ²={r2:.4f} (n={len(data['true'])})")
 
 
 def export_penultimate_embeddings(
@@ -3950,7 +4304,13 @@ def plot_embeddings_tsne(emb_path: str, meta_df: pd.DataFrame, out_prefix: str =
     emb["Pop_Code"] = emb["JoinKey"].map(lambda k: lookup.get(k, (np.nan, np.nan, np.nan))[2])
     merged = emb
     X = merged[repr_cols].values
-    perplexity = max(5, min(30, len(merged) - 1))
+    if len(merged) < 4:
+        # t-SNE needs perplexity < n_samples; tiny held-out folds (e.g. small
+        # populations under population-blocked CV) can't be embedded. Skip the
+        # cosmetic plot rather than crashing after predictions are already saved.
+        logging.warning("plot_embeddings_tsne: only %d samples; skipping t-SNE plot.", len(merged))
+        return
+    perplexity = min(30, max(2, len(merged) - 1))
     tsne = TSNE(n_components=2, perplexity=perplexity, init="random", random_state=SEED)
     pts = tsne.fit_transform(X)
 
@@ -4054,7 +4414,7 @@ def plot_latent_space_summary_from_embeddings(
     df["EnvID"] = df["JoinKey"].map(lambda k: key_to_env.get(k, "NA"))
     df["Trait"] = df.get("target", np.nan)
     X = df[repr_cols].values
-    perplexity = max(5, min(30, len(df) - 1))
+    perplexity = min(30, max(2, len(df) - 1))
     pts = TSNE(n_components=2, perplexity=perplexity, init="random", random_state=SEED).fit_transform(X)
     df["z1"] = pts[:, 0]
     df["z2"] = pts[:, 1]
@@ -4108,7 +4468,7 @@ def plot_pairwise_dist_vs_target(vecs: np.ndarray, targets: np.ndarray, fname: s
 def plot_tsne_basic(vecs: np.ndarray, targets: np.ndarray, out_prefix: str):
     if vecs.size == 0 or targets.size == 0 or vecs.shape[0] < 2:
         return
-    perplexity = max(5, min(30, vecs.shape[0] - 1))
+    perplexity = min(30, max(2, vecs.shape[0] - 1))
     pts = TSNE(n_components=2, perplexity=perplexity, init="random", random_state=SEED).fit_transform(vecs)
     plt.figure(figsize=(6, 6))
     sc = plt.scatter(pts[:, 0], pts[:, 1], c=targets, cmap="coolwarm", alpha=0.75, s=16)
@@ -4146,7 +4506,10 @@ def save_trait_boxplot(series: pd.Series, whisker_k: float = 1.5, path: str = "t
         logging.warning("Boxplot skipped: empty series.")
         return
     plt.figure(figsize=(4, 6))
-    plt.boxplot(series.dropna(), whis=whisker_k, vert=True, labels=[TARGET_COL])
+    try:
+        plt.boxplot(series.dropna(), whis=whisker_k, tick_labels=[TARGET_COL])
+    except TypeError:
+        plt.boxplot(series.dropna(), whis=whisker_k, labels=[TARGET_COL])
     plt.title(f"Trait boxplot (whis={whisker_k})")
     plt.ylabel(TARGET_COL)
     plt.tight_layout()
@@ -4185,12 +4548,12 @@ def analyze_splits(meta_df, train_keys, val_keys, test_keys, key_col, id_col, lo
     leak_val_test = val_sids.intersection(test_sids)
 
     print("\nGenotype Leakage Check:")
-    print(f"  Train intersect Val:  {len(leak_tr_val)} overlapping genotypes")
-    if len(leak_tr_val) > 0: print(f"  Warning: Leakage detected! {list(leak_tr_val)[:5]}")
-    print(f"  Train intersect Test: {len(leak_tr_test)} overlapping genotypes")
-    if len(leak_tr_test) > 0: print(f"  Warning: Leakage detected! {list(leak_tr_test)[:5]}")
-    print(f"  Val intersect Test:   {len(leak_val_test)} overlapping genotypes")
-    if len(leak_val_test) > 0: print(f"  Warning: Leakage detected! {list(leak_val_test)[:5]}")
+    print(f"  Train Ã¢Ë†Â© Val:  {len(leak_tr_val)} overlapping genotypes")
+    if len(leak_tr_val) > 0: print(f"    WARNING: Leakage detected! {list(leak_tr_val)[:5]}")
+    print(f"  Train Ã¢Ë†Â© Test: {len(leak_tr_test)} overlapping genotypes")
+    if len(leak_tr_test) > 0: print(f"    WARNING: Leakage detected! {list(leak_tr_test)[:5]}")
+    print(f"  Val Ã¢Ë†Â© Test:   {len(leak_val_test)} overlapping genotypes")
+    if len(leak_val_test) > 0: print(f"    WARNING: Leakage detected! {list(leak_val_test)[:5]}")
 
 
     # --- Environment (Location) Analysis ---
@@ -4271,12 +4634,12 @@ def analyze_target_distribution(meta_df, train_keys, val_keys, test_keys, key_co
     overlap_vt = val_set & test_set
     
     if overlap_tv or overlap_tt or overlap_vt:
-        print("\nWarning: Overlapping keys detected!")
-        print(f"   Train intersect Val: {len(overlap_tv)} keys")
-        print(f"   Train intersect Test: {len(overlap_tt)} keys")
-        print(f"   Val intersect Test: {len(overlap_vt)} keys")
+        print("\n  WARNING: Overlapping keys detected!")
+        print(f"   Train Ã¢Ë†Â© Val: {len(overlap_tv)} keys")
+        print(f"   Train Ã¢Ë†Â© Test: {len(overlap_tt)} keys")
+        print(f"   Val Ã¢Ë†Â© Test: {len(overlap_vt)} keys")
         if overlap_tv:
-            print(f"   Example overlaps (Train intersect Val): {list(overlap_tv)[:3]}")
+            print(f"   Example overlaps (Train Ã¢Ë†Â© Val): {list(overlap_tv)[:3]}")
     
     train_targets = pd.to_numeric(meta_df.loc[train_mask, target_col], errors='coerce').dropna()
     val_targets = pd.to_numeric(meta_df.loc[val_mask, target_col], errors='coerce').dropna()
@@ -4342,7 +4705,7 @@ def analyze_target_distribution(meta_df, train_keys, val_keys, test_keys, key_co
     print(f"  Test samples out of training range: {test_out_of_range} ({_format_pct(test_out_of_range, total_test)})")
     
     if test_out_of_range > 0:
-        print(f"  Warning: {test_out_of_range} test samples are outside the training range!")
+        print(f"    WARNING: {test_out_of_range} test samples are outside the training range!")
         print(f"      The model has never seen targets in this range and will likely fail.")
     
     # Statistical tests for distribution differences
@@ -4353,7 +4716,7 @@ def analyze_target_distribution(meta_df, train_keys, val_keys, test_keys, key_co
         if ks_pval_tv < 0.05:
             print(f"      Significant difference detected (p < 0.05)")
         else:
-            print("   Distributions are similar (p >= 0.05)")
+            print(f"   âœ“ Distributions are similar (p >= 0.05)")
     
     if len(train_targets) > 1 and len(test_targets) > 1:
         ks_stat_tt, ks_pval_tt = stats.ks_2samp(train_targets, test_targets)
@@ -4361,7 +4724,7 @@ def analyze_target_distribution(meta_df, train_keys, val_keys, test_keys, key_co
         if ks_pval_tt < 0.05:
             print(f"      Significant difference detected (p < 0.05)")
         else:
-            print("   Distributions are similar (p >= 0.05)")
+            print(f"   âœ“ Distributions are similar (p >= 0.05)")
     
     # Create visualization
     plt.figure(figsize=(12, 4))
@@ -4395,10 +4758,11 @@ def analyze_target_distribution(meta_df, train_keys, val_keys, test_keys, key_co
     
     # Box plot
     plt.subplot(1, 3, 2)
-    plt.boxplot([train_targets, val_targets, test_targets], 
-                labels=[f'Train\n(n={len(train_targets)})', 
-                       f'Val\n(n={len(val_targets)})', 
-                       f'Test\n(n={len(test_targets)})'])
+    _bp_labels = [f'Train\n(n={len(train_targets)})', f'Val\n(n={len(val_targets)})', f'Test\n(n={len(test_targets)})']
+    try:
+        plt.boxplot([train_targets, val_targets, test_targets], tick_labels=_bp_labels)
+    except TypeError:
+        plt.boxplot([train_targets, val_targets, test_targets], labels=_bp_labels)
     plt.ylabel(target_col)
     plt.title('Target Distribution (Boxplot)')
     plt.grid(alpha=0.3)
@@ -4417,7 +4781,7 @@ def analyze_target_distribution(meta_df, train_keys, val_keys, test_keys, key_co
     plt.tight_layout()
     plt.savefig('target_distribution_analysis.png', dpi=200)
     plt.close()
-    print("\nSaved visualization to 'target_distribution_analysis.png'")
+    print(f"\nâœ“â€œ Saved visualization to 'target_distribution_analysis.png'")
     
     print("=" * 60)
     
@@ -4431,610 +4795,10 @@ def analyze_target_distribution(meta_df, train_keys, val_keys, test_keys, key_co
 
 
 
-
-
-def _compute_regression_metric_dict(y_true: np.ndarray, y_pred: np.ndarray) -> Dict[str, float]:
-    y_true = np.asarray(y_true, dtype=float)
-    y_pred = np.asarray(y_pred, dtype=float)
-    y_true, y_pred = _filter_finite_pairs(y_true, y_pred)
-    out = {"n": int(len(y_true)), "r2": float("nan"), "rmse": float("nan"), "mae": float("nan"), "ccc": float("nan")}
-    if len(y_true) < 2:
-        return out
-    out["r2"] = float(r2_score(y_true, y_pred))
-    out["rmse"] = float(math.sqrt(mean_squared_error(y_true, y_pred)))
-    out["mae"] = float(mean_absolute_error(y_true, y_pred))
-    out["ccc"] = float(concordance_correlation_coefficient(y_true, y_pred))
-    return out
-
-
-def _save_ranked_barplot(
-    df: pd.DataFrame,
-    label_col: str,
-    value_col: str,
-    path: str,
-    title: str,
-    top_k: Optional[int] = None,
-    xlabel: Optional[str] = None,
-):
-    if df is None or df.empty or label_col not in df.columns or value_col not in df.columns:
-        return
-    plot_df = df.copy()
-    plot_df = plot_df[np.isfinite(plot_df[value_col].astype(float))]
-    if plot_df.empty:
-        return
-    plot_df = plot_df.sort_values(value_col, ascending=False)
-    if top_k is not None and top_k > 0:
-        plot_df = plot_df.head(int(top_k))
-    plt.figure(figsize=(8, max(4, 0.35 * len(plot_df) + 1.5)))
-    y_pos = np.arange(len(plot_df))
-    plt.barh(y_pos, plot_df[value_col].astype(float).values)
-    plt.yticks(y_pos, plot_df[label_col].astype(str).values)
-    plt.gca().invert_yaxis()
-    plt.title(title)
-    plt.xlabel(xlabel or value_col)
-    plt.tight_layout()
-    plt.savefig(path, dpi=220)
-    plt.close()
-
-
-def _save_window_importance_plot(df: pd.DataFrame, path: str, title: str):
-    if df is None or df.empty or "window_idx" not in df.columns or "delta_r2" not in df.columns:
-        return
-    plot_df = df.sort_values("window_idx")
-    plt.figure(figsize=(8, 4))
-    plt.plot(plot_df["window_idx"].astype(int).values + 1, plot_df["delta_r2"].astype(float).values, marker="o")
-    plt.axhline(0.0, linestyle="--", linewidth=1)
-    plt.xlabel("Temporal window")
-    plt.ylabel("delta R2 after permutation")
-    plt.title(title)
-    plt.tight_layout()
-    plt.savefig(path, dpi=220)
-    plt.close()
-
-
-def _save_stage_feature_heatmap(df: pd.DataFrame, path: str, title: str, value_col: str = "delta_r2"):
-    if df is None or df.empty:
-        return
-    required = {"stage", "feature", value_col}
-    if not required.issubset(df.columns):
-        return
-    pivot = df.pivot(index="stage", columns="feature", values=value_col)
-    if pivot.empty:
-        return
-    plt.figure(figsize=(max(6, 0.6 * pivot.shape[1] + 2), max(3, 0.7 * pivot.shape[0] + 1.5)))
-    im = plt.imshow(pivot.values.astype(float), aspect="auto")
-    plt.xticks(np.arange(pivot.shape[1]), pivot.columns.astype(str), rotation=45, ha="right")
-    plt.yticks(np.arange(pivot.shape[0]), pivot.index.astype(str))
-    plt.title(title)
-    plt.colorbar(im, fraction=0.046, pad=0.04, label=value_col)
-    plt.tight_layout()
-    plt.savefig(path, dpi=220)
-    plt.close()
-
-
-def _population_metrics_from_preds(pred_rows: List[Dict[str, float]], sample_to_pop: Optional[Dict[str, int]]) -> pd.DataFrame:
-    if not pred_rows or not sample_to_pop:
-        return pd.DataFrame(columns=["population", "n", "r2", "rmse", "mae", "ccc"])
-    grouped: Dict[Any, Dict[str, List[float]]] = defaultdict(lambda: {"true": [], "pred": []})
-    for row in pred_rows:
-        sid = str(row.get("SampleID", ""))
-        pop = sample_to_pop.get(sid)
-        if pop is None:
-            continue
-        grouped[pop]["true"].append(float(row.get("true", 0.0)))
-        grouped[pop]["pred"].append(float(row.get("pred", 0.0)))
-    records = []
-    for pop, vals in sorted(grouped.items(), key=lambda kv: kv[0]):
-        metrics = _compute_regression_metric_dict(vals["true"], vals["pred"])
-        metrics.update({"population": pop, "n": int(len(vals["true"]))})
-        records.append(metrics)
-    return pd.DataFrame(records)
-
-
-def run_signal_capture_analysis(
-    model,
-    loader,
-    device,
-    criterion,
-    out_dir: str,
-    env_data_dict: Optional[Dict[str, np.ndarray]] = None,
-    feature_names: Optional[List[str]] = None,
-    baseline_lookup: Optional[Dict[str, float]] = None,
-    env_target_stats: Optional[Dict[int, Tuple[float, float]]] = None,
-    sample_to_pop: Optional[Dict[str, int]] = None,
-    max_batches: Optional[int] = None,
-) -> Dict[str, Any]:
-    """
-    Post-hoc signal analysis for the Results section.
-    Outputs:
-      - env feature permutation importance
-      - temporal window importance
-      - stage x feature importance
-      - HABE/BAE/population sensitivity tables
-      - per-population performance table
-
-    NOTE: HABE/BAE are reported here as fast sensitivity analyses using the channels that feed
-    those modules. For the paper, pair these with controlled re-training ablations (-HABE, -BAE,
-    -Population) using USE_HABE / USE_BIOLOGICAL_AWARE_EMBEDDING / USE_POPULATION_EMBEDDING.
-    """
-    os.makedirs(out_dir, exist_ok=True)
-    tensor_model = _is_tensor_model(model)
-    use_chr_pool = tensor_model and USE_CHR_POOLING and not getattr(model, "uses_habe", False)
-    genomic_feature_names = list(feature_names or getattr(loader.dataset, "feature_names", []) or [])
-    env_feature_names = []
-    if env_data_dict is not None:
-        env_feature_names = list(map(str, env_data_dict.get("feature_names", []) or []))
-    if not env_feature_names:
-        env_feature_names = list(_build_env_feature_names())
-
-    # Peek one batch to discover observed shapes.
-    first_batch = None
-    try:
-        first_batch = next(iter(loader))
-    except StopIteration:
-        first_batch = None
-    if first_batch is None:
-        logging.warning("Signal analysis skipped: empty loader.")
-        return {}
-    if len(first_batch) == 9:
-        env_probe = first_batch[3]
-    elif len(first_batch) == 7:
-        env_probe = first_batch[1]
-    else:
-        logging.warning("Signal analysis skipped: unexpected batch shape (%d).", len(first_batch))
-        return {}
-    if env_probe.dim() == 3:
-        n_steps_obs = int(env_probe.shape[1])
-        n_env_feats_obs = int(env_probe.shape[2])
-    else:
-        n_steps_obs = 1
-        n_env_feats_obs = int(env_probe.shape[-1])
-    if len(env_feature_names) < n_env_feats_obs:
-        env_feature_names.extend([f"env_feat_{i}" for i in range(len(env_feature_names), n_env_feats_obs)])
-    env_feature_names = env_feature_names[:n_env_feats_obs]
-
-    def _evaluate_variant(batch_transform=None, label: str = "baseline") -> Dict[str, float]:
-        model.eval()
-        total_loss = 0.0
-        preds_all, true_all = [], []
-        env_ids_all: List[int] = []
-        batches_seen = 0
-        with torch.no_grad():
-            for batch_idx, batch in enumerate(loader):
-                if max_batches is not None and batch_idx >= int(max_batches):
-                    break
-                batches_seen += 1
-                sample_weights: Optional[torch.Tensor] = None
-                if len(batch) == 9:
-                    genomic, masks, row_labels, env_ts, loc_ids, year_ids, pop_ids, targets, sids = batch
-                    state = {
-                        "genomic": genomic.to(device).clone(),
-                        "masks": masks.to(device).clone(),
-                        "row_labels": row_labels.to(device).clone(),
-                        "env_ts": env_ts.to(device).clone(),
-                        "loc_ids": loc_ids.to(device).clone(),
-                        "year_ids": year_ids.to(device).clone(),
-                        "pop_ids": pop_ids.to(device).clone(),
-                        "targets": targets.to(device).clone(),
-                        "sids": list(sids),
-                    }
-                    if batch_transform is not None:
-                        state = batch_transform(state)
-                    genomic = state["genomic"]
-                    masks = state["masks"]
-                    row_labels = state["row_labels"]
-                    env_ts = state["env_ts"]
-                    loc_ids = state["loc_ids"]
-                    year_ids = state["year_ids"]
-                    pop_ids = state["pop_ids"]
-                    targets = state["targets"]
-                    env_ids = _compute_env_ids(loc_ids, year_ids)
-                    env_ids_all.extend(env_ids.detach().cpu().tolist())
-                    sample_weights = _compute_sample_weights(env_ids, pop_ids)
-                    if use_chr_pool:
-                        genomic, masks = pool_within_chromosomes(genomic, masks, window_size=CHR_POOL_WINDOW)
-                    out_raw = _forward_maybe_row_labels(
-                        model,
-                        (genomic, masks, env_ts, loc_ids, year_ids, pop_ids),
-                        {},
-                        row_labels,
-                    )
-                elif len(batch) == 7:
-                    geno_vec, env_ts, loc_ids, year_ids, pop_ids, targets, sids = batch
-                    state = {
-                        "geno_vec": geno_vec.to(device).clone(),
-                        "env_ts": env_ts.to(device).clone(),
-                        "loc_ids": loc_ids.to(device).clone(),
-                        "year_ids": year_ids.to(device).clone(),
-                        "pop_ids": pop_ids.to(device).clone(),
-                        "targets": targets.to(device).clone(),
-                        "sids": list(sids),
-                    }
-                    if batch_transform is not None:
-                        state = batch_transform(state)
-                    geno_vec = state["geno_vec"]
-                    env_ts = state["env_ts"]
-                    loc_ids = state["loc_ids"]
-                    year_ids = state["year_ids"]
-                    pop_ids = state["pop_ids"]
-                    targets = state["targets"]
-                    env_ids = _compute_env_ids(loc_ids, year_ids)
-                    env_ids_all.extend(env_ids.detach().cpu().tolist())
-                    sample_weights = _compute_sample_weights(env_ids, pop_ids)
-                    out_raw = model(geno_vec, env_ts, loc_ids, year_ids, pop_ids)
-                else:
-                    continue
-                out = out_raw[0] if isinstance(out_raw, (tuple, list)) else out_raw
-                if out.dim() > 1:
-                    out = out.squeeze(-1)
-                loss_raw = criterion(out, targets)
-                loss = _reduce_loss(loss_raw, sample_weights)
-                total_loss += float(loss.detach().item())
-                preds_all.extend(out.detach().cpu().numpy().tolist())
-                true_all.extend(targets.detach().cpu().numpy().tolist())
-        preds_all = np.asarray(preds_all, dtype=float)
-        true_all = np.asarray(true_all, dtype=float)
-        preds_metrics = destandardize_targets(preds_all)
-        true_metrics = destandardize_targets(true_all)
-        if env_target_stats:
-            preds_metrics = _apply_env_unscale(preds_metrics, env_ids_all, env_target_stats)
-            true_metrics = _apply_env_unscale(true_metrics, env_ids_all, env_target_stats)
-        if baseline_lookup:
-            baseline_vals = []
-            for batch in loader:
-                if len(batch) == 9:
-                    sids = batch[-1]
-                elif len(batch) == 7:
-                    sids = batch[-1]
-                else:
-                    sids = []
-                baseline_vals.extend([baseline_lookup.get(str(sid), 0.0) for sid in sids])
-                if max_batches is not None and len(baseline_vals) >= len(preds_metrics):
-                    break
-            if baseline_vals:
-                baseline_arr = np.asarray(baseline_vals[: len(preds_metrics)], dtype=float)
-                preds_metrics = preds_metrics + baseline_arr
-                true_metrics = true_metrics + baseline_arr
-        metric_dict = _compute_regression_metric_dict(true_metrics, preds_metrics)
-        metric_dict["loss"] = float(total_loss / max(1, batches_seen))
-        metric_dict["label"] = label
-        return metric_dict
-
-    def _make_env_feature_permuter(feat_idx: int):
-        def _transform(state: Dict[str, Any]) -> Dict[str, Any]:
-            env_ts = state.get("env_ts")
-            if env_ts is None or env_ts.numel() == 0 or feat_idx >= env_ts.shape[-1]:
-                return state
-            perm = torch.randperm(env_ts.size(0), device=env_ts.device)
-            env_new = env_ts.clone()
-            if env_ts.dim() == 3:
-                env_new[:, :, feat_idx] = env_ts[perm, :, feat_idx]
-            elif env_ts.dim() == 2:
-                env_new[:, feat_idx] = env_ts[perm, feat_idx]
-            state["env_ts"] = env_new
-            return state
-        return _transform
-
-    def _make_env_window_permuter(window_idx: int):
-        def _transform(state: Dict[str, Any]) -> Dict[str, Any]:
-            env_ts = state.get("env_ts")
-            if env_ts is None or env_ts.dim() != 3 or window_idx >= env_ts.shape[1]:
-                return state
-            perm = torch.randperm(env_ts.size(0), device=env_ts.device)
-            env_new = env_ts.clone()
-            env_new[:, window_idx, :] = env_ts[perm, window_idx, :]
-            state["env_ts"] = env_new
-            return state
-        return _transform
-
-    def _make_stage_feature_permuter(start_idx: int, end_idx: int, feat_idx: int):
-        def _transform(state: Dict[str, Any]) -> Dict[str, Any]:
-            env_ts = state.get("env_ts")
-            if env_ts is None or env_ts.dim() != 3 or feat_idx >= env_ts.shape[-1]:
-                return state
-            start = max(0, int(start_idx))
-            end = min(int(end_idx), env_ts.shape[1])
-            if end <= start:
-                return state
-            perm = torch.randperm(env_ts.size(0), device=env_ts.device)
-            env_new = env_ts.clone()
-            env_new[:, start:end, feat_idx] = env_ts[perm, start:end, feat_idx]
-            state["env_ts"] = env_new
-            return state
-        return _transform
-
-    def _make_all_env_permuter():
-        def _transform(state: Dict[str, Any]) -> Dict[str, Any]:
-            env_ts = state.get("env_ts")
-            if env_ts is None or env_ts.numel() == 0:
-                return state
-            perm = torch.randperm(env_ts.size(0), device=env_ts.device)
-            state["env_ts"] = env_ts[perm].clone()
-            return state
-        return _transform
-
-    def _make_pop_permuter(constant: Optional[int] = None):
-        def _transform(state: Dict[str, Any]) -> Dict[str, Any]:
-            pop_ids = state.get("pop_ids")
-            if pop_ids is None or pop_ids.numel() == 0:
-                return state
-            if constant is not None:
-                state["pop_ids"] = torch.full_like(pop_ids, int(constant))
-            else:
-                perm = torch.randperm(pop_ids.size(0), device=pop_ids.device)
-                state["pop_ids"] = pop_ids[perm].clone()
-            return state
-        return _transform
-
-    def _make_genomic_zeroer(patterns: List[str]):
-        idxs = _find_feature_indices(genomic_feature_names, patterns)
-        def _transform(state: Dict[str, Any]) -> Dict[str, Any]:
-            genomic = state.get("genomic")
-            if genomic is None or genomic.numel() == 0 or not idxs:
-                return state
-            valid = [i for i in idxs if 0 <= i < genomic.shape[-1]]
-            if not valid:
-                return state
-            genomic_new = genomic.clone()
-            genomic_new[..., valid] = 0.0
-            state["genomic"] = genomic_new
-            return state
-        return _transform, idxs
-
-    base_metrics = _evaluate_variant(label="baseline")
-    with open(os.path.join(out_dir, "baseline_metrics.json"), "w") as fh:
-        json.dump(base_metrics, fh, indent=2)
-
-    base_preds = predict_with_ids(
-        model,
-        loader,
-        device,
-        baseline_lookup=baseline_lookup,
-        env_target_stats=env_target_stats,
-    )
-    population_df = _population_metrics_from_preds(base_preds, sample_to_pop)
-    if not population_df.empty:
-        population_df.sort_values(["r2", "n"], ascending=[False, False]).to_csv(
-            os.path.join(out_dir, "population_metrics.csv"), index=False
-        )
-        _save_ranked_barplot(
-            population_df.sort_values("r2", ascending=False),
-            label_col="population",
-            value_col="r2",
-            path=os.path.join(out_dir, "population_r2.png"),
-            title="Per-population predictive performance",
-            xlabel="R2",
-        )
-
-    env_feature_records = []
-    for feat_idx, feat_name in enumerate(env_feature_names):
-        pert = _evaluate_variant(_make_env_feature_permuter(feat_idx), label=f"env_feature:{feat_name}")
-        env_feature_records.append({
-            "feature": feat_name,
-            **pert,
-            "delta_r2": float(base_metrics["r2"] - pert["r2"]),
-            "delta_rmse": float(pert["rmse"] - base_metrics["rmse"]),
-            "delta_mae": float(pert["mae"] - base_metrics["mae"]),
-            "delta_ccc": float(base_metrics["ccc"] - pert["ccc"]),
-        })
-    env_feature_df = pd.DataFrame(env_feature_records).sort_values("delta_r2", ascending=False)
-    env_feature_df.to_csv(os.path.join(out_dir, "env_feature_importance.csv"), index=False)
-    _save_ranked_barplot(
-        env_feature_df,
-        label_col="feature",
-        value_col="delta_r2",
-        path=os.path.join(out_dir, "env_feature_importance.png"),
-        title="Environmental feature importance (permutation)",
-        xlabel="delta R2 after feature permutation",
-    )
-
-    env_window_df = pd.DataFrame(columns=["window_idx", "label", "r2", "rmse", "mae", "ccc", "delta_r2", "delta_rmse", "delta_mae", "delta_ccc"])
-    if n_steps_obs > 1:
-        window_records = []
-        for window_idx in range(n_steps_obs):
-            pert = _evaluate_variant(_make_env_window_permuter(window_idx), label=f"window:{window_idx + 1}")
-            window_records.append({
-                "window_idx": int(window_idx),
-                **pert,
-                "delta_r2": float(base_metrics["r2"] - pert["r2"]),
-                "delta_rmse": float(pert["rmse"] - base_metrics["rmse"]),
-                "delta_mae": float(pert["mae"] - base_metrics["mae"]),
-                "delta_ccc": float(base_metrics["ccc"] - pert["ccc"]),
-            })
-        env_window_df = pd.DataFrame(window_records).sort_values("delta_r2", ascending=False)
-        env_window_df.to_csv(os.path.join(out_dir, "env_window_importance.csv"), index=False)
-        _save_window_importance_plot(
-            pd.DataFrame(window_records),
-            os.path.join(out_dir, "env_window_importance.png"),
-            "Temporal window importance (whole-window permutation)",
-        )
-
-    stage_feature_df = pd.DataFrame(columns=["stage", "feature", "label", "r2", "rmse", "mae", "ccc", "delta_r2", "delta_rmse", "delta_mae", "delta_ccc"])
-    if n_steps_obs > 1:
-        target_features = [
-            feat for feat in [
-                "daylength_h",
-                "tmax_C",
-                "tmin_C",
-                "gdd",
-                "vpd_kPa",
-                "heat_hdd",
-                "cold_cdd",
-                "drought_vpd",
-                "photo_temp",
-                "cum_ptu",
-            ] if feat in env_feature_names
-        ]
-        if target_features:
-            splits = np.linspace(0, n_steps_obs, num=4, dtype=int)
-            stage_slices = {
-                "early": (int(splits[0]), int(splits[1])),
-                "mid": (int(splits[1]), int(splits[2])),
-                "late": (int(splits[2]), int(splits[3])),
-            }
-            stage_records = []
-            for stage_name, (start_idx, end_idx) in stage_slices.items():
-                for feat_name in target_features:
-                    feat_idx = env_feature_names.index(feat_name)
-                    pert = _evaluate_variant(
-                        _make_stage_feature_permuter(start_idx, end_idx, feat_idx),
-                        label=f"stage_feature:{stage_name}:{feat_name}",
-                    )
-                    stage_records.append({
-                        "stage": stage_name,
-                        "feature": feat_name,
-                        **pert,
-                        "delta_r2": float(base_metrics["r2"] - pert["r2"]),
-                        "delta_rmse": float(pert["rmse"] - base_metrics["rmse"]),
-                        "delta_mae": float(pert["mae"] - base_metrics["mae"]),
-                        "delta_ccc": float(base_metrics["ccc"] - pert["ccc"]),
-                    })
-            stage_feature_df = pd.DataFrame(stage_records).sort_values(["stage", "delta_r2"], ascending=[True, False])
-            stage_feature_df.to_csv(os.path.join(out_dir, "env_stage_feature_importance.csv"), index=False)
-            _save_stage_feature_heatmap(
-                stage_feature_df,
-                os.path.join(out_dir, "env_stage_feature_importance_heatmap.png"),
-                "Stage x feature importance (permutation)",
-                value_col="delta_r2",
-            )
-
-    component_records = []
-    component_specs = [
-        ("All_environment_permuted", _make_all_env_permuter(), True),
-        ("Population_ids_permuted", _make_pop_permuter(constant=None), True),
-        ("Population_ids_zeroed", _make_pop_permuter(constant=0), True),
-    ]
-    if tensor_model and genomic_feature_names:
-        habe_block_transform, habe_block_idxs = _make_genomic_zeroer([
-            "block_id_raw",
-            "block_id_norm",
-            "block_len_norm",
-            "inblock_ld",
-            "is_block_boundary",
-            "block_gene_count_norm",
-            "block_snp_density_norm",
-            "block_mean_maf_norm",
-        ])
-        if habe_block_idxs:
-            component_specs.append(("HABE_block_context_zeroed", habe_block_transform, True))
-        habe_hotspot_transform, habe_hotspot_idxs = _make_genomic_zeroer([
-            "te_hotspot_flag",
-            "te_hotspot_mask",
-            "is_te_hotspot",
-            "te_hotspot",
-            "is_genic",
-            "is_promoter",
-            "is_te",
-        ])
-        if habe_hotspot_idxs:
-            component_specs.append(("HABE_hotspot_context_zeroed", habe_hotspot_transform, True))
-        bae_transform, bae_idxs = _make_genomic_zeroer([
-            "dosage*",
-            "te_dist*",
-            "gene_dist*",
-            "te_hotspot_flag",
-            "is_te",
-            "is_promoter",
-        ])
-        if bae_idxs:
-            component_specs.append(("BAE_context_zeroed", bae_transform, True))
-    threshold_features = [f for f in ["heat_hdd", "cold_cdd", "drought_vpd"] if f in env_feature_names]
-    if threshold_features:
-        threshold_indices = [env_feature_names.index(f) for f in threshold_features]
-        def _threshold_transform(state: Dict[str, Any]) -> Dict[str, Any]:
-            env_ts = state.get("env_ts")
-            if env_ts is None or env_ts.numel() == 0:
-                return state
-            perm = torch.randperm(env_ts.size(0), device=env_ts.device)
-            env_new = env_ts.clone()
-            if env_ts.dim() == 3:
-                for idx in threshold_indices:
-                    if idx < env_ts.shape[-1]:
-                        env_new[:, :, idx] = env_ts[perm, :, idx]
-            elif env_ts.dim() == 2:
-                for idx in threshold_indices:
-                    if idx < env_ts.shape[-1]:
-                        env_new[:, idx] = env_ts[perm, idx]
-            state["env_ts"] = env_new
-            return state
-        component_specs.append(("Threshold_channels_permuted", _threshold_transform, True))
-
-    for component_name, transform_fn, enabled in component_specs:
-        if not enabled:
-            continue
-        pert = _evaluate_variant(transform_fn, label=f"component:{component_name}")
-        component_records.append({
-            "component": component_name,
-            **pert,
-            "delta_r2": float(base_metrics["r2"] - pert["r2"]),
-            "delta_rmse": float(pert["rmse"] - base_metrics["rmse"]),
-            "delta_mae": float(pert["mae"] - base_metrics["mae"]),
-            "delta_ccc": float(base_metrics["ccc"] - pert["ccc"]),
-        })
-    component_df = pd.DataFrame(component_records).sort_values("delta_r2", ascending=False)
-    if not component_df.empty:
-        component_df.to_csv(os.path.join(out_dir, "module_input_sensitivity.csv"), index=False)
-        _save_ranked_barplot(
-            component_df,
-            label_col="component",
-            value_col="delta_r2",
-            path=os.path.join(out_dir, "module_input_sensitivity.png"),
-            title="Module / metadata sensitivity",
-            xlabel="delta R2 after perturbation",
-        )
-
-    # Human-readable summary.
-    summary_lines = [
-        "Signal-capture summary",
-        "======================",
-        f"Baseline: R2={base_metrics['r2']:.4f}, RMSE={base_metrics['rmse']:.4f}, MAE={base_metrics['mae']:.4f}, CCC={base_metrics['ccc']:.4f}",
-        "",
-        "Top environmental features (by delta R2 after permutation):",
-    ]
-    if not env_feature_df.empty:
-        for _, row in env_feature_df.head(8).iterrows():
-            summary_lines.append(f"  - {row['feature']}: delta R2={row['delta_r2']:.4f}, delta RMSE={row['delta_rmse']:.4f}")
-    else:
-        summary_lines.append("  - none")
-    summary_lines.append("")
-    summary_lines.append("Top temporal windows (by delta R2 after permutation):")
-    if not env_window_df.empty:
-        for _, row in env_window_df.sort_values("delta_r2", ascending=False).head(8).iterrows():
-            summary_lines.append(f"  - window_{int(row['window_idx']) + 1}: delta R2={row['delta_r2']:.4f}, delta RMSE={row['delta_rmse']:.4f}")
-    else:
-        summary_lines.append("  - not available")
-    summary_lines.append("")
-    summary_lines.append("Top module / metadata sensitivities:")
-    if not component_df.empty:
-        for _, row in component_df.head(8).iterrows():
-            summary_lines.append(f"  - {row['component']}: delta R2={row['delta_r2']:.4f}, delta RMSE={row['delta_rmse']:.4f}")
-    else:
-        summary_lines.append("  - none")
-    if not population_df.empty:
-        summary_lines.append("")
-        summary_lines.append("Per-population performance (sorted by R2):")
-        for _, row in population_df.sort_values("r2", ascending=False).iterrows():
-            summary_lines.append(f"  - pop {row['population']}: R2={row['r2']:.4f}, RMSE={row['rmse']:.4f}, n={int(row['n'])}")
-    summary_lines.append("")
-    summary_lines.append("Interpretation note: HABE/BAE rows here are post-hoc sensitivities using the channels they consume.")
-    summary_lines.append("For the main manuscript table, report these alongside full retraining ablations using USE_HABE / USE_BIOLOGICAL_AWARE_EMBEDDING / USE_POPULATION_EMBEDDING.")
-    with open(os.path.join(out_dir, "signal_summary.txt"), "w") as fh:
-        fh.write("\n".join(summary_lines))
-
-    logging.info("Signal analysis complete -> %s", out_dir)
-    return {
-        "baseline": base_metrics,
-        "population_metrics": population_df,
-        "env_feature_importance": env_feature_df,
-        "env_window_importance": env_window_df,
-        "env_stage_feature_importance": stage_feature_df,
-        "module_input_sensitivity": component_df,
-    }
-
-
-
 def main():
     global N_POPULATIONS, N_ENV_FEATURES_PER_MONTH, N_LOCATIONS, N_YEARS, NUM_ENVIRONMENTS, ENV_PAIR_TO_ID, ENV_PAIR_LUT
+    global DOSAGE_OVERRIDE_ENABLED, DOSAGE_OVERRIDE_MAP, DOSAGE_OVERRIDE_DIM
+    global DOSAGE_OVERRIDE_SAMPLE_TO_SID, _DOSAGE_OVERRIDE_MISSING_WARNED
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     logging.info(f"Using device: {device}")
     model_dropout, model_weight_decay = get_regularization_for_model("gxetensor")
@@ -5087,7 +4851,7 @@ def main():
     if "SampleID" not in env.columns:
         env.rename(columns={env.columns[0]: "SampleID"}, inplace=True)
     if "Location" in env.columns:
-        env["Location"] = env["Location"].astype(str).str.strip()
+        _normalize_location_column(env, "environment data")
     if "Year" in env.columns:
         env["Year"] = env["Year"].astype(str).str.strip()
     env_cols = [c for c in env.columns if c not in {"SampleID", "Location", "Year"}]
@@ -5112,7 +4876,7 @@ def main():
 
     # Normalize metadata text columns before coding
     if "Location" in meta.columns:
-        meta["Location"] = meta["Location"].astype(str).str.strip()
+        _normalize_location_column(meta, "metadata")
     if "Year" in meta.columns:
         meta["Year"] = meta["Year"].astype(str).str.strip()
 
@@ -5145,7 +4909,7 @@ def main():
         env["Year_Code"] = 0
         year_map = {}
 
-    # Seeding date -> day-of-year (captures planting timing)
+    # Seeding date â†’â€™ day-of-year (captures planting timing)
     if "SD" in meta.columns:
         try:
             meta["SeedingDOY"] = pd.to_datetime(meta["SD"], errors="coerce").dt.dayofyear
@@ -5523,7 +5287,7 @@ def main():
             overlap_tt = set_tr & set_te
             overlap_vt = set_va & set_te
             if overlap_tv or overlap_tt or overlap_vt:
-                logging.error(f"Leakage detected across splits: train_intersect_val={overlap_tv}, train_intersect_test={overlap_tt}, val_intersect_test={overlap_vt}")
+                logging.error(f"Leakage detected across splits: trainÃ¢Ë†Â©val={overlap_tv}, trainÃ¢Ë†Â©test={overlap_tt}, valÃ¢Ë†Â©test={overlap_vt}")
                 return
         metadata_key_col = "SplitKey"
     else:
@@ -5556,6 +5320,39 @@ def main():
             test_samples = test_sid
         metadata_key_col = "SampleID"
     sample_key_to_pop = meta.set_index(metadata_key_col)["Pop_Code"].to_dict()
+
+    # Build the aux-trait source table (opt-in MTL). Keyed by metadata_key_col so aux
+    # values can be looked up by the same sample_keys the tensor batches carry. If the aux
+    # pheno file is the main phenotype CSV, pull columns straight from `meta`; otherwise
+    # merge a separate file onto meta by genotype SampleID (aux values replicate per env row).
+    AUX_SOURCE_DF = None
+    if USE_AUX:
+        if AUX_PHENO_PATH == METADATA_FILE:
+            keep_cols = [metadata_key_col] + [c for c in AUX_TARGETS if c in meta.columns]
+            AUX_SOURCE_DF = meta[keep_cols].copy()
+            missing = [c for c in AUX_TARGETS if c not in meta.columns]
+            if missing:
+                logging.warning(f"[AUX] trait columns not found in main metadata: {missing}")
+        else:
+            aux_raw = pd.read_csv(AUX_PHENO_PATH, sep=None, engine="python")
+            aux_join_col = "SampleID" if "SampleID" in aux_raw.columns else aux_raw.columns[0]
+            merged = meta[[metadata_key_col, "SampleID_str"]].merge(
+                aux_raw, left_on="SampleID_str", right_on=aux_join_col, how="left"
+            )
+            keep_cols = [metadata_key_col] + [c for c in AUX_TARGETS if c in merged.columns]
+            AUX_SOURCE_DF = merged[keep_cols].copy()
+            missing = [c for c in AUX_TARGETS if c not in merged.columns]
+            if missing:
+                logging.warning(f"[AUX] trait columns not found in aux pheno {AUX_PHENO_PATH}: {missing}")
+        logging.info(
+            f"[AUX] multi-trait MTL enabled: targets={AUX_TARGETS} weight={AUX_LOSS_WEIGHT} "
+            f"pheno={AUX_PHENO_PATH} rows={0 if AUX_SOURCE_DF is None else len(AUX_SOURCE_DF)}"
+        )
+    DOSAGE_OVERRIDE_SAMPLE_TO_SID = {str(k): str(v) for k, v in sample_key_to_sid.items()}
+    DOSAGE_OVERRIDE_ENABLED = False
+    DOSAGE_OVERRIDE_MAP = {}
+    DOSAGE_OVERRIDE_DIM = 0
+    _DOSAGE_OVERRIDE_MISSING_WARNED = False
 
     if not USE_CV:
         assert set(train_samples).isdisjoint(val_samples), "Train/Val overlap detected."
@@ -5669,6 +5466,15 @@ def main():
     # Fit env-only main effect and build residual targets (single-split path only; CV handles per-fold)
     baseline_lookup = {}
     residual_targets = {}
+    nonCV_aux_target_lookup = None
+    if not USE_CV and USE_AUX:
+        nonCV_aux_target_lookup = _build_aux_target_lookup(
+            AUX_SOURCE_DF,
+            train_keys=train_samples,
+            all_keys=list(dict.fromkeys(train_samples + val_samples + test_samples)),
+            key_col=metadata_key_col,
+            aux_cols=AUX_TARGETS,
+        )
     if not USE_CV and use_env_residuals:
         all_keys_for_baseline = list(dict.fromkeys(train_samples + val_samples + test_samples))
         baseline_lookup = fit_env_main_effects(
@@ -5778,6 +5584,28 @@ def main():
             )
         else:
             raise RuntimeError(f"Unsupported GENO_SOURCE={GENO_SOURCE} (expected 'plink' or 'dosage feature').")
+    elif USE_DOSAGE_BRANCH and str(DOSAGE_SOURCE).lower() == "plink":
+        logging.info("Loading PLINK dosage matrix for dosage branch override (complex/tensor path).")
+        try:
+            if geno_matrix is None or geno_ids is None:
+                geno_matrix, geno_ids = load_genotypes_plink(PLINK_PREFIX)
+            geno_matrix = np.nan_to_num(np.asarray(geno_matrix), nan=0.0).astype(np.float32, copy=False)
+            DOSAGE_OVERRIDE_MAP = {str(iid): geno_matrix[i] for i, iid in enumerate(geno_ids)}
+            DOSAGE_OVERRIDE_DIM = int(geno_matrix.shape[1]) if geno_matrix.ndim == 2 else 0
+            DOSAGE_OVERRIDE_ENABLED = bool(DOSAGE_OVERRIDE_MAP) and DOSAGE_OVERRIDE_DIM > 0
+            if DOSAGE_OVERRIDE_ENABLED:
+                logging.info(
+                    "Enabled PLINK dosage override for dosage branch (samples=%d, snps=%d).",
+                    len(DOSAGE_OVERRIDE_MAP),
+                    DOSAGE_OVERRIDE_DIM
+                )
+            else:
+                logging.warning("PLINK dosage override requested but matrix is empty; continuing with tensor dosage.")
+        except Exception as e:
+            logging.warning("Failed to load PLINK dosage override; continuing with tensor dosage. Error: %s", e)
+            DOSAGE_OVERRIDE_ENABLED = False
+            DOSAGE_OVERRIDE_MAP = {}
+            DOSAGE_OVERRIDE_DIM = 0
 
     # Shared dataset kwargs
     base_ds_kwargs = dict(
@@ -5810,6 +5638,15 @@ def main():
     # Dataloaders
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True,
                               num_workers=NUM_WORKERS, collate_fn=collate_fn_main, pin_memory=False)
+    train_eval_loader = DataLoader(
+    train_ds,
+    batch_size=BATCH_SIZE,
+    shuffle=False,
+    num_workers=NUM_WORKERS,
+    collate_fn=collate_fn_main,
+    pin_memory=False
+)
+
     val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE, shuffle=False,
                             num_workers=NUM_WORKERS, collate_fn=collate_fn_main, pin_memory=False)
     test_loader = DataLoader(test_ds, batch_size=BATCH_SIZE, shuffle=False,
@@ -5822,14 +5659,14 @@ def main():
     num_pops = int(meta["Pop_Code"].max()) + 1
     if IS_SIMPLE:
         geno_dim_main = geno_dim_global
-        logging.info(f"Model sizes -> env={num_env_features}, geno_vec_dim={geno_dim_main}, "
+        logging.info(f"Model sizes → env={num_env_features}, geno_vec_dim={geno_dim_main}, "
                      f"locations={num_locations}, years={num_years}, pops={num_pops}")
     else:
         num_chromosomes = int(train_ds.n_chr)
         genomic_feature_dim = int(getattr(train_ds, "feature_dim", 0)) if USE_GENOMIC_TENSORS else None
         max_haplotype_blocks = int(getattr(train_ds, "max_block_id_est", 1) or 1)
         if USE_GENOMIC_TENSORS:
-            logging.info(f"Model sizes -> env={num_env_features}, genomic_feat={genomic_feature_dim}, "
+            logging.info(f"Model sizes â†’â€™ env={num_env_features}, genomic_feat={genomic_feature_dim}, "
                          f"chrom={num_chromosomes}, locations={num_locations}, years={num_years}, pops={num_pops}")
             logging.info(
                 "Tensor feature indices: block_id_raw_idx=%s, te_hotspot_idx=%s, is_te_idx=%s, "
@@ -5853,7 +5690,7 @@ def main():
                 getattr(train_ds, "gene_dist_idx", None),
             )
         else:
-            logging.info(f"Model sizes -> env={num_env_features}, chrom={num_chromosomes}, blocks~{max_haplotype_blocks}, "
+            logging.info(f"Model sizes â†’â€™ env={num_env_features}, chrom={num_chromosomes}, blocksÃ¢â€°Â¤{max_haplotype_blocks}, "
                          f"locations={num_locations}, years={num_years}, pops={num_pops}")
     logging.info("Using model type: simple_rawgeno" if IS_SIMPLE else "Using model type: gxetensor")
 
@@ -5862,63 +5699,73 @@ def main():
     dosage_pca_mean = None
     dosage_pca_std = None
     if USE_DOSAGE_BRANCH:
-        dosage_pca_components, dosage_pca_mean, dosage_pca_std = _load_dosage_pca_assets()
-        # If assets were not provided, compute from PLINK (train IDs) and optionally persist.
-        if (dosage_pca_components is None or dosage_pca_mean is None or dosage_pca_std is None) and not IS_SIMPLE:
-            assets_found = False
-            # Option B: approximate PCA directly from the tensor dosage channel (no PLINK dependency).
-            if USE_GENOMIC_TENSORS and hasattr(train_ds, "dosage_idx") and train_ds.dosage_idx is not None:
-                comps, mean_arr, std_arr = compute_tensor_dosage_pca(
-                    train_ds,
-                    max_samples=4000,
-                    n_components=SIMPLE_GENO_N_PCS
-                )
-                if comps is not None and mean_arr is not None and std_arr is not None:
-                    dosage_pca_components = comps
-                    dosage_pca_mean = mean_arr
-                    dosage_pca_std = std_arr
-                    assets_found = True
-                    logging.info(
-                        "Computed dosage PCA assets from Chromomap tensors (components=%s, mean=%s, std=%s).",
-                        comps.shape,
-                        mean_arr.shape,
-                        std_arr.shape
+        if USE_DOSAGE_PCA:
+            dosage_pca_components, dosage_pca_mean, dosage_pca_std = _load_dosage_pca_assets()
+            # If assets were not provided, compute from PLINK (train IDs) and optionally persist.
+            if (dosage_pca_components is None or dosage_pca_mean is None or dosage_pca_std is None) and not IS_SIMPLE:
+                assets_found = False
+                # Option B: approximate PCA directly from the tensor dosage channel (no PLINK dependency).
+                if (
+                    str(DOSAGE_SOURCE).lower() != "plink"
+                    and USE_GENOMIC_TENSORS
+                    and hasattr(train_ds, "dosage_idx")
+                    and train_ds.dosage_idx is not None
+                ):
+                    comps, mean_arr, std_arr = compute_tensor_dosage_pca(
+                        train_ds,
+                        max_samples=4000,
+                        n_components=SIMPLE_GENO_N_PCS
                     )
-                    _save_dosage_pca_assets(dosage_pca_components, dosage_pca_mean, dosage_pca_std)
-            # Option A fallback: reuse PLINK genotypes when available.
-            if not assets_found and GENO_SOURCE == "plink":
-                try:
-                    geno_matrix, geno_ids = load_genotypes_plink(PLINK_PREFIX)
-                    train_sid_set = {sample_key_to_sid.get(k, k) for k in train_samples}
-                    _, _, assets = build_geno_transform(
-                        geno_matrix,
-                        geno_ids,
-                        list(train_sid_set),
-                        use_pca=SIMPLE_GENO_PCA,
-                        n_pcs=SIMPLE_GENO_N_PCS,
-                        standardize=SIMPLE_GENO_STANDARDIZE,
-                        return_assets=True
-                    )
-                    if assets:
-                        comps, mean_arr, std_arr = assets
-                        if comps is not None:
-                            dosage_pca_components = comps
-                        if mean_arr is not None:
-                            dosage_pca_mean = mean_arr
-                        if std_arr is not None:
-                            dosage_pca_std = std_arr
-                        assets_found = any(x is not None for x in (comps, mean_arr, std_arr))
+                    if comps is not None and mean_arr is not None and std_arr is not None:
+                        dosage_pca_components = comps
+                        dosage_pca_mean = mean_arr
+                        dosage_pca_std = std_arr
+                        assets_found = True
                         logging.info(
-                            "Computed dosage PCA assets from PLINK for complex path (components=%s, mean=%s, std=%s).",
-                            None if comps is None else comps.shape,
-                            None if mean_arr is None else mean_arr.shape,
-                            None if std_arr is None else std_arr.shape
+                            "Computed dosage PCA assets from Chromomap tensors (components=%s, mean=%s, std=%s).",
+                            comps.shape,
+                            mean_arr.shape,
+                            std_arr.shape
                         )
                         _save_dosage_pca_assets(dosage_pca_components, dosage_pca_mean, dosage_pca_std)
-                except Exception as e:
-                    logging.warning("Failed to compute dosage PCA assets from PLINK for complex path: %s", e)
-            if not assets_found:
-                logging.warning("Dosage PCA assets unavailable; dosage branch will fall back to LazyLinear.")
+                # Option A fallback: reuse PLINK genotypes when available.
+                if not assets_found and GENO_SOURCE == "plink":
+                    try:
+                        geno_matrix, geno_ids = load_genotypes_plink(PLINK_PREFIX)
+                        train_sid_set = {sample_key_to_sid.get(k, k) for k in train_samples}
+                        _, _, assets = build_geno_transform(
+                            geno_matrix,
+                            geno_ids,
+                            list(train_sid_set),
+                            use_pca=SIMPLE_GENO_PCA,
+                            n_pcs=SIMPLE_GENO_N_PCS,
+                            standardize=SIMPLE_GENO_STANDARDIZE,
+                            return_assets=True
+                        )
+                        if assets:
+                            comps, mean_arr, std_arr = assets
+                            if comps is not None:
+                                dosage_pca_components = comps
+                            if mean_arr is not None:
+                                dosage_pca_mean = mean_arr
+                            if std_arr is not None:
+                                dosage_pca_std = std_arr
+                            assets_found = any(x is not None for x in (comps, mean_arr, std_arr))
+                            logging.info(
+                                "Computed dosage PCA assets from PLINK for complex path (components=%s, mean=%s, std=%s).",
+                                None if comps is None else comps.shape,
+                                None if mean_arr is None else mean_arr.shape,
+                                None if std_arr is None else std_arr.shape
+                            )
+                            _save_dosage_pca_assets(dosage_pca_components, dosage_pca_mean, dosage_pca_std)
+                    except Exception as e:
+                        logging.warning("Failed to compute dosage PCA assets from PLINK for complex path: %s", e)
+                if not assets_found:
+                    logging.warning("Dosage PCA assets unavailable; dosage branch will fall back to LazyLinear.")
+        else:
+            logging.info(
+                "USE_DOSAGE_PCA=False: dosage branch will use flattened dosage (all SNP positions) without PCA projection."
+            )
     if USE_CV:
         genomic_feature_dim_cv: Optional[int] = None
         num_chromosomes_cv: Optional[int] = None
@@ -6112,8 +5959,18 @@ def main():
                 gxe_moe_hidden_dim=GXE_MOE_HIDDEN_DIM,
                 gxe_moe_temperature=GXE_MOE_TEMPERATURE,
                 interaction_reg_lambda=INTERACTION_REG_LAMBDA,
-                use_env_cross_attention=False
+                use_env_cross_attention=False,
+                n_aux_targets=(len(AUX_TARGETS) if USE_AUX else 0)
             ).to(device)
+            base_model.strict_hotspots = True
+            base_model.hotspot_focus_bias = 0.0
+            if hasattr(base_model, "hotspot_focus_bias_param"):
+                base_model.hotspot_focus_bias_param.data.zero_()
+            base_model.use_functional_pool_bias = False
+
+            base_model.max_sparse_tokens = 128
+            if hasattr(base_model, "habe") and hasattr(base_model.habe, "sparse_injector"):
+                base_model.habe.sparse_injector.max_sparse_tokens = 128
             if USE_DUAL_BRANCH_MODEL and not IS_SIMPLE:
                 base_model = DualBranchGxE(
                     base_model,
@@ -6177,7 +6034,23 @@ def main():
                         split_key_col=metadata_key_col,
                         sampleid_col=sid_col
                     )
-                    cv_jobs.append(("tier2_env", "Within-genotype env holdout (seen genotypes, unseen environments)", fold_triplets_within))
+                    cv_jobs.append(("tier2_env", "Within-genotype env holdout (sparse trial completion; environments shared with training)", fold_triplets_within))
+
+        if EVAL_TIER_MODE in ("env_blocked", "all"):
+            try:
+                from eval_env_blocked import run_environment_blocked_cv
+                _sid_eb = "SampleID_str" if "SampleID_str" in meta.columns else ("SampleID" if "SampleID" in meta.columns else None)
+                if _sid_eb is None or metadata_key_col not in meta.columns:
+                    logging.warning("Environment-blocked CV needs SplitKey + SampleID columns; skipping.")
+                else:
+                    for _eb_mode in ENV_BLOCKED_MODES:
+                        try:
+                            _eb_tr = run_environment_blocked_cv(meta=meta, split_key_col=metadata_key_col, sampleid_col=_sid_eb, block_by=_eb_mode, location_col="Location", year_col="Year", val_frac=WITHIN_GENO_VAL_FRAC, seed=SEED)
+                            cv_jobs.append((f"tier3_{_eb_mode}", f"Environment-blocked ({_eb_mode} held out; truly unseen environment)", _eb_tr))
+                        except Exception as _e:
+                            logging.warning("env-blocked mode %s skipped: %s", _eb_mode, _e)
+            except Exception as _e2:
+                logging.warning("Environment-blocked CV setup failed: %s", _e2)
 
         if not cv_jobs:
             raise RuntimeError("No CV jobs scheduled. Check EVAL_TIER_MODE / USE_GENOTYPE_CV / metadata columns.")
@@ -6283,6 +6156,15 @@ def main():
                     )
                     if not fold_env_target_stats:
                         logging.warning(f"[{job_tag} Fold {fold}] Env z-score enabled but no per-env stats were computed.")
+                fold_aux_target_lookup = None
+                if USE_AUX:
+                    fold_aux_target_lookup = _build_aux_target_lookup(
+                        AUX_SOURCE_DF,
+                        train_keys=tr_ids,
+                        all_keys=list(dict.fromkeys(tr_ids + va_ids + te_ids)),
+                        key_col=metadata_key_col,
+                        aux_cols=AUX_TARGETS,
+                    )
                 if standardize_target:
                     set_target_scaler(fold_target_mean, fold_target_std)
                 else:
@@ -6320,7 +6202,7 @@ def main():
                     genomic_feature_dim_cv = int(getattr(fold_train_ds, "feature_dim", 0))
                     num_chromosomes_cv = int(getattr(fold_train_ds, "n_chr", getattr(fold_train_ds, "num_chromosomes", 0)))
                     logging.info(
-                        f"[{job_tag} Fold {fold}/{total_folds}] Tensor dims -> genomic_feat={genomic_feature_dim_cv}, chrom={num_chromosomes_cv}, "
+                        f"[{job_tag} Fold {fold}/{total_folds}] Tensor dims →’ genomic_feat={genomic_feature_dim_cv}, chrom={num_chromosomes_cv}, "
                         f"locations={num_locations}, years={num_years}, pops={num_pops}"
                     )
                     logging.info(
@@ -6350,6 +6232,14 @@ def main():
 
                 fold_train_loader = DataLoader(fold_train_ds, batch_size=BATCH_SIZE, shuffle=True,
                                                num_workers=NUM_WORKERS, collate_fn=collate_fn_cv, pin_memory=False)
+                fold_train_eval_loader = DataLoader(
+                    fold_train_ds,
+                    batch_size=BATCH_SIZE,
+                    shuffle=False,
+                    num_workers=NUM_WORKERS,
+                    collate_fn=collate_fn_cv,
+                    pin_memory=False
+                )
                 fold_val_loader = DataLoader(fold_val_ds, batch_size=BATCH_SIZE, shuffle=False,
                                              num_workers=NUM_WORKERS, collate_fn=collate_fn_cv, pin_memory=False)
                 fold_test_loader = DataLoader(fold_test_ds, batch_size=BATCH_SIZE, shuffle=False,
@@ -6370,9 +6260,9 @@ def main():
                             if loc_ids is not None and year_ids is not None:
                                 logging.info(
                                     f"[{job_tag} Fold {fold}] Diagnostic loc_ids min={loc_ids.min().item()} max={loc_ids.max().item()} "
-                                    f"(expected 0-{num_locations - 1}), "
+                                    f"(expected 0–{num_locations - 1}), "
                                     f"year_ids min={year_ids.min().item()} max={year_ids.max().item()} "
-                                    f"(expected 0-{num_years - 1})"
+                                    f"(expected 0–{num_years - 1})"
                                 )
                             break
                     except Exception as e:
@@ -6414,6 +6304,7 @@ def main():
                 if USE_RESIDUAL_FOCUS_ARCH and _supports_gxe_stage(model):
                     m = train_and_eval_two_stage(
                         model=model,
+                        train_eval_loader=fold_train_eval_loader,
                         train_loader=fold_train_loader,
                         val_loader=fold_val_loader,
                         test_loader=fold_test_loader,
@@ -6421,6 +6312,8 @@ def main():
                         criterion=criterion,
                         baseline_lookup=fold_baseline_lookup if use_env_residuals else None,
                         env_target_stats=fold_env_target_stats if use_env_zscore else None,
+                        aux_target_lookup=fold_aux_target_lookup,
+                        aux_loss_weight=(AUX_LOSS_WEIGHT if USE_AUX else 0.0),
                         snapshot_cycle_length=SNAPSHOT_CYCLE_LENGTH,
                         snapshot_prefix=snapshot_prefix,
                         monitor_test=False
@@ -6436,25 +6329,61 @@ def main():
                     scheduler = build_scheduler(optimizer, max_epochs=NUM_EPOCHS)
 
                     m = train_and_eval_once(
-                        model, fold_train_loader, fold_val_loader, fold_test_loader, device,
+                        model, fold_train_eval_loader, fold_train_loader, fold_val_loader, fold_test_loader, device,
                         optimizer, scheduler, criterion,
                         max_epochs=NUM_EPOCHS,
                         early_stop_patience=EARLY_STOP_PATIENCE,
                         early_stop_min_delta=EARLY_STOP_MIN_DELTA,
                         baseline_lookup=fold_baseline_lookup if use_env_residuals else None,
                         env_target_stats=fold_env_target_stats if use_env_zscore else None,
+                        aux_target_lookup=fold_aux_target_lookup,
+                        aux_loss_weight=(AUX_LOSS_WEIGHT if USE_AUX else 0.0),
                         snapshot_cycle_length=SNAPSHOT_CYCLE_LENGTH,
                         snapshot_prefix=snapshot_prefix,
                         monitor_test=False
                     )
                 fold_metrics.append(m)
-                preds = predict_with_ids(
-                    model,
-                    fold_test_loader,
-                    device,
-                    baseline_lookup=fold_baseline_lookup if use_env_residuals else None,
-                    env_target_stats=fold_env_target_stats if use_env_zscore else None
-                )
+                _bl = fold_baseline_lookup if use_env_residuals else None
+                _es = fold_env_target_stats if use_env_zscore else None
+                preds = None
+                if USE_VAL_BLEND:
+                    blend_w = _select_val_blend_weight(model, fold_val_loader, device, _bl, _es)
+                    if blend_w is not None:
+                        try:
+                            comp = _probe_dosage_complex(model, fold_test_loader, device, _bl, _es)
+                        except Exception as exc:
+                            logging.warning("[val-blend] test component probe failed (%s); using native output.", exc)
+                            comp = None
+                        if comp is not None:
+                            ids, dosage, complex_, true = comp
+                            blended = blend_w * dosage + (1.0 - blend_w) * complex_
+                            preds = [
+                                {"SampleID": sid, "pred": float(p), "true": float(t)}
+                                for sid, p, t in zip(ids, blended.tolist(), true.tolist())
+                            ]
+                            try:
+                                yt, yp = _filter_finite_pairs(true, blended)
+                                if len(yt) > 1:
+                                    m["test"] = (
+                                        m["test"][0],
+                                        r2_score(yt, yp),
+                                        math.sqrt(mean_squared_error(yt, yp)),
+                                        mean_absolute_error(yt, yp),
+                                        concordance_correlation_coefficient(yt, yp),
+                                    )
+                            except Exception as exc:
+                                logging.warning("[val-blend] test metric recompute failed (%s); left native.", exc)
+                            logging.info("[val-blend] fold %s: applied val-selected w=%.1f to TEST predictions.", fold, blend_w)
+                if preds is None:
+                    if USE_VAL_BLEND:
+                        logging.warning("[val-blend] fold %s: blend not applied (bare-tensor probe unavailable); using native model output.", fold)
+                    preds = predict_with_ids(
+                        model,
+                        fold_test_loader,
+                        device,
+                        baseline_lookup=_bl,
+                        env_target_stats=_es,
+                    )
                 for row in preds:
                     row["fold"] = fold
                 if SAVE_FOLD_PREDICTIONS:
@@ -6485,24 +6414,6 @@ def main():
                 analyze_env_performance(val_preds, meta, metadata_key_col)
                 print("\nTest (UNSEEN environment):")
                 analyze_env_performance(test_preds, meta, metadata_key_col)
-                if RUN_SIGNAL_ANALYSIS:
-                    try:
-                        fold_signal_dir = os.path.join(SIGNAL_ANALYSIS_OUTDIR, f"{job_tag}_fold{fold}")
-                        run_signal_capture_analysis(
-                            model=model,
-                            loader=fold_test_loader,
-                            device=device,
-                            criterion=criterion,
-                            out_dir=fold_signal_dir,
-                            env_data_dict=fold_env_data_dict,
-                            feature_names=getattr(fold_train_ds, "feature_names", []),
-                            baseline_lookup=fold_baseline_lookup if use_env_residuals else None,
-                            env_target_stats=fold_env_target_stats if use_env_zscore else None,
-                            sample_to_pop=sample_key_to_pop,
-                            max_batches=SIGNAL_ANALYSIS_MAX_BATCHES,
-                        )
-                    except Exception as exc:
-                        logging.warning("[%s Fold %d] Signal analysis failed: %s", job_tag, fold, exc)
 
             if not fold_metrics:
                 logging.warning("[%s] No completed folds (likely due to empty splits); skipping metrics/logging.", job_tag)
@@ -6554,6 +6465,11 @@ def main():
                     rmsecv = math.sqrt(mean_squared_error(y_true, y_pred))
                     maecv = mean_absolute_error(y_true, y_pred)
                     ccc_cv = concordance_correlation_coefficient(y_true, y_pred)
+                    ceiling_cv = residual_variance_ceiling(y_true, y_pred)
+                    logging.info(
+                        "[%s] CV pooled trait ceiling ~= 1 - Var(residual)/Var(y): %.4f",
+                        job_tag, ceiling_cv
+                    )
                 else:
                     r2cv = rmsecv = maecv = ccc_cv = float("nan")
                 plt.title(f"CV scatter R2={r2cv:.3f} RMSE={rmsecv:.2f} MAE={maecv:.2f} CCC={ccc_cv:.3f}")
@@ -6640,7 +6556,7 @@ def main():
         genomic_feature_dim_main = int(getattr(train_ds, "feature_dim", 0))
         num_chromosomes_main = int(getattr(train_ds, "n_chr", getattr(train_ds, "num_chromosomes", 0)))
         logging.info(
-            f"Tensor model dims -> genomic_feat={genomic_feature_dim_main}, chrom={num_chromosomes_main}, "
+            f"Tensor model dims â†’â€™ genomic_feat={genomic_feature_dim_main}, chrom={num_chromosomes_main}, "
             f"locations={num_locations}, years={num_years}, pops={num_pops}"
         )
         block_id_idx_main = getattr(train_ds, "block_id_raw_idx", None)
@@ -6790,8 +6706,19 @@ def main():
             gxe_moe_num_experts=GXE_MOE_NUM_EXPERTS,
             gxe_moe_hidden_dim=GXE_MOE_HIDDEN_DIM,
             gxe_moe_temperature=GXE_MOE_TEMPERATURE,
-            interaction_reg_lambda=INTERACTION_REG_LAMBDA
+            interaction_reg_lambda=INTERACTION_REG_LAMBDA,
+            n_aux_targets=(len(AUX_TARGETS) if USE_AUX else 0)
         ).to(device)
+        model.strict_hotspots = True
+        model.hotspot_focus_bias = 0.0
+        if hasattr(model, "hotspot_focus_bias_param"):
+            model.hotspot_focus_bias_param.data.zero_()
+        model.use_functional_pool_bias = False
+
+        # keep sparse branch smaller
+        model.max_sparse_tokens = 128
+        if hasattr(model, "habe") and hasattr(model.habe, "sparse_injector"):
+            model.habe.sparse_injector.max_sparse_tokens = 128
     if USE_DUAL_BRANCH_MODEL:
         model = DualBranchGxE(
             model,
@@ -6851,6 +6778,7 @@ def main():
     if USE_RESIDUAL_FOCUS_ARCH and _supports_gxe_stage(model):
         metrics = train_and_eval_two_stage(
             model=model,
+            train_eval_loader=train_eval_loader,
             train_loader=train_loader,
             val_loader=val_loader,
             test_loader=test_loader,
@@ -6858,6 +6786,8 @@ def main():
             criterion=criterion,
             baseline_lookup=baseline_lookup if not USE_CV else None,
             env_target_stats=env_target_stats if use_env_zscore and not USE_CV else None,
+            aux_target_lookup=nonCV_aux_target_lookup if not USE_CV else None,
+            aux_loss_weight=(AUX_LOSS_WEIGHT if (USE_AUX and not USE_CV) else 0.0),
             snapshot_cycle_length=SNAPSHOT_CYCLE_LENGTH,
             snapshot_prefix="final",
             monitor_test=False
@@ -6865,7 +6795,7 @@ def main():
         best_val_r2 = metrics["val"][1]
         torch.save(model.state_dict(), "best_model_chromomap.pt")
         snapshot_test_metrics = metrics["test"]
-        logging.info(f"Two-stage training complete. Best Val R2 = {best_val_r2:.4f}")
+        logging.info(f"Two-stage training complete. Best Val RÂ² = {best_val_r2:.4f}")
     else:
         if USE_SNAPSHOT_ENSEMBLE and SNAPSHOT_CYCLE_LENGTH > 0:
             os.makedirs(SNAPSHOT_DIR, exist_ok=True)
@@ -6875,8 +6805,16 @@ def main():
                 adv_alpha = min(ENV_ADVERSARY_MAX_ALPHA, epoch / float(max(1, ENV_ADVERSARY_WARMUP_EPOCHS)))
             tr_loss, tr_r2 = train_epoch_regularized(
                 model, train_loader, criterion, optimizer, device,
-                l1_weight=0.0, mixup_alpha=MIXUP_ALPHA, adv_alpha=adv_alpha
+                l1_weight=0.0, mixup_alpha=MIXUP_ALPHA, adv_alpha=adv_alpha,
+                aux_target_lookup=nonCV_aux_target_lookup,
+                aux_loss_weight=(AUX_LOSS_WEIGHT if USE_AUX else 0.0)
             )
+            
+            tr_eval_loss, tr_eval_r2, tr_eval_rmse, tr_eval_mae, tr_eval_ccc = evaluate(
+            model, train_eval_loader, criterion, device,
+            baseline_lookup=baseline_lookup if not USE_CV else None,
+            env_target_stats=env_target_stats if use_env_zscore and not USE_CV else None
+        )
             va_loss, va_r2, va_rmse, va_mae, va_ccc = evaluate(
                 model,
                 val_loader,
@@ -6887,12 +6825,12 @@ def main():
             )
             step_scheduler(scheduler, epoch - 1)
             history.append((tr_loss, tr_r2, va_loss, va_r2))
-            logging.info(f"Epoch {epoch:03d}/{NUM_EPOCHS} | Train Loss {tr_loss:.4f} R2 {tr_r2:.4f} "
+            logging.info(f"Epoch {epoch:03d}/{NUM_EPOCHS} | Train Loss {tr_loss:.4f} R2 {tr_r2:.4f} | " f"TrainEval R2 {tr_eval_r2:.4f} RMSE {tr_eval_rmse:.4f} MAE {tr_eval_mae:.4f} CCC {tr_eval_ccc:.4f} |"
                          f"| Val Loss {va_loss:.4f} R2 {va_r2:.4f} RMSE {va_rmse:.4f} MAE {va_mae:.4f} CCC {va_ccc:.4f}")
             if va_r2 > best_val_r2 + EARLY_STOP_MIN_DELTA:
                 best_val_r2 = va_r2
                 torch.save(model.state_dict(), "best_model_chromomap.pt")
-                logging.info(f"New best model saved (R2 = {va_r2:.4f})")
+                logging.info(f" âœ“ New best model saved (RÂ² = {va_r2:.4f})")
                 epochs_since_improve = 0
             else:
                 epochs_since_improve += 1
@@ -6903,10 +6841,10 @@ def main():
                 snapshot_paths.append(snapshot_path)
 
             if epochs_since_improve >= EARLY_STOP_PATIENCE:
-                logging.info(f"Early stopping triggered (no val R2 improvement in {EARLY_STOP_PATIENCE} epochs).")
+                logging.info(f"Early stopping triggered (no val RÂ² improvement in {EARLY_STOP_PATIENCE} epochs).")
                 break
 
-        logging.info(f"Done. Best Val R2 = {best_val_r2:.4f}")
+        logging.info(f"Done. Best Val RÂ² = {best_val_r2:.4f}")
         if snapshot_paths:
             snapshot_val_metrics = _aggregate_snapshot_metrics(
                 model, val_loader, criterion, device, snapshot_paths,
@@ -6979,6 +6917,11 @@ def main():
     if preds_rows:
         y_true = np.array([r["true"] for r in preds_rows], dtype=float)
         y_pred = np.array([r["pred"] for r in preds_rows], dtype=float)
+        trait_ceiling = residual_variance_ceiling(y_true, y_pred)
+        logging.info(
+            "Final test trait ceiling ~= 1 - Var(residual)/Var(y): %.4f",
+            trait_ceiling
+        )
         plt.figure(figsize=(5, 5))
         plt.scatter(y_true, y_pred, alpha=0.6, edgecolors="none")
         lims = [
@@ -7014,22 +6957,13 @@ def main():
                         fname=f"pairwise_dist_vs_target_diff_{view}.png"
                     )
 
-    if RUN_SIGNAL_ANALYSIS:
-        try:
-            run_signal_capture_analysis(
-                model=model,
-                loader=test_loader,
-                device=device,
-                criterion=criterion,
-                out_dir=SIGNAL_ANALYSIS_OUTDIR,
-                env_data_dict=env_data_dict,
-                feature_names=getattr(train_ds, "feature_names", []),
-                baseline_lookup=baseline_lookup if not USE_CV else None,
-                env_target_stats=env_target_stats if use_env_zscore and not USE_CV else None,
-                sample_to_pop=sample_key_to_pop,
-                max_batches=SIGNAL_ANALYSIS_MAX_BATCHES,
-            )
-        except Exception as exc:
-            logging.warning("Signal analysis failed on final test split: %s", exc)
+    # Analyze model predictions on test set
+    pred_analysis = analyze_model_predictions(
+        model=model,
+        test_loader=test_loader,
+        device=device,
+        target_mean=target_mean if STANDARDIZE_TARGET else None,
+        target_std=target_std if STANDARDIZE_TARGET else None
+    ) if not USE_TEMPORAL_ENV_ENCODING else {}
 if __name__ == "__main__":
     main()

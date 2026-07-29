@@ -1,6 +1,20 @@
 """
 GxE TRANSFORMER WITH TEMPORAL ENVIRONMENTAL ENCODING
 ====================================================
+
+This is the IMPROVED model architecture for beating RÃƒâ€šÃ‚Â²=0.52 baseline.
+
+Key improvements:
+1. Temporal LSTM encoder for time-series environmental data (20 weeks ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â 6 features)
+2. Location and year embeddings (categorical variables)
+3. Population structure embedding (from admixture analysis)
+4. Explicit GxE interaction modeling (bilinear)
+5. Cross-attention between genomic and environmental modalities
+
+Expected RÃƒâ€šÃ‚Â²: 0.52-0.66 (beating EcoPopDL-GP's 0.52)
+
+Author: Modified for rice flowering time prediction
+Date: 2025
 """
 
 import logging
@@ -1379,442 +1393,6 @@ class GxE_FusionHead(nn.Module):
         return out
 
 
-
-class HomeologContextInjector(nn.Module):
-    """Inject a pooled 'homeolog context' message into per-locus embeddings.
-
-    This adds an explicit message passing step over homology/homeolog groups, before block aggregation.
-    """
-
-    def __init__(
-        self,
-        d_model: int,
-        hom_has_idx: Optional[int] = None,
-        hom_gid_idx: Optional[int] = None,
-        hom_hash_indices: Optional[List[int]] = None,
-        sg_idx: Optional[int] = None,
-        hom_group_size_idx: Optional[int] = None,
-        hom_anchor_density_idx: Optional[int] = None,
-        mode: str = "cross_sub",
-        dropout: float = 0.0,
-        scale: float = 1.0,
-        use_loo: bool = True,
-        add_code_embed: bool = True,
-    ):
-        super().__init__()
-        self.d_model = int(d_model)
-        self.hom_has_idx = hom_has_idx
-        self.hom_gid_idx = hom_gid_idx
-        self.hom_hash_indices = list(hom_hash_indices) if hom_hash_indices is not None else None
-        self.sg_idx = sg_idx
-        self.hom_group_size_idx = hom_group_size_idx
-        self.hom_anchor_density_idx = hom_anchor_density_idx
-        self.mode = str(mode)
-        self.scale = float(scale)
-        self.use_loo = bool(use_loo)
-
-        self.ctx_proj = nn.Linear(self.d_model, self.d_model, bias=False)
-        gate_hidden = max(8, self.d_model // 4)
-        self.gate_mlp = nn.Sequential(
-            nn.Linear(3, gate_hidden),
-            nn.GELU(),
-            nn.Linear(gate_hidden, 1),
-        )
-        self.dropout = nn.Dropout(float(dropout))
-
-        self.code_mlp = None
-        if add_code_embed and self.hom_hash_indices is not None and len(self.hom_hash_indices) > 0:
-            code_hidden = max(8, self.d_model // 2)
-            self.code_mlp = nn.Sequential(
-                nn.Linear(len(self.hom_hash_indices), code_hidden),
-                nn.GELU(),
-                nn.Linear(code_hidden, self.d_model),
-            )
-
-    @staticmethod
-    def _pack_bits_to_int(bits: torch.Tensor) -> torch.Tensor:
-        if bits.dtype != torch.bool:
-            bits = bits > 0.5
-        K = bits.size(-1)
-        shifts = (1 << torch.arange(K, device=bits.device, dtype=torch.long))
-        return (bits.to(torch.long) * shifts).sum(dim=-1)
-
-    def forward(self, x: torch.Tensor, feat: torch.Tensor, pad_mask: torch.Tensor) -> torch.Tensor:
-        if x is None or feat is None or pad_mask is None:
-            return x
-        B, L, D = x.shape
-        device = x.device
-
-        # Group ids
-        if self.hom_gid_idx is not None:
-            gid = feat[..., self.hom_gid_idx].long()
-        elif self.hom_hash_indices is not None and len(self.hom_hash_indices) > 0:
-            gid = self._pack_bits_to_int(feat[..., self.hom_hash_indices])
-        else:
-            return x
-
-        valid = (~pad_mask) & (gid > 0)
-        if self.hom_has_idx is not None:
-            valid = valid & (feat[..., self.hom_has_idx] > 0.5)
-        if not valid.any():
-            return x
-
-        # Optional: add a dedicated group-code embedding (from hash bits only)
-        if self.code_mlp is not None:
-            code = feat[..., self.hom_hash_indices].float()
-            code_emb = self.code_mlp(code)
-            x = x + code_emb * valid.unsqueeze(-1).to(code_emb.dtype)
-
-        x_flat = x.reshape(-1, D)
-        gid_flat = gid.reshape(-1)
-        valid_flat = valid.reshape(-1)
-        idx = torch.nonzero(valid_flat, as_tuple=False).squeeze(1)
-        if idx.numel() == 0:
-            return x
-
-        x_v = x_flat[idx].float()  # accumulate in fp32
-        gid_v = gid_flat[idx].long()
-        batch_idx = (idx // L).long()
-        vocab = int(gid_v.max().item()) + 1
-        combined = gid_v + batch_idx * vocab
-
-        uniq, inv = torch.unique(combined, return_inverse=True)
-        n_groups = int(uniq.numel())
-        if n_groups <= 0:
-            return x
-
-        group_sum = torch.zeros((n_groups, D), device=device, dtype=torch.float32)
-        group_sum.index_add_(0, inv, x_v)
-        group_cnt = torch.bincount(inv, minlength=n_groups).to(torch.float32).unsqueeze(1).to(device)
-
-        # Context
-        if self.sg_idx is not None and ("cross" in self.mode):
-            sg = feat[..., self.sg_idx].long().reshape(-1)[idx]
-            mask0 = (sg == 0)
-            mask1 = ~mask0
-
-            sum0 = torch.zeros((n_groups, D), device=device, dtype=torch.float32)
-            cnt0 = torch.zeros((n_groups, 1), device=device, dtype=torch.float32)
-            sum1 = torch.zeros((n_groups, D), device=device, dtype=torch.float32)
-            cnt1 = torch.zeros((n_groups, 1), device=device, dtype=torch.float32)
-
-            if mask0.any():
-                sum0.index_add_(0, inv[mask0], x_v[mask0])
-                cnt0 += torch.bincount(inv[mask0], minlength=n_groups).to(torch.float32).unsqueeze(1).to(device)
-            if mask1.any():
-                sum1.index_add_(0, inv[mask1], x_v[mask1])
-                cnt1 += torch.bincount(inv[mask1], minlength=n_groups).to(torch.float32).unsqueeze(1).to(device)
-
-            sum_i = group_sum[inv]
-            cnt_i = group_cnt[inv]
-            sum0_i, cnt0_i = sum0[inv], cnt0[inv]
-            sum1_i, cnt1_i = sum1[inv], cnt1[inv]
-
-            sg_f = sg.view(-1, 1).to(torch.float32)
-            sum_self = sum0_i * (1.0 - sg_f) + sum1_i * sg_f
-            cnt_self = cnt0_i * (1.0 - sg_f) + cnt1_i * sg_f
-            other_sum = sum_i - sum_self
-            other_cnt = cnt_i - cnt_self
-            denom = other_cnt.clamp_min(1.0)
-            ctx = other_sum / denom
-            ctx = ctx * (other_cnt > 0).to(ctx.dtype)
-        else:
-            sum_i = group_sum[inv]
-            cnt_i = group_cnt[inv]
-            if self.use_loo:
-                denom = (cnt_i - 1.0).clamp_min(1.0)
-                ctx = (sum_i - x_v) / denom
-                ctx = ctx * (cnt_i > 1.0).to(ctx.dtype)
-            else:
-                ctx = sum_i / cnt_i.clamp_min(1.0)
-
-        ctx = self.ctx_proj(ctx)
-
-        # Gate inputs
-        gate_in = torch.zeros((idx.numel(), 3), device=device, dtype=torch.float32)
-        if self.hom_has_idx is not None:
-            gate_in[:, 0] = feat.reshape(-1, feat.size(-1))[idx, self.hom_has_idx].float()
-        else:
-            gate_in[:, 0] = 1.0
-        if self.hom_group_size_idx is not None:
-            gate_in[:, 1] = feat.reshape(-1, feat.size(-1))[idx, self.hom_group_size_idx].float()
-        if self.hom_anchor_density_idx is not None:
-            gate_in[:, 2] = feat.reshape(-1, feat.size(-1))[idx, self.hom_anchor_density_idx].float()
-
-        gate = torch.sigmoid(self.gate_mlp(gate_in))  # [N,1]
-        update = self.dropout(gate * ctx) * self.scale
-        update = update.to(x_flat.dtype)
-
-        x_flat[idx] = x_flat[idx] + update
-        return x_flat.view(B, L, D)
-
-
-class HomeologGroupTokenAttention(nn.Module):
-    """Graphormer-style homeolog-group token layer (efficient, segment attention).
-
-    This adds a second-level representation: one token per homeolog-group (hom_gid > 0)
-    or per (homeolog-group, subgenome) pair when enabled, *present in the batch*, and lets:
-      1) group-tokens attend over their member SNP tokens (segment softmax attention)
-      2) SNP tokens attend over {self, same-subgenome group token} by default, and
-         optionally also the opposite-subgenome group token when cross-subgenome
-         attention is enabled
-
-    Importantly, this avoids building a dense [L x G] attention matrix; all operations
-    are O(N_valid * D).
-
-    Args:
-        d_model: embedding dimension
-        n_heads: number of attention heads
-        dropout: dropout on attention outputs
-        hom_gid_channel_idx: index of the raw hom_gid channel in feat
-        sg_channel_idx: optional subgenome flag channel (0/1) used to split group tokens
-        hom_hash_indices: optional indices for hom_gid_hash_* channels (used to create
-                          a small, collision-tolerant id embedding for each group token)
-        split_subgenome_tokens: if True, build separate A/C tokens per homeolog group
-        cross_subgenome_attention: if True, each SNP can also attend to the opposite-
-                                   subgenome token for the same homeolog group
-        max_groups: optional cap on number of group tokens per batch (keeps largest groups)
-        eps: numerical stability
-    """
-
-    def __init__(
-        self,
-        d_model: int,
-        n_heads: int = 4,
-        dropout: float = 0.05,
-        hom_gid_channel_idx: int = 0,
-        sg_channel_idx: Optional[int] = None,
-        hom_hash_indices: Optional[List[int]] = None,
-        split_subgenome_tokens: bool = False,
-        cross_subgenome_attention: bool = False,
-        max_groups: Optional[int] = 8192,
-        eps: float = 1e-6,
-    ):
-        super().__init__()
-        if d_model % n_heads != 0:
-            raise ValueError(f"d_model ({d_model}) must be divisible by n_heads ({n_heads})")
-        self.d_model = d_model
-        self.n_heads = n_heads
-        self.d_head = d_model // n_heads
-        self.dropout = nn.Dropout(dropout)
-        self.eps = eps
-
-        self.hom_gid_channel_idx = hom_gid_channel_idx
-        self.sg_channel_idx = sg_channel_idx
-        self.hom_hash_indices = list(hom_hash_indices) if hom_hash_indices is not None else []
-        self.split_subgenome_tokens = bool(split_subgenome_tokens) and (self.sg_channel_idx is not None)
-        self.cross_subgenome_attention = bool(cross_subgenome_attention) and self.split_subgenome_tokens
-        self.max_groups = max_groups
-
-        # Optional hashed-id embedding (tiny, collision-tolerant)
-        self.id_embed = nn.Linear(len(self.hom_hash_indices), d_model, bias=False) if len(self.hom_hash_indices) > 0 else None
-        self.group_bias = nn.Parameter(torch.zeros(d_model))
-        self.subgenome_embed = nn.Embedding(2, d_model) if self.split_subgenome_tokens else None
-
-        # group attends to tokens
-        self.group_ln = nn.LayerNorm(d_model)
-        self.q_group = nn.Linear(d_model, d_model, bias=False)
-        self.k_tok = nn.Linear(d_model, d_model, bias=False)
-        self.v_tok = nn.Linear(d_model, d_model, bias=False)
-        self.o_group = nn.Linear(d_model, d_model, bias=False)
-
-        # tokens attend to {self, same-group} or {self, same-group, opposite-group}
-        self.tok_ln = nn.LayerNorm(d_model)
-        self.q_tok = nn.Linear(d_model, d_model, bias=False)
-        self.k_self = nn.Linear(d_model, d_model, bias=False)
-        self.v_self = nn.Linear(d_model, d_model, bias=False)
-        self.k_group = nn.Linear(d_model, d_model, bias=False)
-        self.v_group = nn.Linear(d_model, d_model, bias=False)
-        self.o_tok = nn.Linear(d_model, d_model, bias=False)
-
-    def _segment_softmax(self, scores: torch.Tensor, inv: torch.Tensor, G: int) -> torch.Tensor:
-        """Softmax over variable-length segments (groups).
-
-        scores: [N]
-        inv: [N] with values in [0, G-1] indicating segment id for each element
-        returns: [N] normalized weights per segment
-        """
-        max_scores = torch.full((G,), -1e9, device=scores.device, dtype=scores.dtype)
-        max_scores.scatter_reduce_(0, inv, scores, reduce="amax", include_self=True)
-        exp_scores = torch.exp(scores - max_scores[inv])
-        denom = torch.zeros((G,), device=scores.device, dtype=scores.dtype)
-        denom.index_add_(0, inv, exp_scores)
-        return exp_scores / (denom[inv] + self.eps)
-
-    def forward(self, x: torch.Tensor, feat: torch.Tensor, pad_mask: Optional[torch.Tensor] = None) -> torch.Tensor:
-        """Forward.
-
-        x: [B, L, D]
-        feat: [B, L, F]
-        pad_mask: [B, L] bool (True = padding)
-        """
-        B, L, D = x.shape
-        if pad_mask is None:
-            pad_mask = torch.zeros((B, L), device=x.device, dtype=torch.bool)
-
-        hom_gid = feat[..., self.hom_gid_channel_idx].round().long()
-        valid = (~pad_mask) & (hom_gid > 0)
-        if valid.sum().item() == 0:
-            return x
-
-        group_gid = hom_gid
-        sg = None
-        if self.split_subgenome_tokens:
-            sg = (feat[..., self.sg_channel_idx] > 0.5).long()
-            group_gid = hom_gid * 2 + sg
-
-        # Offset by batch to avoid cross-sample mixing; dynamic vocab avoids id collisions
-        vocab = int(group_gid.max().item()) + 1
-        batch_ids = torch.arange(B, device=x.device, dtype=group_gid.dtype).unsqueeze(1).expand(B, L)
-        full_gid = group_gid + batch_ids * vocab  # [B, L]
-
-        flat_valid = valid.view(-1)
-        flat_idx = flat_valid.nonzero(as_tuple=False).squeeze(1)  # [N]
-        x_flat = x.reshape(-1, D)
-        feat_flat = feat.reshape(-1, feat.shape[-1])
-        gid_flat = full_gid.reshape(-1)
-
-        x_valid = x_flat[flat_idx]     # [N, D]
-        gid_valid = gid_flat[flat_idx] # [N]
-        sg_valid = sg.reshape(-1)[flat_idx] if sg is not None else None
-
-        # Map arbitrary gids to compact [0..G-1]
-        uniq_gid, inv = torch.unique(gid_valid, sorted=True, return_inverse=True)
-        G = int(uniq_gid.numel())
-
-        # Optional cap: keep largest groups only
-        if self.max_groups is not None and G > int(self.max_groups):
-            counts = torch.zeros((G,), device=x.device, dtype=torch.long)
-            counts.index_add_(0, inv, torch.ones_like(inv, dtype=torch.long))
-            keep_groups = torch.topk(counts, k=int(self.max_groups), largest=True).indices
-            keep_tok = torch.isin(inv, keep_groups)
-            if keep_tok.sum().item() == 0:
-                return x
-            flat_idx = flat_idx[keep_tok]
-            x_valid = x_valid[keep_tok]
-            gid_valid = gid_valid[keep_tok]
-            inv = inv[keep_tok]
-            if sg_valid is not None:
-                sg_valid = sg_valid[keep_tok]
-            # Re-index group ids after filtering
-            uniq_gid, inv = torch.unique(gid_valid, sorted=True, return_inverse=True)
-            G = int(uniq_gid.numel())
-
-        other_inv = None
-        other_exists = None
-        if self.cross_subgenome_attention and sg_valid is not None:
-            delta = torch.where(sg_valid > 0, -torch.ones_like(sg_valid), torch.ones_like(sg_valid))
-            other_gid = gid_valid + delta
-            other_pos = torch.searchsorted(uniq_gid, other_gid)
-            other_exists = other_pos < uniq_gid.numel()
-            if other_exists.any():
-                other_match = torch.zeros_like(other_exists)
-                other_match[other_exists] = uniq_gid[other_pos[other_exists]] == other_gid[other_exists]
-                other_exists = other_match
-            other_inv = torch.full_like(inv, -1)
-            if other_exists.any():
-                other_inv[other_exists] = other_pos[other_exists]
-
-        # --- Build group tokens (mean of members) ---
-        group_sum = torch.zeros((G, D), device=x.device, dtype=x.dtype)
-        group_sum.index_add_(0, inv, x_valid)
-        cnt = torch.zeros((G,), device=x.device, dtype=x.dtype)
-        cnt.index_add_(0, inv, torch.ones_like(inv, dtype=x.dtype))
-        group_mean = group_sum / (cnt.unsqueeze(1) + self.eps)
-        group_init = group_mean + self.group_bias
-        if self.subgenome_embed is not None and sg_valid is not None:
-            sg_sum = torch.zeros((G,), device=x.device, dtype=x.dtype)
-            sg_sum.index_add_(0, inv, sg_valid.to(x.dtype))
-            group_sg = (sg_sum / (cnt + self.eps) > 0.5).long()
-            group_init = group_init + self.subgenome_embed(group_sg)
-
-        # Add hashed-id embedding if available
-        if self.id_embed is not None and len(self.hom_hash_indices) > 0:
-            hash_valid = feat_flat[flat_idx][:, self.hom_hash_indices]  # [N, n_hash]
-            hash_sum = torch.zeros((G, hash_valid.shape[-1]), device=x.device, dtype=x.dtype)
-            hash_sum.index_add_(0, inv, hash_valid)
-            hash_mean = hash_sum / (cnt.unsqueeze(1) + self.eps)
-            group_init = group_init + self.id_embed(hash_mean)
-
-        # --- 1) group attends to its member tokens (segment attention) ---
-        group_tokens = self.group_ln(group_init)
-        q = self.q_group(group_tokens).view(G, self.n_heads, self.d_head)
-        k = self.k_tok(x_valid).view(-1, self.n_heads, self.d_head)
-        v = self.v_tok(x_valid).view(-1, self.n_heads, self.d_head)
-
-        scale = 1.0 / math.sqrt(self.d_head)
-        group_out_heads = []
-        for h in range(self.n_heads):
-            qh = q[:, h, :]                      # [G, d_head]
-            kh = k[:, h, :]
-            vh = v[:, h, :]
-            scores = (qh[inv] * kh).sum(dim=-1) * scale  # [N]
-            w = self._segment_softmax(scores, inv, G)     # [N]
-            out_h = torch.zeros((G, self.d_head), device=x.device, dtype=x.dtype)
-            out_h.index_add_(0, inv, w.unsqueeze(-1) * vh)
-            group_out_heads.append(out_h)
-        group_attn = torch.cat(group_out_heads, dim=-1)  # [G, D]
-        group_tokens = group_tokens + self.dropout(self.o_group(group_attn))
-
-        # --- 2) token attends to self + group token(s) ---
-        x_in = self.tok_ln(x_valid)
-        q = self.q_tok(x_in).view(-1, self.n_heads, self.d_head)
-        ks = self.k_self(x_in).view(-1, self.n_heads, self.d_head)
-        vs = self.v_self(x_in).view(-1, self.n_heads, self.d_head)
-
-        g_same = group_tokens[inv]  # [N, D]
-        kg_same = self.k_group(g_same).view(-1, self.n_heads, self.d_head)
-        vg_same = self.v_group(g_same).view(-1, self.n_heads, self.d_head)
-
-        kg_other = None
-        vg_other = None
-        if self.cross_subgenome_attention and other_inv is not None and other_exists is not None:
-            g_other = torch.zeros_like(g_same)
-            if other_exists.any():
-                g_other[other_exists] = group_tokens[other_inv[other_exists]]
-            kg_other = self.k_group(g_other).view(-1, self.n_heads, self.d_head)
-            vg_other = self.v_group(g_other).view(-1, self.n_heads, self.d_head)
-
-        tok_out_heads = []
-        for h in range(self.n_heads):
-            qh = q[:, h, :]
-            s_self = (qh * ks[:, h, :]).sum(dim=-1) * scale
-            s_same = (qh * kg_same[:, h, :]).sum(dim=-1) * scale
-            if kg_other is None or vg_other is None or other_exists is None:
-                m = torch.maximum(s_self, s_same)
-                exp_self = torch.exp(s_self - m)
-                exp_same = torch.exp(s_same - m)
-                denom = exp_self + exp_same + self.eps
-                w_self = exp_self / denom
-                w_same = exp_same / denom
-                out_h = w_self.unsqueeze(-1) * vs[:, h, :] + w_same.unsqueeze(-1) * vg_same[:, h, :]
-            else:
-                s_other = (qh * kg_other[:, h, :]).sum(dim=-1) * scale
-                s_other = s_other.masked_fill(~other_exists, -1e9)
-                m = torch.maximum(torch.maximum(s_self, s_same), s_other)
-                exp_self = torch.exp(s_self - m)
-                exp_same = torch.exp(s_same - m)
-                exp_other = torch.exp(s_other - m) * other_exists.to(s_other.dtype)
-                denom = exp_self + exp_same + exp_other + self.eps
-                w_self = exp_self / denom
-                w_same = exp_same / denom
-                w_other = exp_other / denom
-                out_h = (
-                    w_self.unsqueeze(-1) * vs[:, h, :]
-                    + w_same.unsqueeze(-1) * vg_same[:, h, :]
-                    + w_other.unsqueeze(-1) * vg_other[:, h, :]
-                )
-            tok_out_heads.append(out_h)
-
-        tok_attn = torch.cat(tok_out_heads, dim=-1)  # [N, D]
-        x_valid = x_valid + self.dropout(self.o_tok(tok_attn))
-
-        # Scatter back to [B, L, D]
-        x_out = x_flat.clone()
-        x_out[flat_idx] = x_valid
-        return x_out.view(B, L, D)
-
-
 class GxE_Transformer_Tensor(nn.Module):
     """
     GxE model that consumes ChromoMap hierarchical tensors with HABE.
@@ -1913,30 +1491,7 @@ class GxE_Transformer_Tensor(nn.Module):
         dosage_pca_components: Optional[torch.Tensor] = None,
         dosage_pca_mean: Optional[torch.Tensor] = None,
         dosage_pca_std: Optional[torch.Tensor] = None,
-        hom_has_channel_idx: Optional[int] = None,
-        hom_gid_channel_idx: Optional[int] = None,
-        hom_hash_indices: Optional[List[int]] = None,
-        hom_group_size_channel_idx: Optional[int] = None,
-        hom_anchor_density_channel_idx: Optional[int] = None,
-        sg_channel_idx: Optional[int] = None,
-        use_homeolog_context: bool = False,
-        homeolog_context_mode: str = "cross_sub",
-        homeolog_context_scale: float = 1.0,
-        homeolog_context_dropout: float = 0.0,
-        homeolog_context_add_code_embed: bool = True,
-        use_homeolog_group_tokens: bool = False,
-        homeolog_group_token_heads: int = 4,
-        homeolog_group_token_dropout: float = 0.05,
-        homeolog_group_token_layers: int = 1,
-        homeolog_group_token_use_hash_id: bool = True,
-        homeolog_group_token_split_subgenome: bool = False,
-        homeolog_group_token_cross_subgenome_attention: bool = False,
-        homeolog_group_token_max_groups: Optional[int] = 8192,
-        use_homeolog_auxiliary: bool = False,
-        homeolog_aux_hidden_dim: Optional[int] = None,
-        homeolog_aux_stop_grad_target: bool = True,
-        homeolog_aux_cosine_weight: float = 1.0,
-        homeolog_aux_huber_weight: float = 0.25,
+        n_aux_targets: int = 0
     ):
         super().__init__()
         self.embed_dim = int(embed_dim)
@@ -1952,52 +1507,6 @@ class GxE_Transformer_Tensor(nn.Module):
         self.te_channel_idx = te_channel_idx if te_channel_idx is not None else None
         self.genic_channel_idx = genic_channel_idx if genic_channel_idx is not None else None
         self.promoter_channel_idx = promoter_channel_idx if promoter_channel_idx is not None else None
-        # Homeolog / homology channels (optional)
-        self.hom_has_channel_idx = hom_has_channel_idx
-        self.hom_gid_channel_idx = hom_gid_channel_idx
-        self.hom_hash_indices = hom_hash_indices
-        self.hom_group_size_channel_idx = hom_group_size_channel_idx
-        self.hom_anchor_density_channel_idx = hom_anchor_density_channel_idx
-        self.sg_channel_idx = sg_channel_idx
-        self.use_homeolog_context = bool(use_homeolog_context)
-        self.homeolog_context_mode = str(homeolog_context_mode)
-        self.homeolog_context_scale = float(homeolog_context_scale)
-        self.homeolog_context_add_code_embed = bool(homeolog_context_add_code_embed)
-        self.homeolog_group_token_split_subgenome = bool(homeolog_group_token_split_subgenome)
-        self.homeolog_group_token_cross_subgenome_attention = bool(homeolog_group_token_cross_subgenome_attention)
-        if self.homeolog_group_token_split_subgenome and self.sg_channel_idx is None:
-            logging.warning(
-                "homeolog_group_token_split_subgenome requested but sg_channel_idx is missing; disabling split."
-            )
-            self.homeolog_group_token_split_subgenome = False
-            self.homeolog_group_token_cross_subgenome_attention = False
-        self.use_homeolog_auxiliary = bool(use_homeolog_auxiliary)
-        self.homeolog_aux_stop_grad_target = bool(homeolog_aux_stop_grad_target)
-        self.homeolog_aux_cosine_weight = float(homeolog_aux_cosine_weight)
-        self.homeolog_aux_huber_weight = float(homeolog_aux_huber_weight)
-        self.homeolog_aux_predictor: Optional[nn.Sequential] = None
-        if self.use_homeolog_auxiliary and (
-            self.hom_gid_channel_idx is None or self.sg_channel_idx is None
-        ):
-            logging.warning(
-                "use_homeolog_auxiliary requested but hom_gid_channel_idx/sg_channel_idx is missing; disabling auxiliary loss."
-            )
-            self.use_homeolog_auxiliary = False
-        if self.use_homeolog_auxiliary and (
-            self.homeolog_aux_cosine_weight <= 0.0 and self.homeolog_aux_huber_weight <= 0.0
-        ):
-            logging.warning(
-                "use_homeolog_auxiliary requested but all auxiliary component weights are non-positive; disabling auxiliary loss."
-            )
-            self.use_homeolog_auxiliary = False
-        if self.use_homeolog_auxiliary:
-            aux_hidden = max(8, int(homeolog_aux_hidden_dim or embed_dim))
-            self.homeolog_aux_predictor = nn.Sequential(
-                nn.Linear(embed_dim, aux_hidden),
-                nn.LayerNorm(aux_hidden),
-                nn.GELU(),
-                nn.Linear(aux_hidden, embed_dim),
-            )
         self.dosage_channel_idx = dosage_channel_idx if dosage_channel_idx is not None else None
         self.te_distance_channel_idx = te_distance_channel_idx if te_distance_channel_idx is not None else None
         self.gene_distance_channel_idx = gene_distance_channel_idx if gene_distance_channel_idx is not None else None
@@ -2338,6 +1847,16 @@ class GxE_Transformer_Tensor(nn.Module):
 
         fused_dim = embed_dim + env_embed_dim + location_embed_dim + year_embed_dim + pop_embed_dim
         self.fused_dim = fused_dim
+        # Opt-in multi-trait auxiliary heads (hard parameter sharing) off the shared fused
+        # representation. When n_aux_targets == 0 no modules are registered, so no new
+        # parameters exist and forward never emits 'aux_preds' -> byte-identical.
+        self.n_aux_targets = int(n_aux_targets)
+        if self.n_aux_targets > 0:
+            self.aux_heads = nn.ModuleList(
+                [nn.Linear(self.fused_dim, 1) for _ in range(self.n_aux_targets)]
+            )
+        else:
+            self.aux_heads = None
         self.main_head_dropout = float(dropout if main_head_dropout is None else main_head_dropout)
         self.interaction_head_dropout = float(dropout if interaction_head_dropout is None else interaction_head_dropout)
         self.fuse_dropout = nn.Dropout(self.main_head_dropout)
@@ -2348,48 +1867,7 @@ class GxE_Transformer_Tensor(nn.Module):
             nn.Dropout(self.main_head_dropout),
             nn.Linear(fused_dim, 1)
         )
-
-        # Optional homeolog context injection (message passing over homology groups)
-        self.homeolog_injector: Optional[HomeologContextInjector] = None
-        if self.use_homeolog_context and (
-            self.hom_has_channel_idx is not None
-            and ((self.hom_gid_channel_idx is not None) or (self.hom_hash_indices is not None and len(self.hom_hash_indices) > 0))
-        ):
-            self.homeolog_injector = HomeologContextInjector(
-                d_model=self.embed_dim,
-                hom_has_idx=self.hom_has_channel_idx,
-                hom_gid_idx=self.hom_gid_channel_idx,
-                hom_hash_indices=self.hom_hash_indices,
-                sg_idx=self.sg_channel_idx,
-                hom_group_size_idx=self.hom_group_size_channel_idx,
-                hom_anchor_density_idx=self.hom_anchor_density_channel_idx,
-                mode=self.homeolog_context_mode,
-                dropout=float(homeolog_context_dropout),
-                scale=self.homeolog_context_scale,
-                use_loo=True,
-                add_code_embed=self.homeolog_context_add_code_embed,
-            )
-        # Environment -to- SNP modulation (element-wise scaling before pooling).
-
-        # Optional: second-level homeolog-group tokens (Graphormer-style)
-        self.homeolog_group_token_layers: Optional[nn.ModuleList] = None
-        if use_homeolog_group_tokens and (self.hom_gid_channel_idx is not None):
-            hash_idx = self.hom_hash_indices if (homeolog_group_token_use_hash_id and self.hom_hash_indices) else None
-            n_layers = max(1, int(homeolog_group_token_layers))
-            self.homeolog_group_token_layers = nn.ModuleList([
-                HomeologGroupTokenAttention(
-                    d_model=embed_dim,
-                    n_heads=int(homeolog_group_token_heads),
-                    dropout=float(homeolog_group_token_dropout),
-                    hom_gid_channel_idx=int(self.hom_gid_channel_idx),
-                    sg_channel_idx=(int(self.sg_channel_idx) if self.sg_channel_idx is not None else None),
-                    hom_hash_indices=hash_idx,
-                    split_subgenome_tokens=self.homeolog_group_token_split_subgenome,
-                    cross_subgenome_attention=self.homeolog_group_token_cross_subgenome_attention,
-                    max_groups=homeolog_group_token_max_groups,
-                )
-                for _ in range(n_layers)
-            ])
+        # Environment ÃƒÂ¢Ã¢â‚¬ Ã¢â‚¬â„¢ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ SNP modulation (element-wise scaling before pooling).
         self.snp_env_modulation = nn.Sequential(
             nn.Linear(env_embed_dim, embed_dim),
             nn.LayerNorm(embed_dim),
@@ -2616,6 +2094,11 @@ class GxE_Transformer_Tensor(nn.Module):
 
         func_type_ids = None
         is_hotspot = torch.zeros_like(pad_mask, dtype=torch.bool)
+        # [FIX] always bind these; previously assigned only when annotation channels exist,
+        # which crashed the strict-hotspot step for tensors without gene/TE/promoter channels.
+        is_genic = torch.zeros_like(pad_mask, dtype=torch.bool)
+        is_promoter = torch.zeros_like(pad_mask, dtype=torch.bool)
+        is_te = torch.zeros_like(pad_mask, dtype=torch.bool)
         hotspot_source_found = False
         use_func_context = (
             self.use_functional_hotspots
@@ -2767,96 +2250,6 @@ class GxE_Transformer_Tensor(nn.Module):
             part = F.pad(part, (0, expected_dim - part.size(1)))
         return part.to(device=device, dtype=dtype)
 
-    def _compute_homeolog_auxiliary(
-        self,
-        x: torch.Tensor,
-        feat: torch.Tensor,
-        pad_mask: torch.Tensor
-    ) -> Dict[str, torch.Tensor]:
-        aux: Dict[str, torch.Tensor] = {}
-        if (
-            not self.use_homeolog_auxiliary
-            or self.homeolog_aux_predictor is None
-            or self.hom_gid_channel_idx is None
-            or self.sg_channel_idx is None
-        ):
-            return aux
-        if x is None or feat is None or pad_mask is None:
-            return aux
-
-        B, L, D = x.shape
-        hom_gid = feat[..., self.hom_gid_channel_idx].round().long()
-        valid = (~pad_mask) & (hom_gid > 0)
-        if self.hom_has_channel_idx is not None and self.hom_has_channel_idx < feat.size(-1):
-            valid = valid & (feat[..., self.hom_has_channel_idx] > 0.5)
-        if valid.sum().item() < 2:
-            return aux
-
-        sg = (feat[..., self.sg_channel_idx] > 0.5).long()
-        flat_idx = valid.reshape(-1).nonzero(as_tuple=False).squeeze(1)
-        if flat_idx.numel() == 0:
-            return aux
-
-        x_valid = x.reshape(-1, D)[flat_idx].float()
-        gid_valid = hom_gid.reshape(-1)[flat_idx]
-        sg_valid = sg.reshape(-1)[flat_idx]
-        batch_idx = (flat_idx // L).long()
-        vocab = int(gid_valid.max().item()) + 1
-        combined_gid = gid_valid + batch_idx * vocab
-        _, inv = torch.unique(combined_gid, return_inverse=True)
-        n_groups = int(inv.max().item()) + 1 if inv.numel() > 0 else 0
-        if n_groups <= 0:
-            return aux
-
-        mask0 = (sg_valid == 0)
-        mask1 = ~mask0
-        sum0 = torch.zeros((n_groups, D), device=x.device, dtype=torch.float32)
-        cnt0 = torch.zeros((n_groups, 1), device=x.device, dtype=torch.float32)
-        sum1 = torch.zeros((n_groups, D), device=x.device, dtype=torch.float32)
-        cnt1 = torch.zeros((n_groups, 1), device=x.device, dtype=torch.float32)
-
-        if mask0.any():
-            sum0.index_add_(0, inv[mask0], x_valid[mask0])
-            cnt0 += torch.bincount(inv[mask0], minlength=n_groups).to(torch.float32).unsqueeze(1).to(x.device)
-        if mask1.any():
-            sum1.index_add_(0, inv[mask1], x_valid[mask1])
-            cnt1 += torch.bincount(inv[mask1], minlength=n_groups).to(torch.float32).unsqueeze(1).to(x.device)
-
-        sum0_i = sum0[inv]
-        cnt0_i = cnt0[inv]
-        sum1_i = sum1[inv]
-        cnt1_i = cnt1[inv]
-        sg_f = sg_valid.view(-1, 1).to(torch.float32)
-        other_sum = sum1_i * (1.0 - sg_f) + sum0_i * sg_f
-        other_cnt = cnt1_i * (1.0 - sg_f) + cnt0_i * sg_f
-        eligible = other_cnt.squeeze(1) > 0
-        n_pairs = int(eligible.sum().item())
-        if n_pairs <= 0:
-            return aux
-
-        pred = self.homeolog_aux_predictor(x_valid[eligible]).float()
-        target = other_sum[eligible] / other_cnt[eligible].clamp_min(1.0)
-        if self.homeolog_aux_stop_grad_target:
-            target = target.detach()
-
-        losses: List[torch.Tensor] = []
-        if self.homeolog_aux_cosine_weight > 0.0:
-            pred_norm = F.normalize(pred, dim=-1, eps=1e-6)
-            target_norm = F.normalize(target, dim=-1, eps=1e-6)
-            cosine_loss = 1.0 - (pred_norm * target_norm).sum(dim=-1)
-            aux["homeolog_aux_cosine"] = cosine_loss.mean().detach()
-            losses.append(self.homeolog_aux_cosine_weight * cosine_loss.mean())
-        if self.homeolog_aux_huber_weight > 0.0:
-            huber_loss = F.smooth_l1_loss(pred, target, reduction="none").mean(dim=-1)
-            aux["homeolog_aux_huber"] = huber_loss.mean().detach()
-            losses.append(self.homeolog_aux_huber_weight * huber_loss.mean())
-        if not losses:
-            return {}
-
-        aux["homeolog_aux_loss"] = sum(losses)
-        aux["homeolog_aux_pairs"] = pred.new_tensor(float(n_pairs)).detach()
-        return aux
-
     def _dosage_branch_forward(
         self,
         genomic: torch.Tensor,
@@ -2974,18 +2367,14 @@ class GxE_Transformer_Tensor(nn.Module):
         env_seq: Optional[torch.Tensor],
         meta_repr: Optional[torch.Tensor],
         disable_modulation: bool = False
-    ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Dict[str, torch.Tensor]]:
+    ) -> Tuple[torch.Tensor, Optional[torch.Tensor]]:
         if self.use_habe:
             feat, block_ids, is_hotspot, pad_mask, func_type_ids = self._prepare_habe_inputs(genomic, mask)
             bae_inputs = self._prepare_bae_inputs(feat, pad_mask)
             if bae_inputs is not None and self.genomic_bae is not None:
                 x = self.genomic_bae(*bae_inputs)
             else:
-                proj_feat = feat
-                if self.hom_gid_channel_idx is not None:
-                    proj_feat = proj_feat.clone()
-                    proj_feat[..., self.hom_gid_channel_idx] = 0.0
-                x = self.genomic_feature_proj(proj_feat)
+                x = self.genomic_feature_proj(feat)
             if (
                 not disable_modulation
                 and self.use_env_film
@@ -3005,16 +2394,7 @@ class GxE_Transformer_Tensor(nn.Module):
             ):
                 meta_gamma = self.meta_to_gamma(meta_repr).unsqueeze(1) * self.meta_film_scale
                 meta_beta = self.meta_to_beta(meta_repr).unsqueeze(1) * self.meta_film_scale
-                x = x * (1.0 + meta_gamma) + meta_beta            # Inject cross-homeolog context at SNP level before block aggregation
-            if self.homeolog_injector is not None:
-                x = self.homeolog_injector(x, feat, pad_mask)
-
-            if self.homeolog_group_token_layers is not None:
-                for _gt_layer in self.homeolog_group_token_layers:
-                    x = _gt_layer(x, feat, pad_mask)
-
-            genomic_aux = self._compute_homeolog_auxiliary(x, feat, pad_mask)
-
+                x = x * (1.0 + meta_gamma) + meta_beta
             tokens, token_mask, hotspot_mask, func_type_tokens = self.habe(
                 x,
                 block_ids,
@@ -3095,7 +2475,7 @@ class GxE_Transformer_Tensor(nn.Module):
                 env_bias = (encoded * env_proj).sum(dim=-1) / (encoded.size(-1) ** 0.5)
                 bias = env_bias if bias is None else bias + env_bias
             g_repr = self.genomic_pool(encoded, mask=token_mask, bias=bias)
-            return g_repr, None, genomic_aux
+            return g_repr, None
 
         env_mod = None
         env_seq_arg = env_seq
@@ -3118,7 +2498,7 @@ class GxE_Transformer_Tensor(nn.Module):
             env_repr=env_repr_arg,
             meta_repr=meta_repr_arg
         )
-        return g_repr, per_chrom, {}
+        return g_repr, per_chrom
 
     def forward(
         self,
@@ -3151,7 +2531,7 @@ class GxE_Transformer_Tensor(nn.Module):
         year_emb = self.year_embedding(year_ids)
         pop_emb = self.pop_embedding(pop_ids)
         meta_repr = torch.cat([loc_emb, year_emb, pop_emb], dim=-1)
-        g_repr, per_chrom, genomic_aux = self._encode_genomic(genomic, mask, env_repr_main, env_seq_main, meta_repr)
+        g_repr, per_chrom = self._encode_genomic(genomic, mask, env_repr_main, env_seq_main, meta_repr)
 
         if self.training and self.modality_dropout_p > 0.0:
             drop = torch.rand(1, device=g_repr.device).item()
@@ -3183,9 +2563,6 @@ class GxE_Transformer_Tensor(nn.Module):
                 aux = out_raw[1]
         else:
             out = out_raw
-        if genomic_aux:
-            aux = aux or {}
-            aux.update(genomic_aux)
 
         final_out = out
         dosage_pred = None
@@ -3230,6 +2607,10 @@ class GxE_Transformer_Tensor(nn.Module):
             aux["dosage_gate"] = dosage_weights
             aux["complex_pred"] = complex_pred
 
+        if getattr(self, "aux_heads", None) is not None:
+            aux = aux or {}
+            aux["aux_preds"] = torch.cat([head(fused) for head in self.aux_heads], dim=1)
+
         self._last_fused = fused
         self._last_genomic = g_repr
         self._last_per_chrom = per_chrom
@@ -3261,7 +2642,7 @@ class GxE_Transformer_Tensor(nn.Module):
         year_emb = self.year_embedding(year_ids)
         pop_emb = self.pop_embedding(pop_ids)
         meta_repr = torch.cat([loc_emb, year_emb, pop_emb], dim=-1)
-        g_repr, per_chrom, _ = self._encode_genomic(genomic, mask, env_repr_main, env_seq_main, meta_repr)
+        g_repr, per_chrom = self._encode_genomic(genomic, mask, env_repr_main, env_seq_main, meta_repr)
         fused = torch.cat([g_repr, env_repr_main, loc_emb, year_emb, pop_emb], dim=-1)
         self._last_per_chrom = per_chrom
         ge_feat = self.fusion.compute_ge_feat(g_repr, env_repr_gxe if env_repr_gxe is not None else env_repr_main)
@@ -3278,7 +2659,7 @@ class GxE_Transformer_Tensor(nn.Module):
             env_seq=None,
             meta_repr=None,
             disable_modulation=True
-        )[:2]
+        )
         self._last_genomic = g_repr
         self._last_per_chrom = per_chrom
         return g_repr
@@ -3711,3 +3092,8 @@ def preprocess_environmental_data(
             outs.append((mean, std))
         return tuple(outs)
     return env_tensor, location_ids, year_ids, location_map, year_map
+
+
+# ============================================================================
+# EXAMPLE USAGE
+# ============================================================================

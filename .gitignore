@@ -1,0 +1,22 @@
+# --- run outputs (large; never commit) ---
+runs/
+tmp/
+*.pt
+*.pth
+best_model*.pt
+
+# --- python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+
+# --- logs / scratch ---
+*.log
+nohup*.out
+*.pre_mt.*
+
+# --- OS / filesystem artifacts ---
+.DS_Store
+.nfs*
+Thumbs.db

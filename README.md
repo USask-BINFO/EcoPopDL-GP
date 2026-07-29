@@ -297,6 +297,63 @@ Notes:
 
 *High-level architecture of the genomic tensor branch, metadata branch, weather branch, dosage branch, and the final fusion used for phenotype prediction. The homoeolog-context block is used in polyploid mode only.*
 
+## Running the best (automated) model
+
+`run.sh` runs the base model. To run the **automated configuration reported in the paper**, use the
+wrapper `run_best_model.sh`. It accepts every `run.sh` option and adds the automated-model settings
+on top:
+
+```bash
+./run_best_model.sh \
+  --mode diploid \
+  --workdir out/d1_yield \
+  --genotype-source /data/D1/geno \
+  --trait-file /data/D1/pheno.csv \
+  --trait-col Yield \
+  --trial-file /data/D1/trials.csv
+```
+
+The learnable gate is enabled by default and needs no extra files. The two optional components
+switch on only when you supply their inputs:
+
+```bash
+./run_best_model.sh \
+  --aux-pheno /data/D1/aux_traits.csv --aux-targets Flowering,SW \
+  --genic-ids /data/D1/genic_snps.txt \
+  ... # plus the usual run.sh options
+```
+
+| Wrapper flag | Effect |
+|---|---|
+| *(default)* | **Learnable dual-branch gate**: the additive/deep mixing weight `w` is learned instead of fixed |
+| `--aux-pheno` + `--aux-targets` | **Multi-trait auxiliary heads**: extra traits supervise a shared representation |
+| `--aux-weight FLOAT` | Loss weight for the auxiliary heads (default `0.2`) |
+| `--genic-ids FILE` | **Genic-restricted additive branch**: keep only the listed SNP IDs in the additive branch |
+| `--no-gate` | Disable the learnable gate (revert to the fixed mixing weight) |
+| `--seed INT` | Set the random seed |
+
+### Advanced: configuring the engine directly
+
+Both training engines are configured through `ECOPOP_*` environment variables, so any option can be
+set without editing code. The most useful ones:
+
+| Variable | Purpose |
+|---|---|
+| `ECOPOP_DOSAGE_WEIGHT` | `learn` for the learnable gate, otherwise a fixed weight |
+| `ECOPOP_AUX_PHENO`, `ECOPOP_AUX_TARGETS`, `ECOPOP_AUX_WEIGHT` | Multi-trait auxiliary heads |
+| `ECOPOP_ADDITIVE_GENIC_IDS` | Restrict the additive branch to a SNP-ID list |
+| `ECOPOP_EVAL_MODE` | `env` (env-CV), `geno` (geno-CV), `env_blocked`, or `population` |
+| `ECOPOP_ENV_BLOCKED_MODES` | Which blocking schemes to run: `location`, `year`, `loc_year` |
+| `ECOPOP_ENV_WINDOW_FRAC` | Fraction of the season to use, for partial-season / early selection |
+| `ECOPOP_USE_BAE`, `ECOPOP_USE_HABE`, `ECOPOP_USE_ADDITIVE`, `ECOPOP_USE_POP`, `ECOPOP_ABLATE_WEATHER` | Component ablations |
+| `ECOPOP_SEED`, `ECOPOP_CV_FOLDS` | Reproducibility and fold count |
+| `ECOPOP_3D_CHANNELS`, `ECOPOP_3D_PATH` | Optional 3D-genome channels (polyploid engine only) |
+
+`run_experiments.sh` drives the full evaluation protocol (env-CV, geno-CV, environment-blocked,
+population-blocked, ablations, partial-season) across tasks, and the helpers in `Scripts/Model/`
+(`emit_best_reg.py`, `collect_metrics.py`, `build_results_table.py`, `eval_env_blocked.py`,
+`aggregate_multiseed.py`) reproduce the tables in the manuscript.
+
 ## Quick start examples
 
 Unless you need to force a specific grouping scheme, leave `--group-cols` unset and let the phenotype helper infer replicate-preserving grouping automatically.

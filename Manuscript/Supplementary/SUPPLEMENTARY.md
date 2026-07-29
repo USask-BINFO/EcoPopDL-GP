@@ -1,7 +1,7 @@
 # Supplementary Figures and Tables for EcoPopDL-GP
 
 This page hosts the supplementary material that will be linked from the manuscript.
-Figure numbering and titles follow the manuscript order exactly for **Figures S2-S6** and **Tables S2-S5**.
+Figure numbering and titles follow the manuscript order exactly for **Figures S2-S6** and **Tables S3-S13**.
 
 ## Supplementary Figures
 
@@ -308,3 +308,128 @@ Entries summarize the dominant patterns observed after sample-wise permutation o
 | D3 | SW | Weak, diffuse profile with no single dominant window; modest mid-to-late peaks with broad uncertainty | Late-stage heat-related degree days strongest; smaller positive changes for late maximum temperature and drought/Vapour pressure deficit-related features; most other cells weak or near zero | BAE strongest by a wide margin; population and full-environment perturbations small; HABE and threshold perturbations near zero | All displayed groups positive; moderate heterogeneity, with one lower-performing group showing wide uncertainty | -- |
 | D4 | Oil content | Later-window emphasis | Late heat, Vapour pressure deficit, drought | BAE and environment strongest; HABE secondary | All displayed groups positive | Small |
 | D4 | DTF | Later-window emphasis | Daylength, growing degree days, photo-thermal temperature | Environment strongest; BAE and HABE smaller | All displayed groups positive | Small |
+
+### Table S7. Hyperparameter search spaces for the tuned machine-learning baselines.
+
+| Model | Hyperparameter | Search values |
+|---|---|---|
+| RF | number of trees | 200, 500, 1000 |
+| RF | maximum depth | 5, 10, 20, none |
+| RF | feature fraction | sqrt, 0.3, 1.0 |
+| RF | minimum samples per leaf | 1, 3, 5 |
+| XGB | number of trees | 200, 500, 1000 |
+| XGB | maximum depth | 3, 5, 8 |
+| XGB | learning rate | 0.01, 0.03, 0.1 |
+| XGB | subsample | 0.7, 1.0 |
+| XGB | column subsample | 0.7, 1.0 |
+| Ridge (rrBLUP) | regularization strength (alpha) | 0.001, 0.01, 0.1, 1, 10, 100 |
+| GBLUP | (none tuned) | genomic relationship kernel; standard settings |
+| BRR | (self-determined) | priors estimated from the training data |
+| LMET | (package defaults) | multi-environment machine-learning pipeline defaults |
+| DGxE | (fixed) | same optimizer, early stopping, and epoch budget as EcoPopDL-GP |
+
+_Search strategy:_ randomized search, 20 iterations, inner 3-fold cross-validation on the training split, scored by R². The outer split remains genotype-grouped, so no test observation contributes to hyperparameter selection.
+
+### Table S8. Transfer to entirely unseen environments (environment-blocked cross-validation).
+
+| Dataset | Trait | Held out | Ranking *r* | Absolute R² |
+|---|---|---|---:|---:|
+| D1 | Yield | location | 0.42 | −1.18 |
+| D1 | Yield | year | 0.41 | −2.38 |
+| D1 | Yield | location×year | 0.48 | −1.08 |
+| D1 | DTF | location | 0.60 | −0.46 |
+| D1 | DTF | year | 0.50 | −0.51 |
+| D1 | DTF | location×year | 0.69 | −1.23 |
+| D1 | SW | location | 0.72 | −1.50 |
+| D1 | SW | year | 0.55 | 0.18 |
+| D1 | SW | location×year | 0.72 | -1.10 |
+| D2 | FT | location | 0.46 | −2.19 |
+| D2 | FT | year | 0.41 | −0.21 |
+| D2 | FT | location×year | 0.54 | −0.93 |
+| D3 | Yield | location | {{...}} | {{...}} |
+| D3 | Yield | year | 0.42 | 0.00 |
+| D3 | Yield | location×year | {{...}} | {{...}} |
+| D3 | DTF | location | {{...}} | {{...}} |
+| D3 | DTF | year | {{...}} | {{...}} |
+| D3 | DTF | location×year | {{...}} | {{...}} |
+| D3 | SW | location | {{...}} | {{...}} |
+| D3 | SW | year | {{...}} | {{...}} |
+| D3 | SW | location×year | {{...}} | {{...}} |
+| D4 | Oil content | location | 0.61 | −0.24 |
+| D4 | Oil content | year | 0.65 | −0.32 |
+| D4 | Oil content | location×year | 0.65| -0.21 |
+| D4 | DTF | location | 0.41 | -0.57 |
+| D4 | DTF | year | 0.51 | -5.64 |
+| D4 | DTF | location×year | 0.52 | −5.79 |
+
+### Table S9. Weather-branch and population-metadata ablations (relative to the full model).
+
+| Dataset | Trait | Full R² | −Weather R² | −Weather ΔR² | −Population R² | −Population ΔR² |
+|---|---|---:|---:|---:|---:|---:|
+| D1 | yield | 0.62 | 0.57 | −0.05 | 0.61 | −0.01 | 
+| D1 | DTF | 0.59 | 0.55 | −0.04 | 0.59 | 0.00 | 
+| D1 | SW | 0.59 | 0.56	 | -0.03 | 0.59 | 0.00 | 
+| D2 | FT | 0.50 | 0.46 | −0.04 | 0.50 | 0.00 | 
+| D3 | yield | 0.45 | 0.40 | −0.05 | 0.44 | −0.01 | 
+| D3 | DTF | 0.71 | 0.65 | −0.06 | 0.70 | −0.01 | 
+| D3 | SW | 0.62 | 0.57 | −0.05 | 0.62 | 0.00 | 
+| D4 | Oil content | 0.56 | 0.51 | −0.05 | 0.56 | 0.00 | 
+| D4 | DTF | 0.52 | 0.49 | −0.03 | 0.52 | 0.00 | 
+
+### Table S10. Seed stability of the model (reproducibility across random seeds).
+
+| Dataset | # genotypes | Trait | # seeds | Mean R² | SD | Min | Max | Range |
+|---|---:|---|---:|---:|---:|---:|---:|---:|
+| D1 | 195 | yield | 4 | 0.60 | 0.02 | 0.58 | 0.62 | 0.04 |
+| D1 | 195 | DTF | 4 | 0.57 | 0.01 | 0.55 | 0.59 | 0.03 |
+| D1 | 195 | SW | 4 | 0.56 | 0.04 | 0.53 | 0.59 | 0.08 |
+| D2 | 378 | FT | 4 | 0.48 | 0.03 | 0.45 | 0.51 | 0.06 |
+| D4 | 3{,}032 | Oil content | 4 | 0.56 | 0.01 | 0.56 | 0.56 | 0.01 |
+| D4 | 3{,}032 | DTF | 4 | 0.52 | 0.01 | 0.52 | 0.52 | 0.02 |
+
+
+### Table S11. Early in-season selection (partial-season prediction).
+
+| Dataset | Trait | Full-season R² | 50% windows R² (% of full) | 75% windows R² (% of full) |
+|---|---|---:|---:|---:|
+| D1 | yield | 0.623 | 0.607 (97%) | 0.623 (100%) |
+| D1 | DTF | 0.592 | 0.599 (101%) | 0.628 (106%) |
+| D1 | SW | 0.598 | 0.554 (92%) | 0.580 (97%) |
+| D2 | FT | 0.504 | 0.529 (105%) | 0.533 (106%) |
+| D3 | yield | {{...}} | {{...}} | {{...}} |
+| D3 | DTF | {{...}} | {{...}} | {{...}} |
+| D3 | SW | {{...}} | {{...}} | {{...}} |
+| D4 | Oil content | 0.566 | 0.562 | 0.558 |
+| D4 | DTF | {{...}} | {{...}} | {{...}} |
+
+## Validation of the model
+
+### Table S12. Full-model predictive performance across four generalization regimes.
+
+| Dataset | Trait | env-CV (*r* / R²) | geno-CV (*r* / R²) | env-blocked (*r* / R²) | pop-blocked (*r* / R²) |
+|---|---|---|---|---|---|
+| D1 | yield | 0.79 / 0.62 | 0.76 / 0.58 | 0.44 / −1.55 | 0.75 / 0.38 |
+| D1 | DTF | 0.77 / 0.59 | 0.71 / 0.51 | 0.60 / −0.73 | 0.69 / −0.04 |
+| D1 | SW | 0.77 / 0.59 | 0.72 / 0.52 | 0.66 / −0.81 | 0.68 / 0.09 |
+| D2 | FT | 0.71 / 0.50 | 0.69 / 0.48 | 0.47 / −1.11 | 0.49 / −0.38 |
+| D3 | yield | 0.67 / 0.45 | 0.66 / 0.43 | 0.42 / 0.00 | {{...}} |
+| D3 | DTF | 0.84 / 0.71 | 0.82 / 0.68 | {{...}} | {{...}} |
+| D3 | SW | 0.79 / 0.62 | 0.77 / 0.60 | {{...}} | {{...}} |
+| D4 | Oil content | 0.75 / 0.56 | 0.75 / 0.56 | 0.63 / −0.26 | {{...}} |
+| D4 | DTF | 0.72 / 0.52 | 0.71 / 0.51 | 0.48 / −4.00 | {{...}} |
+
+### Table S13. Scenario-matched ablation of the weather and population branches.
+
+
+| Dataset | Trait | Weather ΔR² · env-CV (redundant) | Weather Δr · env-blocked (informative) | Population ΔR² · env-CV (redundant) | Population Δr · pop-blocked (informative) |
+|---|---|---:|---:|---:|---:|
+| D1 | yield | −0.022 | +0.001 | −0.008 | +0.008 |
+| D1 | DTF | −0.022 | +0.023 | +0.001 | −0.010 |
+| D1 | SW | −0.011 | +0.008 | −0.034 | +0.024 |
+| D2 | FT |  | {{...}} | | {{...}} |
+| D3 | yield | {{...}} | {{...}} | {{...}} | {{...}} |
+| D3 | DTF | {{...}} | {{...}} | {{...}} | {{...}} |
+| D3 | SW | {{...}} | {{...}} | {{...}} | {{...}} |
+| D4 | Oil content | {{...}} | {{...}} | {{...}} | {{...}} |
+| D4 | DTF | {{...}} | {{...}} | {{...}} | {{...}} |
+

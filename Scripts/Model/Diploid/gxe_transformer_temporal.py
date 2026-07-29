@@ -1,6 +1,20 @@
 """
 GxE TRANSFORMER WITH TEMPORAL ENVIRONMENTAL ENCODING
 ====================================================
+
+This is the IMPROVED model architecture for beating RÃƒâ€šÃ‚Â²=0.52 baseline.
+
+Key improvements:
+1. Temporal LSTM encoder for time-series environmental data (20 weeks ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â 6 features)
+2. Location and year embeddings (categorical variables)
+3. Population structure embedding (from admixture analysis)
+4. Explicit GxE interaction modeling (bilinear)
+5. Cross-attention between genomic and environmental modalities
+
+Expected RÃƒâ€šÃ‚Â²: 0.52-0.66 (beating EcoPopDL-GP's 0.52)
+
+Author: Modified for rice flowering time prediction
+Date: 2025
 """
 
 import logging
@@ -383,16 +397,16 @@ class SparseSNPInjector(nn.Module):
 
         pos = torch.arange(L, device=device, dtype=torch.float32).unsqueeze(0).expand(B, L)
 
-        if func_type_ids is not None:
-            # Priority: promoter (2) > genic (1) > TE (3) > others
-            ft = func_type_ids.float()
-            priority = torch.zeros_like(ft)
-            priority = torch.where(ft == 2, torch.full_like(priority, 3.0), priority)
-            priority = torch.where(ft == 1, torch.full_like(priority, 2.0), priority)
-            priority = torch.where(ft == 3, torch.full_like(priority, 1.0), priority)
-            scores = priority - 1e-6 * pos  # tie-break by position (earlier slightly favored)
-        else:
-            scores = -pos
+        # if func_type_ids is not None:
+        #     # Priority: promoter (2) > genic (1) > TE (3) > others
+        #     ft = func_type_ids.float()
+        #     priority = torch.zeros_like(ft)
+        #     priority = torch.where(ft == 2, torch.full_like(priority, 3.0), priority)
+        #     priority = torch.where(ft == 1, torch.full_like(priority, 2.0), priority)
+        #     priority = torch.where(ft == 3, torch.full_like(priority, 1.0), priority)
+        #     scores = priority - 1e-6 * pos  # tie-break by position (earlier slightly favored)
+        # else:
+        scores = -pos
 
         scores = torch.where(sparse_select, scores, pos.new_full((B, L), -float("inf")))
         topk = torch.topk(scores, k=max_sparse, dim=1)
@@ -1476,7 +1490,8 @@ class GxE_Transformer_Tensor(nn.Module):
         dosage_scale: bool = True,
         dosage_pca_components: Optional[torch.Tensor] = None,
         dosage_pca_mean: Optional[torch.Tensor] = None,
-        dosage_pca_std: Optional[torch.Tensor] = None
+        dosage_pca_std: Optional[torch.Tensor] = None,
+        n_aux_targets: int = 0
     ):
         super().__init__()
         self.embed_dim = int(embed_dim)
@@ -1586,7 +1601,11 @@ class GxE_Transformer_Tensor(nn.Module):
         self.dosage_append_realcount = bool(dosage_append_realcount)
         self.dosage_center = bool(dosage_center)
         self.dosage_scale = bool(dosage_scale)
+        self.dosage_context_dim = (
+            self.env_embed_dim + self.location_embed_dim + self.year_embed_dim + self.pop_embed_dim
+        )
         self.simple_branch: Optional[nn.Sequential] = None
+        self.dosage_context_branch: Optional[nn.Sequential] = None
         self.dosage_gate: Optional[nn.Sequential] = None
         self.dosage_blender: Optional[nn.Linear] = None
         self._dosage_branch_warned = False
@@ -1628,6 +1647,13 @@ class GxE_Transformer_Tensor(nn.Module):
                     nn.Dropout(self.dosage_gate_dropout),
                     nn.Linear(hidden2, 1)
                 )
+            self.dosage_context_branch = nn.Sequential(
+                nn.Linear(1 + self.dosage_context_dim, hidden2),
+                nn.LayerNorm(hidden2),
+                nn.GELU(),
+                nn.Dropout(self.dosage_gate_dropout),
+                nn.Linear(hidden2, 1)
+            )
             self.dosage_gate = nn.Sequential(
                 nn.Linear(2, self.dosage_gate_hidden),
                 nn.LayerNorm(self.dosage_gate_hidden),
@@ -1821,6 +1847,16 @@ class GxE_Transformer_Tensor(nn.Module):
 
         fused_dim = embed_dim + env_embed_dim + location_embed_dim + year_embed_dim + pop_embed_dim
         self.fused_dim = fused_dim
+        # Opt-in multi-trait auxiliary heads (hard parameter sharing) off the shared fused
+        # representation. When n_aux_targets == 0 no modules are registered, so no new
+        # parameters exist and forward never emits 'aux_preds' -> byte-identical.
+        self.n_aux_targets = int(n_aux_targets)
+        if self.n_aux_targets > 0:
+            self.aux_heads = nn.ModuleList(
+                [nn.Linear(self.fused_dim, 1) for _ in range(self.n_aux_targets)]
+            )
+        else:
+            self.aux_heads = None
         self.main_head_dropout = float(dropout if main_head_dropout is None else main_head_dropout)
         self.interaction_head_dropout = float(dropout if interaction_head_dropout is None else interaction_head_dropout)
         self.fuse_dropout = nn.Dropout(self.main_head_dropout)
@@ -1831,7 +1867,7 @@ class GxE_Transformer_Tensor(nn.Module):
             nn.Dropout(self.main_head_dropout),
             nn.Linear(fused_dim, 1)
         )
-        # Environment -to- SNP modulation (element-wise scaling before pooling).
+        # Environment ÃƒÂ¢Ã¢â‚¬ Ã¢â‚¬â„¢ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ SNP modulation (element-wise scaling before pooling).
         self.snp_env_modulation = nn.Sequential(
             nn.Linear(env_embed_dim, embed_dim),
             nn.LayerNorm(embed_dim),
@@ -2058,6 +2094,11 @@ class GxE_Transformer_Tensor(nn.Module):
 
         func_type_ids = None
         is_hotspot = torch.zeros_like(pad_mask, dtype=torch.bool)
+        # [FIX] always bind these; previously assigned only when annotation channels exist,
+        # which crashed the strict-hotspot step for tensors without gene/TE/promoter channels.
+        is_genic = torch.zeros_like(pad_mask, dtype=torch.bool)
+        is_promoter = torch.zeros_like(pad_mask, dtype=torch.bool)
+        is_te = torch.zeros_like(pad_mask, dtype=torch.bool)
         hotspot_source_found = False
         use_func_context = (
             self.use_functional_hotspots
@@ -2184,33 +2225,75 @@ class GxE_Transformer_Tensor(nn.Module):
             hotspots = hotspots.masked_fill(pad_mask.unsqueeze(-1), 0.0)
         return dosage_ids, distances, hotspots
 
+    def _dosage_context_part(
+        self,
+        tensor: Optional[torch.Tensor],
+        batch_size: int,
+        expected_dim: int,
+        device: torch.device,
+        dtype: torch.dtype
+    ) -> torch.Tensor:
+        if expected_dim <= 0:
+            return torch.zeros((batch_size, 0), device=device, dtype=dtype)
+        if tensor is None:
+            return torch.zeros((batch_size, expected_dim), device=device, dtype=dtype)
+        part = tensor
+        if part.dim() == 1:
+            part = part.unsqueeze(-1)
+        elif part.dim() > 2:
+            part = part.reshape(part.size(0), -1)
+        if part.dim() != 2 or part.size(0) != batch_size:
+            return torch.zeros((batch_size, expected_dim), device=device, dtype=dtype)
+        if part.size(1) > expected_dim:
+            part = part[:, :expected_dim]
+        elif part.size(1) < expected_dim:
+            part = F.pad(part, (0, expected_dim - part.size(1)))
+        return part.to(device=device, dtype=dtype)
+
     def _dosage_branch_forward(
         self,
         genomic: torch.Tensor,
-        mask: Optional[torch.Tensor]
+        mask: Optional[torch.Tensor],
+        env_repr: Optional[torch.Tensor] = None,
+        loc_emb: Optional[torch.Tensor] = None,
+        year_emb: Optional[torch.Tensor] = None,
+        pop_emb: Optional[torch.Tensor] = None,
+        dosage_override: Optional[torch.Tensor] = None
     ) -> Optional[torch.Tensor]:
-        if not self.use_dosage_branch or self.simple_branch is None or self.dosage_channel_idx is None:
+        if not self.use_dosage_branch or self.simple_branch is None:
             return None
         if genomic.dim() != 4:
             return None
-        if self.dosage_channel_idx < 0 or self.dosage_channel_idx >= genomic.size(-1):
-            return None
-        dosage = genomic[..., self.dosage_channel_idx]
-        dosage = torch.nan_to_num(dosage, nan=0.0)
-        pad_mask = self._normalize_pad_mask(mask, genomic) if mask is not None else None
-        flat = dosage.reshape(dosage.size(0), -1)
-        if pad_mask is not None:
-            pad_flat = pad_mask.reshape(dosage.size(0), -1)
-            # Impute PAD positions with the mean so they become ~0 after mean-centering
-            if (
-                hasattr(self, "dosage_pca_mean")
-                and self.dosage_center
-                and self.dosage_pca_mean.numel() == flat.shape[1]
-            ):
-                mean = self.dosage_pca_mean.unsqueeze(0).expand_as(flat)
-                flat = torch.where(pad_flat, mean, flat)
-            else:
-                flat = flat.masked_fill(pad_flat, 0.0)
+        pad_mask = None
+        if dosage_override is not None:
+            flat = torch.as_tensor(dosage_override, device=genomic.device, dtype=genomic.dtype)
+            if flat.dim() == 1:
+                flat = flat.unsqueeze(0)
+            elif flat.dim() > 2:
+                flat = flat.reshape(flat.size(0), -1)
+            if flat.dim() != 2 or flat.size(0) != genomic.size(0):
+                return None
+        else:
+            if self.dosage_channel_idx is None:
+                return None
+            if self.dosage_channel_idx < 0 or self.dosage_channel_idx >= genomic.size(-1):
+                return None
+            dosage = genomic[..., self.dosage_channel_idx]
+            dosage = torch.nan_to_num(dosage, nan=0.0)
+            pad_mask = self._normalize_pad_mask(mask, genomic) if mask is not None else None
+            flat = dosage.reshape(dosage.size(0), -1)
+            if pad_mask is not None:
+                pad_flat = pad_mask.reshape(dosage.size(0), -1)
+                # Impute PAD positions with the mean so they become ~0 after mean-centering
+                if (
+                    hasattr(self, "dosage_pca_mean")
+                    and self.dosage_center
+                    and self.dosage_pca_mean.numel() == flat.shape[1]
+                ):
+                    mean = self.dosage_pca_mean.unsqueeze(0).expand_as(flat)
+                    flat = torch.where(pad_flat, mean, flat)
+                else:
+                    flat = flat.masked_fill(pad_flat, 0.0)
         if hasattr(self, "dosage_pca_mean") and self.dosage_center:
             if self.dosage_pca_mean.numel() == flat.shape[1]:
                 flat = flat - self.dosage_pca_mean
@@ -2250,8 +2333,25 @@ class GxE_Transformer_Tensor(nn.Module):
             else:
                 n_real = torch.full((flat.size(0), 1), flat.size(1), device=flat.device, dtype=flat.dtype)
             flat = torch.cat([flat, n_real], dim=1)
+        env_ctx = self._dosage_context_part(
+            env_repr, flat.size(0), self.env_embed_dim, flat.device, flat.dtype
+        )
+        loc_ctx = self._dosage_context_part(
+            loc_emb, flat.size(0), self.location_embed_dim, flat.device, flat.dtype
+        )
+        year_ctx = self._dosage_context_part(
+            year_emb, flat.size(0), self.year_embed_dim, flat.device, flat.dtype
+        )
+        pop_ctx = self._dosage_context_part(
+            pop_emb, flat.size(0), self.pop_embed_dim, flat.device, flat.dtype
+        )
+        context = torch.cat([env_ctx, loc_ctx, year_ctx, pop_ctx], dim=-1)
         try:
-            return self.simple_branch(flat).squeeze(-1)
+            dosage_base = self.simple_branch(flat).squeeze(-1)
+            if self.dosage_context_branch is None:
+                return dosage_base
+            context_in = torch.cat([dosage_base.unsqueeze(-1), context], dim=-1)
+            return self.dosage_context_branch(context_in).squeeze(-1)
         except Exception as e:
             if not self._dosage_branch_warned:
                 logging.warning("Dosage branch forward failed; disabling branch. Error: %s", e)
@@ -2410,7 +2510,8 @@ class GxE_Transformer_Tensor(nn.Module):
         pop_ids,
         row_labels=None,
         stage: int = 0,
-        return_components: bool = False
+        return_components: bool = False,
+        dosage_override: Optional[torch.Tensor] = None
     ):
         env_repr_main = self.env_encoder(env_ts)
         env_seq_main = self.env_encoder.last_sequence
@@ -2467,7 +2568,15 @@ class GxE_Transformer_Tensor(nn.Module):
         dosage_pred = None
         dosage_weights = None
         if self.use_dosage_branch and stage == 0:
-            dosage_pred = self._dosage_branch_forward(genomic, mask)
+            dosage_pred = self._dosage_branch_forward(
+                genomic,
+                mask,
+                env_repr=env_repr_main,
+                loc_emb=loc_emb,
+                year_emb=year_emb,
+                pop_emb=pop_emb,
+                dosage_override=dosage_override
+            )
             complex_pred = out
             if complex_pred.dim() > 1:
                 complex_pred = complex_pred.squeeze(-1)
@@ -2497,6 +2606,10 @@ class GxE_Transformer_Tensor(nn.Module):
             aux["dosage_pred"] = dosage_pred
             aux["dosage_gate"] = dosage_weights
             aux["complex_pred"] = complex_pred
+
+        if getattr(self, "aux_heads", None) is not None:
+            aux = aux or {}
+            aux["aux_preds"] = torch.cat([head(fused) for head in self.aux_heads], dim=1)
 
         self._last_fused = fused
         self._last_genomic = g_repr
@@ -2611,7 +2724,8 @@ class DualBranchGxE(nn.Module):
         pop_ids,
         row_labels=None,
         stage: int = 0,
-        return_components: bool = False
+        return_components: bool = False,
+        dosage_override: Optional[torch.Tensor] = None
     ):
         # Interaction branch via the underlying transformer
         base_out = self.base(
@@ -2623,7 +2737,8 @@ class DualBranchGxE(nn.Module):
             pop_ids,
             row_labels=row_labels,
             stage=stage,
-            return_components=True  # always request aux to preserve components
+            return_components=True,  # always request aux to preserve components
+            dosage_override=dosage_override
         )
         if isinstance(base_out, (tuple, list)):
             interaction_pred, aux = base_out
@@ -2978,3 +3093,7 @@ def preprocess_environmental_data(
         return tuple(outs)
     return env_tensor, location_ids, year_ids, location_map, year_map
 
+
+# ============================================================================
+# EXAMPLE USAGE
+# ============================================================================
