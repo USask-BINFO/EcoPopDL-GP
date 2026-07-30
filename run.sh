@@ -27,16 +27,24 @@ Core options:
   --config FILE                      Shell-style config file (KEY=VALUE per line).
   --force                            Re-run stages even when outputs already exist.
 
-Best (automated) model:
-  --best-model                       Enable the automated configuration reported in the paper.
-                                     Turns on the learnable dual-branch gate; the optional
-                                     components below switch on when you supply their inputs.
-  --aux-pheno FILE                   Phenotype table holding auxiliary traits (multi-trait heads).
+Model:
+  The published configuration runs by default. You do not need to switch it on:
+    - the additive/deep mixing weight is learned during training
+    - regularization is chosen by validation from three levels
+    - in --mode polyploid the homoeolog-context branch is enabled automatically
+    - single-trait unless you pass auxiliary traits, which turns on multi-trait heads
+
+  --aux-pheno FILE                   Phenotype table holding auxiliary traits. Supplying this
+                                     with --aux-targets switches the model to multi-trait.
   --aux-targets LIST                 Comma-separated auxiliary trait columns (needs --aux-pheno).
   --aux-weight FLOAT                 Loss weight for the auxiliary heads (default: 0.2).
-  --genic-ids FILE                   SNP-ID list restricting the additive branch to genic SNPs.
-  --no-gate                          Use the fixed mixing weight instead of the learnable gate.
+  --genic-ids FILE                   Optional. SNP-ID list restricting the additive branch to
+                                     genic SNPs. Off unless you pass a file.
   --seed INT                         Random seed for training.
+  --no-auto-reg                      Train once with the engine defaults instead of running the
+                                     three-level regularization search. Faster.
+  --no-gate                          Use a fixed mixing weight instead of the learned one.
+  --best-model                       Accepted for compatibility. Now the default, so it is a no-op.
 
 Genotype entry (recommended):
   --genotype-source PATH             Single genotype input path or prefix.
@@ -770,12 +778,12 @@ run_training_stage() {
   log "Rendering configured training script"
   "${render_cmd[@]}"
 
-  if [[ "$FORCE" -eq 0 && -f "$TRAIN_DIR/best_model_chromomap.pt" ]]; then
-    log "Skipping training stage; found $TRAIN_DIR/best_model_chromomap.pt"
+  if [[ "$FORCE" -eq 0 && -f "$TRAIN_DIR/.train_complete" ]]; then
+    log "Skipping training stage; already completed in $TRAIN_DIR (use --force to retrain)"
     return 0
   fi
 
-  # ---- best (automated) model settings, passed to the engine as ECOPOP_* ----
+  # ---- model settings, passed to the engine as ECOPOP_* ----
   if [[ "$BEST_MODEL" -eq 1 ]]; then
     if [[ -n "$AUX_PHENO" && -z "$AUX_TARGETS" ]] || [[ -z "$AUX_PHENO" && -n "$AUX_TARGETS" ]]; then
       die "--aux-pheno and --aux-targets must be given together."
@@ -789,9 +797,58 @@ run_training_stage() {
                             && export ECOPOP_AUX_WEIGHT="$AUX_WEIGHT"
     [[ -n "$GENIC_IDS" ]]   && export ECOPOP_ADDITIVE_GENIC_IDS="$GENIC_IDS"
 
-    log "Best model: gate=${BEST_GATE}, aux=${AUX_TARGETS:-off}, genic=${GENIC_IDS:-off}"
+    local trait_mode="single-trait"
+    [[ -n "$AUX_TARGETS" ]] && trait_mode="multi-trait (${AUX_TARGETS})"
+    log "Model: gate=${BEST_GATE}, ${trait_mode}, genic-additive=${GENIC_IDS:-off}"
   fi
+
+  # Homoeolog context is a polyploid-only branch; switch it on with the mode.
+  if [[ "$MODE" == "polyploid" ]]; then
+    export ECOPOP_USE_HOMOEOLOG=1
+    log "Polyploid mode: homoeolog-context branch enabled"
+  fi
+
   [[ -n "$TRAIN_SEED" ]] && export ECOPOP_SEED="$TRAIN_SEED"
+
+  # ---- regularization chosen by validation ----
+  # Trains one short model per regularization level, keeps the level with the best
+  # mean validation R2, then trains the final model with it. Costs three extra runs;
+  # pass --no-auto-reg to train once with the engine defaults instead.
+  if [[ "$AUTO_REG" -eq 1 ]]; then
+    local sweep_dir="$TRAIN_DIR/reg_sweep"
+    mkdir -p "$sweep_dir"
+    local task="${TARGET_COL:-trait}"
+    local lv d w
+    for lv in reg_low reg_mid reg_high; do
+      case "$lv" in
+        reg_low)  d=0.1;  w=0.001 ;;
+        reg_mid)  d=0.25; w=0.005 ;;
+        reg_high) d=0.5;  w=0.05  ;;
+      esac
+      if [[ "$FORCE" -eq 0 && -s "$sweep_dir/${task}_${lv}.log" ]]; then
+        log "Reg sweep: reusing $lv"
+        continue
+      fi
+      log "Reg sweep: training $lv (dropout=$d, weight_decay=$w)"
+      (
+        cd "$TRAIN_DIR"
+        ECOPOP_GXE_DROPOUT="$d" ECOPOP_WEIGHT_DECAY="$w" \
+        PYTHONPATH="$model_dir${PYTHONPATH:+:$PYTHONPATH}" \
+          "$PYTHON_BIN" "$model_py"
+      ) > "$sweep_dir/${task}_${lv}.log" 2>&1 || \
+        log "Reg sweep: $lv failed; it will be skipped in the selection"
+    done
+
+    local picked
+    picked="$("$PYTHON_BIN" "$REPO_DIR/Scripts/Model/emit_best_reg.py" \
+      --dir "$sweep_dir" --task "$task" 2>>"$sweep_dir/selection.log")" || picked=""
+    if [[ -n "$picked" ]]; then
+      log "Reg sweep: selected $picked"
+      export $picked
+    else
+      log "Reg sweep: no level could be scored; using engine defaults"
+    fi
+  fi
 
   log "Training $MODE model"
   (
@@ -799,6 +856,7 @@ run_training_stage() {
     PYTHONPATH="$model_dir${PYTHONPATH:+:$PYTHONPATH}" \
       "$PYTHON_BIN" "$model_py"
   )
+  touch "$TRAIN_DIR/.train_complete"
 }
 
 
@@ -1367,9 +1425,12 @@ CONFIG_FILE=""
 FORCE=0
 RUN_ADMIXTURE=1
 
-# Best (automated) model settings; empty means "leave the engine default alone".
-BEST_MODEL=0
+# Model settings. The published configuration is the default: the additive/deep mixing
+# weight is learned, regularization is chosen by validation, and the homoeolog branch
+# switches on automatically in polyploid mode.
+BEST_MODEL=1
 BEST_GATE="learn"
+AUTO_REG=1
 AUX_PHENO=""
 AUX_TARGETS=""
 AUX_WEIGHT="0.2"
@@ -1487,6 +1548,7 @@ while [[ $# -gt 0 ]]; do
     --aux-weight) AUX_WEIGHT="$2"; shift 2 ;;
     --genic-ids) GENIC_IDS="$2"; BEST_MODEL=1; shift 2 ;;
     --no-gate) BEST_GATE="fixed"; shift ;;
+    --no-auto-reg) AUTO_REG=0; shift ;;
     --seed) TRAIN_SEED="$2"; shift 2 ;;
 
     --genotype-source) GENOTYPE_SOURCE="$2"; shift 2 ;;

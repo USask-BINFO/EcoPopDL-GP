@@ -64,6 +64,7 @@ EXPERIMENTS=(
   "abl_add|ECOPOP_USE_ADDITIVE=0"
   "abl_weather|ECOPOP_ABLATE_WEATHER=1"                           # -Weather (comment #2)
   "abl_pop|ECOPOP_USE_POP=0"                                       # -Population (comment #2/#5)
+  "abl_homoeolog|ECOPOP_USE_HOMOEOLOG=0"                           # -Homoeolog (polyploid D4 tasks only)
   "season50|ECOPOP_ENV_WINDOW_FRAC=0.5"                           # E5 early-selection (comment #6)
   "season75|ECOPOP_ENV_WINDOW_FRAC=0.75"
   "pop_blocked|ECOPOP_EVAL_MODE=env_blocked ECOPOP_ENV_BLOCKED_MODES=population ECOPOP_USE_ENV_ZSCORE=0"  # #5 leave-one-population-out

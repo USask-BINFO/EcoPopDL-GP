@@ -172,7 +172,9 @@ SNP_QUALITY_CHANNEL = 'callrate'  # 'maf'|'callrate'|'missing'
 INCLUDE_DENSITY_CHANNEL = True
 
 # TE annotation input/output (set to None to skip)
-TE_GENE_ANNOTATION_TSV = "/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Demo/input_files/Genotype/Axiom_genotype/D3/Genotype_files/te_gene_annotation.tsv"
+# Optional TE annotation TSV. Set by run.sh from --te-annotation or --te-gff.
+# Leave as None to build tensors without TE annotation.
+TE_GENE_ANNOTATION_TSV = None
 SNP_TE_ANNOTATION_OUT = "snps_with_te_annotation.tsv"
 
 # Gene annotation input/output (set to None to skip)

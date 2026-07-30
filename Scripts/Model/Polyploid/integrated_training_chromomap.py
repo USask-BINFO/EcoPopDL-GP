@@ -696,6 +696,7 @@ SEED = int(os.environ.get("ECOPOP_SEED", "20"))
 USE_HABE = os.environ.get("ECOPOP_USE_HABE", "1") == "1"  # [EXP] -HABE ablation
 USE_POPULATION_EMBEDDING = os.environ.get("ECOPOP_USE_POP", "1") == "1"  # [EXP] -Population ablation
 ABLATE_WEATHER = os.environ.get("ECOPOP_ABLATE_WEATHER", "0") == "1"  # [EXP] -Weather ablation
+USE_HOMOEOLOG = os.environ.get("ECOPOP_USE_HOMOEOLOG", "1") == "1"  # [EXP] -Homoeolog ablation
 ENV_WINDOW_FRACTION = float(os.environ.get("ECOPOP_ENV_WINDOW_FRAC", "1.0"))  # [EXP] early-selection partial season
 ENV_BLOCKED_MODES = [m.strip() for m in os.environ.get("ECOPOP_ENV_BLOCKED_MODES", "year,location,loc_year").split(",") if m.strip()]
 def _ecopop_env_hook(_e):
@@ -2455,6 +2456,21 @@ def apply_channel_dropout(
     return genomic, drop_idx
 
 
+HOMOEOLOG_FEATURE_PATTERNS = ["hom_group_id", "hom_pair_id"]
+
+
+def drop_homoeolog_channels(genomic, feature_names):
+    """Zero the homoeolog-context channels for the -Homoeolog ablation."""
+    if not feature_names:
+        return genomic
+    idxs = _find_feature_indices(feature_names, HOMOEOLOG_FEATURE_PATTERNS)
+    if not idxs:
+        return genomic
+    genomic = genomic.clone()
+    genomic[..., idxs] = 0.0
+    return genomic
+
+
 class GenomicOnlyTensorDataset(Dataset):
     """
     Minimal dataset for SSL pretraining: loads only genomic tensor + pad mask by SampleID.
@@ -3040,6 +3056,8 @@ def train_epoch(
                 keep_first_token=BLOCK_MASK_KEEP_FIRST,
                 min_keep_tokens_total=BLOCK_MASK_MIN_KEEP_TOTAL or max(64, int(0.02 * genomic.shape[1] * genomic.shape[2])),
             )
+        if not USE_HOMOEOLOG and tensor_model:
+            genomic = drop_homoeolog_channels(genomic, feature_names)
         if USE_CHANNEL_DROPOUT and tensor_model and model.training and (CHANNEL_GROUP_DROP_P > 0 or CHANNEL_DROP_P > 0):
             genomic, _ = apply_channel_dropout(
                 genomic,
@@ -3196,6 +3214,8 @@ def train_epoch_regularized(
                     keep_first_token=BLOCK_MASK_KEEP_FIRST,
                     min_keep_tokens_total=BLOCK_MASK_MIN_KEEP_TOTAL or max(64, int(0.02 * genomic.shape[1] * genomic.shape[2])),
                 )
+            if not USE_HOMOEOLOG and tensor_model:
+                genomic = drop_homoeolog_channels(genomic, feature_names)
             if USE_CHANNEL_DROPOUT and tensor_model and model.training and (CHANNEL_GROUP_DROP_P > 0 or CHANNEL_DROP_P > 0):
                 genomic, _ = apply_channel_dropout(
                     genomic,
@@ -5745,6 +5765,14 @@ def main():
             )
             if te_hotspot_idx_cv is None:
                 te_hotspot_idx_cv = getattr(model_ds_for_cv, "te_hotspot_idx", None)
+            hom_has_idx_cv = _idx_or_none(feat_names_cv, "hom_has")
+            hom_gid_idx_cv = _idx_or_none(feat_names_cv, "hom_gid_raw")
+            hom_size_idx_cv = _idx_or_none(feat_names_cv, "hom_group_size_norm")
+            hom_anchor_idx_cv = _idx_or_none(feat_names_cv, "hom_anchor_density")
+            hom_hash_idx_cv = [
+                i for i, n in enumerate(feat_names_cv) if str(n).startswith("hom_gid_hash_")
+            ] or None
+            sg_idx_cv = _idx_any(feat_names_cv, ("sg_is_C", "sg_C", "subgenome_flag"))
             te_idx_cv = _idx_or_none(feat_names_cv, "is_te")
             if te_idx_cv is None:
                 te_idx_cv = getattr(model_ds_for_cv, "is_te_idx", None)
@@ -5872,7 +5900,17 @@ def main():
                 gxe_moe_temperature=GXE_MOE_TEMPERATURE,
                 interaction_reg_lambda=INTERACTION_REG_LAMBDA,
                 use_env_cross_attention=False,
-                n_aux_targets=(len(AUX_TARGETS) if USE_AUX else 0)
+                n_aux_targets=(len(AUX_TARGETS) if USE_AUX else 0),
+                hom_has_channel_idx=hom_has_idx_cv,
+                hom_gid_channel_idx=hom_gid_idx_cv,
+                hom_hash_indices=hom_hash_idx_cv,
+                hom_group_size_channel_idx=hom_size_idx_cv,
+                hom_anchor_density_channel_idx=hom_anchor_idx_cv,
+                sg_channel_idx=sg_idx_cv,
+                use_homeolog_context=USE_HOMOEOLOG,
+                use_homeolog_group_tokens=USE_HOMOEOLOG,
+                homeolog_group_token_split_subgenome=True,
+                homeolog_group_token_cross_subgenome_attention=True
             ).to(device)
             base_model.strict_hotspots = True
             base_model.hotspot_focus_bias = 0.0
@@ -6460,6 +6498,14 @@ def main():
         )
         if te_hotspot_idx_main is None:
             te_hotspot_idx_main = getattr(train_ds, "te_hotspot_idx", None)
+        hom_has_idx_main = _idx_or_none(feat_names_main, "hom_has")
+        hom_gid_idx_main = _idx_or_none(feat_names_main, "hom_gid_raw")
+        hom_size_idx_main = _idx_or_none(feat_names_main, "hom_group_size_norm")
+        hom_anchor_idx_main = _idx_or_none(feat_names_main, "hom_anchor_density")
+        hom_hash_idx_main = [
+            i for i, n in enumerate(feat_names_main) if str(n).startswith("hom_gid_hash_")
+        ] or None
+        sg_idx_main = _idx_any(feat_names_main, ("sg_is_C", "sg_C", "subgenome_flag"))
         te_idx_main = _idx_or_none(feat_names_main, "is_te")
         if te_idx_main is None:
             te_idx_main = getattr(train_ds, "is_te_idx", None)
@@ -6585,7 +6631,17 @@ def main():
             gxe_moe_hidden_dim=GXE_MOE_HIDDEN_DIM,
             gxe_moe_temperature=GXE_MOE_TEMPERATURE,
             interaction_reg_lambda=INTERACTION_REG_LAMBDA,
-            n_aux_targets=(len(AUX_TARGETS) if USE_AUX else 0)
+            n_aux_targets=(len(AUX_TARGETS) if USE_AUX else 0),
+            hom_has_channel_idx=hom_has_idx_main,
+            hom_gid_channel_idx=hom_gid_idx_main,
+            hom_hash_indices=hom_hash_idx_main,
+            hom_group_size_channel_idx=hom_size_idx_main,
+            hom_anchor_density_channel_idx=hom_anchor_idx_main,
+            sg_channel_idx=sg_idx_main,
+            use_homeolog_context=USE_HOMOEOLOG,
+            use_homeolog_group_tokens=USE_HOMOEOLOG,
+            homeolog_group_token_split_subgenome=True,
+            homeolog_group_token_cross_subgenome_attention=True
         ).to(device)
         model.strict_hotspots = True
         model.hotspot_focus_bias = 0.0

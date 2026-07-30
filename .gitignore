@@ -20,3 +20,4 @@ nohup*.out
 .DS_Store
 .nfs*
 Thumbs.db
+config/d1_yield.env

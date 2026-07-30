@@ -1,0 +1,24 @@
+# Core: needed for every run
+numpy
+pandas
+scipy
+matplotlib
+scikit-learn
+torch
+tqdm
+pandas-plink
+
+# Environment stage: NASA POWER download and location geocoding
+requests
+geopy
+
+# Genotype stage: VCF handling
+pysam
+cyvcf2
+
+# Baseline comparison models
+xgboost
+
+# Optional. Speeds up gene/TE interval joins during tensor generation.
+# The tensor scripts fall back to a pure-Python join if this is absent.
+pyranges

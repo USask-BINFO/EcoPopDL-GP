@@ -185,8 +185,9 @@ SNP_QUALITY_CHANNEL = 'callrate'  # 'maf'|'callrate'|'missing'
 # Include a per-row local SNP density channel
 INCLUDE_DENSITY_CHANNEL = True
 
-# TE annotation input/output (set to None to skip)
-TE_GENE_ANNOTATION_TSV = "/birl2/data/brassica/thulani/Research/CMPT898/CMPT-PLSC_819_Project/Demo/input_files/Genotype/Axiom_genotype/D4/Genotype_files/te_gene_annotation.tsv"
+# TE annotation input/output (set to None to skip).
+# run.sh fills this in from --te-annotation or --te-gff.
+TE_GENE_ANNOTATION_TSV = None
 SNP_TE_ANNOTATION_OUT = "snps_with_te_annotation.tsv"
 
 # Gene annotation input/output (set to None to skip)
